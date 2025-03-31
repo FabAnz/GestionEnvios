@@ -1,7 +1,15 @@
+using AccesoDatos.Repositorios;
+using LogicaNegocio.InterfacesRepositorios;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
+builder.Services.AddScoped<IRepositorioRegistroAuditable, RepositorioRegistroAuditable>();
+builder.Services.AddScoped<IRepositorioComentario, RepositorioComentario>();
 
 var app = builder.Build();
 
