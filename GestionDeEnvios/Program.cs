@@ -1,4 +1,6 @@
 using AccesoDatos.Repositorios;
+using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion.CasosUso;
 using LogicaNegocio.InterfacesRepositorios;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,10 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession();
+
 builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
 builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
 builder.Services.AddScoped<IRepositorioRegistroAuditable, RepositorioRegistroAuditable>();
 builder.Services.AddScoped<IRepositorioComentario, RepositorioComentario>();
+builder.Services.AddScoped<ILogin, Login>();
 
 var app = builder.Build();
 
@@ -25,11 +30,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
 
 app.Run();

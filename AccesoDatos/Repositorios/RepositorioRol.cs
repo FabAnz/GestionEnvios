@@ -10,6 +10,10 @@ namespace AccesoDatos.Repositorios
 {
     public class RepositorioRol : IRepositorioRol
     {
+        private static List<Rol> s_roles = new List<Rol>();
+
+        private static int s_ultId = 2;
+
         public void Add(Rol obj)
         {
             throw new NotImplementedException();

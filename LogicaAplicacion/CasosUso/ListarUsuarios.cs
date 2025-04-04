@@ -1,5 +1,7 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion.Mappers;
+using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,8 @@ namespace LogicaAplicacion.CasosUso
         }
         public List<UsuarioDTO> Listar()
         {
-            throw new NotImplementedException();
+            List<Usuario> usuarios = RepoUsuario.FindAll();
+            return MapperUsuario.ToListDTO(usuarios);
         }
     }
 }
