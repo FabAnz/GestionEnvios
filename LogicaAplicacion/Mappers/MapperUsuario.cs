@@ -21,13 +21,13 @@ namespace LogicaAplicacion.Mappers
                 Telefono = dto.Telefono,
                 Email = new Email(dto.Email),
                 Contrasenia = new Contrasenia(dto.Contrasenia),
-                //Rol Hacer obtener rol por nombre
+                Rol = MapperRol.ToRol(dto.Rol)
             };
 
             return aRetornar;
         }
 
-        internal static UsuarioDTO ToDTO(Usuario usuario)
+        internal static UsuarioDTO ToDTO(Usuario usuario, List<Rol> roles)
         {
             UsuarioDTO aRetornar = new UsuarioDTO()
             {
@@ -38,21 +38,21 @@ namespace LogicaAplicacion.Mappers
                 Telefono = usuario.Telefono,
                 Email = usuario.Email.Valor,
                 Contrasenia = usuario.Contrasenia.Valor,
-                Rol = usuario.Rol.Nombre
+                Rol = MapperRol.ToDTO(usuario.Rol),
+                Roles = MapperRol.ToListDTO(roles)
             };
 
             return aRetornar;
         }
 
-        internal static List<UsuarioDTO> ToListDTO(List<Usuario> lista)
+        internal static List<UsuarioDTO> ToListDTO(List<Usuario> lista, List<Rol> roles)
         {
             List<UsuarioDTO> aRetornar = new List<UsuarioDTO>();
 
             foreach (Usuario usuario in lista)
             {
-                aRetornar.Add(ToDTO(usuario));
+                aRetornar.Add(ToDTO(usuario, roles));
             }
-
             return aRetornar;
         }
     }

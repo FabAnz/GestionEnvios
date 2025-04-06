@@ -27,7 +27,7 @@ namespace LogicaAplicacion.Mappers
             UsuarioLoginDTO aRetornar = new UsuarioLoginDTO()
             {
                 Id = usuario.Id,
-                RolId = usuario.Rol.Id
+                Rol = usuario.Rol.Nombre
             };
 
             return aRetornar;

@@ -3,24 +3,30 @@ using CasosUso.InterfacesCasosUso;
 using ExcepcionesPropias.Excepciones;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentacion.Filters;
 
 namespace Presentacion.Controllers
 {
     public class UsuariosController : Controller
     {
         public ILogin CULogin { get; set; }
+        public IListarUsuarios CUListarUsuarios { get; set; }
 
-        public UsuariosController(ILogin cuLogin)
+        public UsuariosController(
+            ILogin cuLogin,
+            IListarUsuarios cUListarUsuarios
+            )
         {
             CULogin = cuLogin;
+            CUListarUsuarios = cUListarUsuarios;
         }
 
         //GET: UsuariosController/Login
-        public ActionResult Login()
+        public ActionResult Login(string error)
         {
             HttpContext.Session.SetString("idUsuario", "");
-            HttpContext.Session.SetString("idRol", "");
-            ViewBag.Error = "";
+            HttpContext.Session.SetString("rol", "");
+            ViewBag.Error = error;
             return View();
         }
 
@@ -33,8 +39,9 @@ namespace Presentacion.Controllers
             {
                 UsuarioLoginDTO usuario = CULogin.VerificarCredenciales(dto);
                 HttpContext.Session.SetString("idUsuario", usuario.Id.ToString());
-                HttpContext.Session.SetString("idRol", usuario.RolId.ToString());
-                ViewBag.Error = "";
+                HttpContext.Session.SetString("rol", usuario.Rol);
+                if (usuario.Rol == "Administrador")
+                    return RedirectToAction(nameof(Index));
                 return View();
             }
             catch (DatosInvalidosException ex)
@@ -50,9 +57,11 @@ namespace Presentacion.Controllers
 
 
         // GET: UsuariosController
+        [RolAdministradorFilter]
         public ActionResult Index()
         {
-            return View();
+            List<UsuarioDTO> dtos = CUListarUsuarios.Listar();
+            return View(dtos);
         }
 
         // GET: UsuariosController/Details/5

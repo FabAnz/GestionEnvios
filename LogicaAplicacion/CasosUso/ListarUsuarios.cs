@@ -14,15 +14,18 @@ namespace LogicaAplicacion.CasosUso
     public class ListarUsuarios : IListarUsuarios
     {
         public IRepositorioUsuario RepoUsuario { get; set; }
+        public IRepositorioRol RepoRol { get; set; }
 
-        public ListarUsuarios(IRepositorioUsuario repo)
+        public ListarUsuarios(IRepositorioUsuario repoUsuario, IRepositorioRol repoRol)
         {
-            RepoUsuario = repo;
+            RepoUsuario = repoUsuario;
+            RepoRol = repoRol;
         }
         public List<UsuarioDTO> Listar()
         {
             List<Usuario> usuarios = RepoUsuario.FindAll();
-            return MapperUsuario.ToListDTO(usuarios);
+            List<Rol> roles = RepoRol.FindAll();
+            return MapperUsuario.ToListDTO(usuarios, roles);
         }
     }
 }

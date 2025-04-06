@@ -21,7 +21,7 @@ namespace AccesoDatos.Repositorios
 
         public List<Rol> FindAll()
         {
-            throw new NotImplementedException();
+            return s_roles;
         }
 
         public Rol FindById(int id)

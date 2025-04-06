@@ -14,7 +14,9 @@ builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
 builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
 builder.Services.AddScoped<IRepositorioRegistroAuditable, RepositorioRegistroAuditable>();
 builder.Services.AddScoped<IRepositorioComentario, RepositorioComentario>();
+builder.Services.AddScoped<IRepositorioRol, RepositorioRol>();
 builder.Services.AddScoped<ILogin, Login>();
+builder.Services.AddScoped<IListarUsuarios, ListarUsuarios>();
 
 var app = builder.Build();
 
