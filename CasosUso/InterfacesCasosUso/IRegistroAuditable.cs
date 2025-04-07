@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CasosUso.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,10 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IRegistroAuditable
     {
-        public void GenerarRegistro();
+        public void GenerarRegistro(
+            string accion,
+            int idUsuarioActivo,
+            UsuarioDTO usuarioAfectado
+            );
     }
 }

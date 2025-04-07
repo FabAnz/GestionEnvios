@@ -17,6 +17,9 @@ builder.Services.AddScoped<IRepositorioComentario, RepositorioComentario>();
 builder.Services.AddScoped<IRepositorioRol, RepositorioRol>();
 builder.Services.AddScoped<ILogin, Login>();
 builder.Services.AddScoped<IListarUsuarios, ListarUsuarios>();
+builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
+builder.Services.AddScoped<IListarRoles, ListarRoles>();
+builder.Services.AddScoped<IBuscarRol, BuscarRol>();
 
 var app = builder.Build();
 

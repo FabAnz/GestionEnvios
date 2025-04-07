@@ -20,12 +20,12 @@ namespace LogicaAplicacion.CasosUso
             RepoRegistroAuditable = repoRegistro;
         }
 
-        public void GenerarRegistro()
+        public void Modifiacr(UsuarioDTO usuario, int idUsuarioActivo)
         {
             throw new NotImplementedException();
         }
 
-        public void Modifiacr(UsuarioDTO usuario)
+        public void GenerarRegistro(string accion, int idUsuarioActivo, UsuarioDTO usuarioAfectado)
         {
             throw new NotImplementedException();
         }

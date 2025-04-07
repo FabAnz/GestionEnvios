@@ -1,4 +1,5 @@
-﻿using CasosUso.InterfacesCasosUso;
+﻿using CasosUso.DTOs;
+using CasosUso.InterfacesCasosUso;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,13 @@ namespace LogicaAplicacion.CasosUso
             RepoUsuario = repoUsuario;
             RepoRegistroAuditable = repoRegistro;
         }
-        public void EjecutarBaja(int id)
+      
+        public void EjecutarBaja(int id, int idUsuarioActivo)
         {
             throw new NotImplementedException();
         }
 
-        public void GenerarRegistro()
+        public void GenerarRegistro(string accion, int idUsuarioActivo, UsuarioDTO usuarioAfectado)
         {
             throw new NotImplementedException();
         }

@@ -27,7 +27,7 @@ namespace LogicaAplicacion.Mappers
             return aRetornar;
         }
 
-        internal static UsuarioDTO ToDTO(Usuario usuario, List<Rol> roles)
+        internal static UsuarioDTO ToDTO(Usuario usuario)
         {
             UsuarioDTO aRetornar = new UsuarioDTO()
             {
@@ -37,21 +37,19 @@ namespace LogicaAplicacion.Mappers
                 Direccion = usuario.Direccion,
                 Telefono = usuario.Telefono,
                 Email = usuario.Email.Valor,
-                Contrasenia = usuario.Contrasenia.Valor,
-                Rol = MapperRol.ToDTO(usuario.Rol),
-                Roles = MapperRol.ToListDTO(roles)
+                Rol = MapperRol.ToDTO(usuario.Rol)
             };
 
             return aRetornar;
         }
 
-        internal static List<UsuarioDTO> ToListDTO(List<Usuario> lista, List<Rol> roles)
+        internal static List<UsuarioDTO> ToListDTO(List<Usuario> lista)
         {
             List<UsuarioDTO> aRetornar = new List<UsuarioDTO>();
 
             foreach (Usuario usuario in lista)
             {
-                aRetornar.Add(ToDTO(usuario, roles));
+                aRetornar.Add(ToDTO(usuario));
             }
             return aRetornar;
         }

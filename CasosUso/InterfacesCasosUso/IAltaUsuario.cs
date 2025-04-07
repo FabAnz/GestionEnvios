@@ -9,6 +9,6 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IAltaUsuario : IRegistroAuditable
     {
-        public void EjecutarAlta(UsuarioDTO usuario);
+        public void EjecutarAlta(UsuarioDTO dto, int idUsuarioActivo);
     }
 }

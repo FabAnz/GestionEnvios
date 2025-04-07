@@ -22,18 +22,25 @@ namespace LogicaNegocio.EntidadesDominio
 
         public Usuario()
         {
-            
+
         }
 
         public void Validar()
         {
-            if (Nombre == null) throw new DatosInvalidosException("El nombre no puede estar vacio");
-            if (Apellido == null) throw new DatosInvalidosException("El apellido no puede estar vacio");
-            if (Direccion == null) throw new DatosInvalidosException("La direccion no puede estar vacio");
-            if (Telefono == null) throw new DatosInvalidosException("El telefono no puede estar vacio");
-            if (Email == null) throw new DatosInvalidosException("El email no puede estar vacio");
-            if (Contrasenia == null) throw new DatosInvalidosException("La contraseña no puede estar vacio");
-            if (Rol == null) throw new DatosInvalidosException("El rol no puede estar vacio");
+            if (String.IsNullOrEmpty(Nombre))
+                throw new DatosInvalidosException("El nombre no puede estar vacio");
+            if (String.IsNullOrEmpty(Apellido))
+                throw new DatosInvalidosException("El apellido no puede estar vacio");
+            if (String.IsNullOrEmpty(Direccion))
+                throw new DatosInvalidosException("La direccion no puede estar vacio");
+            if (String.IsNullOrEmpty(Telefono))
+                throw new DatosInvalidosException("El telefono no puede estar vacio");
+            if (Email == null)
+                throw new DatosInvalidosException("El email no puede estar vacio");
+            if (Contrasenia == null)
+                throw new DatosInvalidosException("La contraseña no puede estar vacia");
+            if (Rol == null)
+                throw new DatosInvalidosException("El rol no puede estar vacio");
         }
     }
 }

@@ -9,6 +9,6 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IModificarUsuario : IRegistroAuditable
     {
-        public void Modifiacr(UsuarioDTO usuario);
+        public void Modifiacr(UsuarioDTO usuario, int idUsuarioActivo);
     }
 }

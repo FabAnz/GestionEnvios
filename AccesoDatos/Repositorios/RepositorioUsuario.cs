@@ -31,7 +31,27 @@ namespace AccesoDatos.Repositorios
 
         public void Add(Usuario obj)
         {
-            throw new NotImplementedException();
+            if (obj == null)
+                throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
+            if (BuscarUsuarioPorEmail(obj.Email.Valor) != null)
+                throw new DatosInvalidosException("Ya existe un usuario con ese email");
+
+            obj.Id = s_ultId++;
+
+            obj.Validar();
+            s_usuarios.Add(obj);
+        }
+
+        public Usuario BuscarUsuarioPorEmail(string email)
+        {
+            Usuario aux = null;
+
+            foreach (Usuario usuario in s_usuarios)
+            {
+                if (usuario.Email.Valor == email)
+                    return usuario;
+            }
+            return aux;
         }
 
         public List<Usuario> FindAll()
@@ -41,7 +61,22 @@ namespace AccesoDatos.Repositorios
 
         public Usuario FindById(int id)
         {
-            throw new NotImplementedException();
+            int inicio = 0;
+            int fin = s_usuarios.Count() - 1;
+            int medio;
+            while (inicio <= fin)
+            {
+                medio = (inicio + fin) / 2;
+                if (s_usuarios[medio].Id == id)
+                    return s_usuarios[medio];
+
+                if (s_usuarios[medio].Id < id)
+                    inicio = medio + 1;
+
+                if (s_usuarios[medio].Id > id)
+                    fin = medio - 1;
+            }
+            throw new DatosInvalidosException("El usuario buscado no existe");
         }
 
         public void Remove(int id)

@@ -1,6 +1,7 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
 using ExcepcionesPropias.Excepciones;
+using LogicaNegocio.EntidadesDominio;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentacion.Filters;
@@ -11,14 +12,23 @@ namespace Presentacion.Controllers
     {
         public ILogin CULogin { get; set; }
         public IListarUsuarios CUListarUsuarios { get; set; }
+        public IAltaUsuario CUAltaUsuario { get; set; }
+        public IListarRoles CUListarRoles { get; set; }
+        public IBuscarRol CUBuscarRol { get; set; }
 
         public UsuariosController(
             ILogin cuLogin,
-            IListarUsuarios cUListarUsuarios
+            IListarUsuarios cuListarUsuarios,
+            IAltaUsuario cuAltaUsuario,
+            IListarRoles cuListarRoles,
+            IBuscarRol cuBuscarRol
             )
         {
             CULogin = cuLogin;
-            CUListarUsuarios = cUListarUsuarios;
+            CUListarUsuarios = cuListarUsuarios;
+            CUAltaUsuario = cuAltaUsuario;
+            CUListarRoles = cuListarRoles;
+            CUBuscarRol = cuBuscarRol;
         }
 
         //GET: UsuariosController/Login
@@ -71,24 +81,38 @@ namespace Presentacion.Controllers
         }
 
         // GET: UsuariosController/Create
+        [RolAdministradorFilter]
         public ActionResult Create()
         {
-            return View();
+            UsuarioDTO dto = new UsuarioDTO();
+            dto.Roles = CUListarRoles.Listar();
+            return View(dto);
         }
 
         // POST: UsuariosController/Create
+        [RolAdministradorFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(UsuarioDTO dto)
         {
             try
             {
+                dto.Roles = CUListarRoles.Listar();
+                dto.Rol.Nombre = CUBuscarRol.Buscar(dto.Rol.Id).Nombre;
+                int idUsuarioActivo = int.Parse(HttpContext.Session.GetString("idUsuario"));
+                CUAltaUsuario.EjecutarAlta(dto, idUsuarioActivo);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (DatosInvalidosException ex)
             {
-                return View();
+                ViewBag.Error = ex.Message;
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Ocurrio un problema, contacte al administrador";
+            }
+            return View(dto);
+
         }
 
         // GET: UsuariosController/Edit/5

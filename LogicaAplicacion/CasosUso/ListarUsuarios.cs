@@ -25,7 +25,7 @@ namespace LogicaAplicacion.CasosUso
         {
             List<Usuario> usuarios = RepoUsuario.FindAll();
             List<Rol> roles = RepoRol.FindAll();
-            return MapperUsuario.ToListDTO(usuarios, roles);
+            return MapperUsuario.ToListDTO(usuarios);
         }
     }
 }
