@@ -24,10 +24,5 @@ namespace LogicaAplicacion.CasosUso
         {
             throw new NotImplementedException();
         }
-
-        public void GenerarRegistro(string accion, int idUsuarioActivo, UsuarioDTO usuarioAfectado)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

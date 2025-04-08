@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IBajaUsuario : IRegistroAuditable
+    public interface IBajaUsuario
     {
-        public void EjecutarBaja(int id, int idUsuarioActivo);
     }
 }

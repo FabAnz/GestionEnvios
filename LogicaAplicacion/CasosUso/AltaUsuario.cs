@@ -12,15 +12,16 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class AltaUsuario : IAltaUsuario
+    public class AltaUsuario : AccionAuditable, IAltaUsuario
     {
         public IRepositorioUsuario RepoUsuario { get; set; }
-        public IRepositorioRegistroAuditable RepoRegistroAuditable { get; set; }
 
-        public AltaUsuario(IRepositorioUsuario repoUsuario, IRepositorioRegistroAuditable repoRegistro)
+        public AltaUsuario(
+            IRepositorioUsuario repoUsuario,
+            IRepositorioRegistroAuditable repoRegistro
+            ) : base(repoUsuario, repoRegistro)
         {
             RepoUsuario = repoUsuario;
-            RepoRegistroAuditable = repoRegistro;
         }
 
         public void EjecutarAlta(UsuarioDTO dto, int idUsuarioActivo)
@@ -30,18 +31,7 @@ namespace LogicaAplicacion.CasosUso
             Usuario usuario = MapperUsuario.ToUsuario(dto);
             usuario.Validar();
             RepoUsuario.Add(usuario);
-            GenerarRegistro("Alta de usuario", idUsuarioActivo, dto);
-        }
-
-        public void GenerarRegistro(string accion, int idUsuarioActivo, UsuarioDTO usuarioAfectado)
-        {
-            RegistroAuditable registro = new RegistroAuditable();
-            registro.Accion = accion;
-            registro.UsuarioRealizoAcccion = RepoUsuario.FindById(idUsuarioActivo);
-            registro.UsuarioAfectado = MapperUsuario.ToUsuario(usuarioAfectado);
-
-            registro.Validar();
-            RepoRegistroAuditable.Add(registro);
+            GenerarRegistro("Alta usuario", idUsuarioActivo, dto);
         }
     }
 }
