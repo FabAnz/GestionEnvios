@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IModificarUsuario
+    public interface IAccionAuditable
     {
-        public void Modificar(UsuarioDTO dto, UsuarioDTO usuarioActivoDto);
+        public void GenerarRegistro(string accion, UsuarioDTO usuarioActivo, UsuarioDTO usuarioAfectado);
     }
 }

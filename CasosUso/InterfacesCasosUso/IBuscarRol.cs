@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IModificarUsuario
+    public interface IBuscarRol
     {
-        public void Modificar(UsuarioDTO dto, UsuarioDTO usuarioActivoDto);
+        public RolDTO Buscar(int id);
     }
 }

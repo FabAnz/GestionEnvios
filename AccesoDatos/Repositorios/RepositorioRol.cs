@@ -1,4 +1,5 @@
-﻿using LogicaNegocio.EntidadesDominio;
+﻿using ExcepcionesPropias.Excepciones;
+using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,13 @@ namespace AccesoDatos.Repositorios
 {
     public class RepositorioRol : IRepositorioRol
     {
-        private static List<Rol> s_roles = new List<Rol>();
+        private static List<Rol> s_roles = new List<Rol>()
+        {
+            new Rol(){Id=1,Nombre="Administrador"},
+            new Rol(){Id=2,Nombre="Funcionario"},
+        };
 
-        private static int s_ultId = 2;
+        private static int s_ultId = 3;
 
         public void Add(Rol obj)
         {
@@ -21,12 +26,16 @@ namespace AccesoDatos.Repositorios
 
         public List<Rol> FindAll()
         {
-            throw new NotImplementedException();
+            return s_roles;
         }
 
         public Rol FindById(int id)
         {
-            throw new NotImplementedException();
+            foreach (Rol obj in s_roles)
+            {
+                if (obj.Id == id) return obj;
+            }
+            throw new DatosInvalidosException("El rol buscado no existe");
         }
 
         public void Remove(int id)

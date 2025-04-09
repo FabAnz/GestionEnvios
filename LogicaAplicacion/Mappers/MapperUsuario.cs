@@ -15,14 +15,17 @@ namespace LogicaAplicacion.Mappers
         {
             Usuario aRetornar = new Usuario()
             {
+                Id = dto.Id,
                 Nombre = dto.Nombre,
                 Apellido = dto.Apellido,
                 Direccion = dto.Direccion,
                 Telefono = dto.Telefono,
                 Email = new Email(dto.Email),
-                Contrasenia = new Contrasenia(dto.Contrasenia),
-                //Rol Hacer obtener rol por nombre
+                Rol = MapperRol.ToRol(dto.Rol)
             };
+
+            if (!string.IsNullOrEmpty(dto.Contrasenia))
+                aRetornar.Contrasenia = new Contrasenia(dto.Contrasenia);
 
             return aRetornar;
         }
@@ -37,8 +40,7 @@ namespace LogicaAplicacion.Mappers
                 Direccion = usuario.Direccion,
                 Telefono = usuario.Telefono,
                 Email = usuario.Email.Valor,
-                Contrasenia = usuario.Contrasenia.Valor,
-                Rol = usuario.Rol.Nombre
+                Rol = MapperRol.ToDTO(usuario.Rol)
             };
 
             return aRetornar;
@@ -52,7 +54,6 @@ namespace LogicaAplicacion.Mappers
             {
                 aRetornar.Add(ToDTO(usuario));
             }
-
             return aRetornar;
         }
     }

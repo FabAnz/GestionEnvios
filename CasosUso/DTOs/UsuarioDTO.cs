@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CasosUso.InterfacesCasosUso;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ namespace CasosUso.DTOs
         public string Direccion { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
-        public string Contrasenia { get; set; }
-        public string Rol { get; set; }
+        public string? Contrasenia { get; set; }
+        public RolDTO Rol { get; set; }
+        public List<RolDTO> Roles { get; set; }
     }
 }

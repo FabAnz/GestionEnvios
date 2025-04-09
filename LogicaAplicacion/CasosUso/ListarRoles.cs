@@ -10,17 +10,18 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class BuscarUsuario : IBuscarUsuario
+    public class ListarRoles : IListarRoles
     {
-        public IRepositorioUsuario RepoUsuario { get; set; }
+        public IRepositorioRol RepoRol { get; set; }
 
-        public BuscarUsuario(IRepositorioUsuario repo)
+        public ListarRoles(IRepositorioRol repo)
         {
-            RepoUsuario = repo;
+            RepoRol = repo;
         }
-        public UsuarioDTO Buscar(int id)
+
+        public List<RolDTO> Listar()
         {
-            return MapperUsuario.ToDTO(RepoUsuario.FindById(id));
+            return MapperRol.ToListDTO(RepoRol.FindAll());
         }
     }
 }
