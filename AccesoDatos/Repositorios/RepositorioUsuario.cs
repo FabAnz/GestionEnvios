@@ -86,7 +86,23 @@ namespace AccesoDatos.Repositorios
 
         public void Update(Usuario obj)
         {
-            throw new NotImplementedException();
+            if (obj == null)
+                throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
+
+            Usuario aModificar = FindById(obj.Id);
+
+            if (!obj.Email.Equals(aModificar.Email))
+                if (BuscarUsuarioPorEmail(obj.Email.Valor) != null)
+                    throw new DatosInvalidosException("Ya existe un usuario con ese email");
+
+            obj.Validar();
+            aModificar.Nombre = obj.Nombre;
+            aModificar.Apellido = obj.Apellido;
+            aModificar.Direccion = obj.Direccion;
+            aModificar.Telefono = obj.Telefono;
+            aModificar.Email = obj.Email;
+            aModificar.Contrasenia = obj.Contrasenia;
+            aModificar.Rol = obj.Rol;
         }
 
         public Usuario VerificarCredenciales(string email, string contrasenia)

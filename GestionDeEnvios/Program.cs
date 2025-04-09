@@ -18,6 +18,8 @@ builder.Services.AddScoped<IRepositorioRol, RepositorioRol>();
 builder.Services.AddScoped<ILogin, Login>();
 builder.Services.AddScoped<IListarUsuarios, ListarUsuarios>();
 builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
+builder.Services.AddScoped<IBuscarUsuario, BuscarUsuario>();
+builder.Services.AddScoped<IModificarUsuario, ModificarUsuario>();
 builder.Services.AddScoped<IListarRoles, ListarRoles>();
 builder.Services.AddScoped<IBuscarRol, BuscarRol>();
 

@@ -1,9 +1,11 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
 using ExcepcionesPropias.Excepciones;
+using Humanizer;
 using LogicaNegocio.EntidadesDominio;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 using Presentacion.Filters;
 
 namespace Presentacion.Controllers
@@ -15,13 +17,17 @@ namespace Presentacion.Controllers
         public IAltaUsuario CUAltaUsuario { get; set; }
         public IListarRoles CUListarRoles { get; set; }
         public IBuscarRol CUBuscarRol { get; set; }
+        public IBuscarUsuario CUBuscarUsuario { get; set; }
+        public IModificarUsuario CUModificarUsuario { get; set; }
 
         public UsuariosController(
             ILogin cuLogin,
             IListarUsuarios cuListarUsuarios,
             IAltaUsuario cuAltaUsuario,
             IListarRoles cuListarRoles,
-            IBuscarRol cuBuscarRol
+            IBuscarRol cuBuscarRol,
+            IBuscarUsuario cuBuscarUsuario,
+            IModificarUsuario cuModificarUsuario
             )
         {
             CULogin = cuLogin;
@@ -29,6 +35,8 @@ namespace Presentacion.Controllers
             CUAltaUsuario = cuAltaUsuario;
             CUListarRoles = cuListarRoles;
             CUBuscarRol = cuBuscarRol;
+            CUBuscarUsuario = cuBuscarUsuario;
+            CUModificarUsuario = cuModificarUsuario;
         }
 
         //GET: UsuariosController/Login
@@ -116,24 +124,37 @@ namespace Presentacion.Controllers
         }
 
         // GET: UsuariosController/Edit/5
+        [RolAdministradorFilter]
         public ActionResult Edit(int id)
         {
-            return View();
+            UsuarioDTO dto = CUBuscarUsuario.Buscar(id);
+            dto.Roles = CUListarRoles.Listar();
+            return View(dto);
         }
 
         // POST: UsuariosController/Edit/5
+        [RolAdministradorFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(UsuarioDTO dto)
         {
             try
             {
+                dto.Roles = CUListarRoles.Listar();
+                dto.Rol.Nombre = CUBuscarRol.Buscar(dto.Rol.Id).Nombre;
+                int idUsuarioActivo = int.Parse(HttpContext.Session.GetString("idUsuario"));
+                CUModificarUsuario.Modificar(dto, idUsuarioActivo);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (DatosInvalidosException ex)
             {
-                return View();
+                ViewBag.Error = ex.Message;
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Ocurrio un problema, contacte al administrador";
+            }
+            return View(dto);
         }
 
         // GET: UsuariosController/Delete/5

@@ -15,14 +15,17 @@ namespace LogicaAplicacion.Mappers
         {
             Usuario aRetornar = new Usuario()
             {
+                Id = dto.Id,
                 Nombre = dto.Nombre,
                 Apellido = dto.Apellido,
                 Direccion = dto.Direccion,
                 Telefono = dto.Telefono,
                 Email = new Email(dto.Email),
-                Contrasenia = new Contrasenia(dto.Contrasenia),
                 Rol = MapperRol.ToRol(dto.Rol)
             };
+
+            if (!string.IsNullOrEmpty(dto.Contrasenia))
+                aRetornar.Contrasenia = new Contrasenia(dto.Contrasenia);
 
             return aRetornar;
         }
