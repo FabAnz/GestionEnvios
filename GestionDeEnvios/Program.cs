@@ -20,6 +20,7 @@ builder.Services.AddScoped<IListarUsuarios, ListarUsuarios>();
 builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
 builder.Services.AddScoped<IBuscarUsuario, BuscarUsuario>();
 builder.Services.AddScoped<IModificarUsuario, ModificarUsuario>();
+builder.Services.AddScoped<IBajaUsuario, BajaUsuario>();
 builder.Services.AddScoped<IListarRoles, ListarRoles>();
 builder.Services.AddScoped<IBuscarRol, BuscarRol>();
 

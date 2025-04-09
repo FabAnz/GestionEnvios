@@ -25,11 +25,11 @@ namespace LogicaAplicacion.CasosUso
             RepoRegistroAuditable = repoRegistroAuditable;
         }
 
-        public void GenerarRegistro(string accion, int idUsuarioActivo, UsuarioDTO usuarioAfectado)
+        public void GenerarRegistro(string accion, UsuarioDTO usuarioActivo, UsuarioDTO usuarioAfectado)
         {
             RegistroAuditable registro = new RegistroAuditable();
             registro.Accion = accion;
-            registro.UsuarioRealizoAcccion = RepoUsuario.FindById(idUsuarioActivo);
+            registro.UsuarioRealizoAcccion = MapperUsuario.ToUsuario(usuarioActivo);
             registro.UsuarioAfectado = MapperUsuario.ToUsuario(usuarioAfectado);
 
             registro.Validar();

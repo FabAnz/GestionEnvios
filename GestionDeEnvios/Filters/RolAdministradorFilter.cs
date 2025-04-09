@@ -13,7 +13,7 @@ namespace Presentacion.Filters
 
             if (rol != "Administrador")
             {
-                context.Result = new RedirectToActionResult("Login", "Usuarios", new { error = "No tiene permiso para acceder a la sección" });
+                context.Result = new RedirectToActionResult("Login", "Usuarios", new { mensaje = "No tiene permiso para acceder a la sección" });
             }
             base.OnActionExecuting(context);
         }

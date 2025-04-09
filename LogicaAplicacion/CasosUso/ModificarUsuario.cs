@@ -24,7 +24,7 @@ namespace LogicaAplicacion.CasosUso
             RepoUsuario = repoUsuario;
         }
 
-        public void Modificar(UsuarioDTO dto, int idUsuarioActivo)
+        public void Modificar(UsuarioDTO dto, UsuarioDTO usuarioActivoDto)
         {
             if (dto == null)
                 throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
@@ -35,7 +35,8 @@ namespace LogicaAplicacion.CasosUso
 
             usuario.Validar();
             RepoUsuario.Update(usuario);
-            GenerarRegistro("Modificación de usuario", idUsuarioActivo, dto);
+
+            GenerarRegistro("Modificación de usuario", usuarioActivoDto, dto);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CasosUso.DTOs;
+﻿using AccesoDatos.Repositorios;
+using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
 using ExcepcionesPropias.Excepciones;
 using Humanizer;
@@ -19,6 +20,7 @@ namespace Presentacion.Controllers
         public IBuscarRol CUBuscarRol { get; set; }
         public IBuscarUsuario CUBuscarUsuario { get; set; }
         public IModificarUsuario CUModificarUsuario { get; set; }
+        public IBajaUsuario CUBajaUsuario { get; set; }
 
         public UsuariosController(
             ILogin cuLogin,
@@ -27,7 +29,8 @@ namespace Presentacion.Controllers
             IListarRoles cuListarRoles,
             IBuscarRol cuBuscarRol,
             IBuscarUsuario cuBuscarUsuario,
-            IModificarUsuario cuModificarUsuario
+            IModificarUsuario cuModificarUsuario,
+            IBajaUsuario cuBajaUsuario
             )
         {
             CULogin = cuLogin;
@@ -37,14 +40,21 @@ namespace Presentacion.Controllers
             CUBuscarRol = cuBuscarRol;
             CUBuscarUsuario = cuBuscarUsuario;
             CUModificarUsuario = cuModificarUsuario;
+            CUBajaUsuario = cuBajaUsuario;
+        }
+
+        private UsuarioDTO UsuarioActivo()
+        {
+            int idUsuario = int.Parse(HttpContext.Session.GetString("idUsuario"));
+            return CUBuscarUsuario.Buscar(idUsuario);
         }
 
         //GET: UsuariosController/Login
-        public ActionResult Login(string error)
+        public ActionResult Login(string mensaje)
         {
             HttpContext.Session.SetString("idUsuario", "");
             HttpContext.Session.SetString("rol", "");
-            ViewBag.Error = error;
+            ViewBag.Mensaje = mensaje;
             return View();
         }
 
@@ -73,6 +83,11 @@ namespace Presentacion.Controllers
             return View(dto);
         }
 
+        //GET: UsuariosController/Logout
+        public ActionResult Logout()
+        {
+            return RedirectToAction(nameof(Login));
+        }
 
         // GET: UsuariosController
         [RolAdministradorFilter]
@@ -107,8 +122,7 @@ namespace Presentacion.Controllers
             {
                 dto.Roles = CUListarRoles.Listar();
                 dto.Rol.Nombre = CUBuscarRol.Buscar(dto.Rol.Id).Nombre;
-                int idUsuarioActivo = int.Parse(HttpContext.Session.GetString("idUsuario"));
-                CUAltaUsuario.EjecutarAlta(dto, idUsuarioActivo);
+                CUAltaUsuario.EjecutarAlta(dto, UsuarioActivo());
                 return RedirectToAction(nameof(Index));
             }
             catch (DatosInvalidosException ex)
@@ -142,8 +156,7 @@ namespace Presentacion.Controllers
             {
                 dto.Roles = CUListarRoles.Listar();
                 dto.Rol.Nombre = CUBuscarRol.Buscar(dto.Rol.Id).Nombre;
-                int idUsuarioActivo = int.Parse(HttpContext.Session.GetString("idUsuario"));
-                CUModificarUsuario.Modificar(dto, idUsuarioActivo);
+                CUModificarUsuario.Modificar(dto, UsuarioActivo());
                 return RedirectToAction(nameof(Index));
             }
             catch (DatosInvalidosException ex)
@@ -158,22 +171,33 @@ namespace Presentacion.Controllers
         }
 
         // GET: UsuariosController/Delete/5
+        [RolAdministradorFilter]
         public ActionResult Delete(int id)
         {
-            return View();
+            UsuarioDTO dto = CUBuscarUsuario.Buscar(id);
+            if (dto == null)
+                throw new DatosInvalidosException("El usuario no existe");
+
+            return View(dto);
         }
 
         // POST: UsuariosController/Delete/5
+        [RolAdministradorFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
+                int idUsuarioActivo = UsuarioActivo().Id;
+                CUBajaUsuario.EjecutarBaja(id, UsuarioActivo());
+                if (id == idUsuarioActivo)
+                    return RedirectToAction(nameof(Login), new { mensaje = "Elimino su usuario con éxito" });
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                ViewBag.Error = "Ocurrio un problema, contacte al administrador";
                 return View();
             }
         }

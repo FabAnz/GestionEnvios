@@ -9,6 +9,6 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IAltaUsuario
     {
-       public void EjecutarAlta(UsuarioDTO dto,int idUsuarioActivo);
+        public void EjecutarAlta(UsuarioDTO dto, UsuarioDTO usuarioActivoDto);
     }
 }

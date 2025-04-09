@@ -81,7 +81,11 @@ namespace AccesoDatos.Repositorios
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            Usuario aBorrar = FindById(id);
+            if (aBorrar == null)
+                throw new DatosInvalidosException("El usuario no existe");
+
+            s_usuarios.Remove(aBorrar);
         }
 
         public void Update(Usuario obj)

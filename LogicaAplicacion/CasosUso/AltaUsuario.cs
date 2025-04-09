@@ -21,17 +21,18 @@ namespace LogicaAplicacion.CasosUso
             IRepositorioRegistroAuditable repoRegistro
             ) : base(repoUsuario, repoRegistro)
         {
-            RepoUsuario = repoUsuario;  
+            RepoUsuario = repoUsuario;
         }
 
-        public void EjecutarAlta(UsuarioDTO dto, int idUsuarioActivo)
+        public void EjecutarAlta(UsuarioDTO dto, UsuarioDTO usuarioActivoDto)
         {
             if (dto == null)
                 throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
             Usuario usuario = MapperUsuario.ToUsuario(dto);
             usuario.Validar();
             RepoUsuario.Add(usuario);
-            GenerarRegistro("Alta de usuario", idUsuarioActivo, dto);
+
+            GenerarRegistro("Alta de usuario", usuarioActivoDto, dto);
         }
     }
 }
