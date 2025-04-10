@@ -13,9 +13,9 @@ namespace LogicaNegocio.EntidadesDominio
     {
         public int Id { get; set; }
         public string Accion { get; set; }
-        public Usuario UsuarioRealizoAcccion { get; set; }
+        public string EmailUsuarioRealizoAcccion { get; set; }
         public DateTime Fecha { get; set; }
-        public Usuario UsuarioAfectado { get; set; }
+        public string EmailUsuarioAfectado { get; set; }
 
         public RegistroAuditable()
         {
@@ -26,9 +26,9 @@ namespace LogicaNegocio.EntidadesDominio
         {
             if (String.IsNullOrEmpty(Accion))
                 throw new DatosInvalidosException("La accion no puede estar vacia");
-            if (UsuarioRealizoAcccion == null)
+            if (String.IsNullOrEmpty(EmailUsuarioRealizoAcccion))
                 throw new DatosInvalidosException("El usuario activo no puede estar vacio");
-            if (UsuarioAfectado == null)
+            if (string.IsNullOrEmpty(EmailUsuarioAfectado))
                 throw new DatosInvalidosException("El usuario afectado no puede estar vacio");
         }
     }

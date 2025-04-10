@@ -29,8 +29,8 @@ namespace LogicaAplicacion.CasosUso
         {
             RegistroAuditable registro = new RegistroAuditable();
             registro.Accion = accion;
-            registro.UsuarioRealizoAcccion = MapperUsuario.ToUsuario(usuarioActivo);
-            registro.UsuarioAfectado = MapperUsuario.ToUsuario(usuarioAfectado);
+            registro.EmailUsuarioRealizoAcccion = usuarioActivo.Email;
+            registro.EmailUsuarioAfectado = usuarioAfectado.Email;
 
             registro.Validar();
             RepoRegistroAuditable.Add(registro);

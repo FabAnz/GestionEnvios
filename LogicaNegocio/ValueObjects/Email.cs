@@ -1,4 +1,5 @@
 ﻿using ExcepcionesPropias.Excepciones;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
+    [Owned]
     public class Email : IEquatable<Email>
     {
         public string Valor { get; private set; }
