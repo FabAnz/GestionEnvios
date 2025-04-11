@@ -29,9 +29,11 @@ namespace AccesoDatos.Repositorios
             if (BuscarUsuarioPorEmail(obj.Email.Valor) != null)
                 throw new DatosInvalidosException("Ya existe un usuario con ese email");
 
+
+            obj.Rol = Contexto.Roles.Find(obj.Rol.Id);
             obj.Validar();
+
             Contexto.Usuarios.Add(obj);
-            Contexto.Entry(obj.Rol).State = EntityState.Unchanged;
             Contexto.SaveChanges();
         }
 
@@ -47,7 +49,7 @@ namespace AccesoDatos.Repositorios
 
         public List<Usuario> FindAll()
         {
-            return Contexto.Usuarios.Include(usuario=>usuario.Rol).ToList();
+            return Contexto.Usuarios.Include(usuario => usuario.Rol).ToList();
         }
 
         public Usuario FindById(int id)
@@ -81,9 +83,9 @@ namespace AccesoDatos.Repositorios
                 if (BuscarUsuarioPorEmail(obj.Email.Valor) != null)
                     throw new DatosInvalidosException("Ya existe un usuario con ese email");
 
+            obj.Rol = Contexto.Roles.Find(obj.Rol.Id);
             obj.Validar();
             Contexto.Usuarios.Update(obj);
-            Contexto.Entry(obj.Rol).State = EntityState.Unchanged;
             Contexto.SaveChanges();
         }
 
