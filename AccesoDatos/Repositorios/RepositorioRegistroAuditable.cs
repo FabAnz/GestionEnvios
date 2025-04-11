@@ -1,4 +1,5 @@
-﻿using ExcepcionesPropias.Excepciones;
+﻿using AccesoDatos.ContextoEF;
+using ExcepcionesPropias.Excepciones;
 using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using LogicaNegocio.ValueObjects;
@@ -12,18 +13,21 @@ namespace AccesoDatos.Repositorios
 {
     public class RepositorioRegistroAuditable : IRepositorioRegistroAuditable
     {
-        private static List<RegistroAuditable> s_registros = new List<RegistroAuditable>();
+        public GestionDeEnviosContext Contexto { get; set; }
 
-        private static int s_ultId = 1;
+        public RepositorioRegistroAuditable(GestionDeEnviosContext ctx)
+        {
+            Contexto = ctx;
+        }
+
         public void Add(RegistroAuditable obj)
         {
             if (obj == null)
                 throw new DatosInvalidosException("Registro vacio, intente nuevamente");
 
-            obj.Id = s_ultId++;
-
             obj.Validar();
-            s_registros.Add(obj);
+            Contexto.RegistroSAuditables.Add(obj);
+            Contexto.SaveChanges();
         }
 
         public List<RegistroAuditable> FindAll()

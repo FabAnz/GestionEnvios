@@ -21,7 +21,7 @@ namespace LogicaAplicacion.Mappers
                 Direccion = dto.Direccion,
                 Telefono = dto.Telefono,
                 Email = new Email(dto.Email),
-                Rol = MapperRol.ToRol(dto.Rol)
+                Rol = new Rol() { Id = dto.Rol.Id }
             };
 
             if (!string.IsNullOrEmpty(dto.Contrasenia))

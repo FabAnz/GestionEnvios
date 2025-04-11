@@ -1,6 +1,7 @@
 ﻿using ExcepcionesPropias.Excepciones;
 using LogicaNegocio.InterfacesDominio;
 using LogicaNegocio.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

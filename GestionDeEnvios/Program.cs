@@ -1,7 +1,9 @@
+using AccesoDatos.ContextoEF;
 using AccesoDatos.Repositorios;
 using CasosUso.InterfacesCasosUso;
 using LogicaAplicacion.CasosUso;
 using LogicaNegocio.InterfacesRepositorios;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,9 @@ builder.Services.AddScoped<IModificarUsuario, ModificarUsuario>();
 builder.Services.AddScoped<IBajaUsuario, BajaUsuario>();
 builder.Services.AddScoped<IListarRoles, ListarRoles>();
 builder.Services.AddScoped<IBuscarRol, BuscarRol>();
+
+string strCon = builder.Configuration.GetConnectionString("MiConexion");
+builder.Services.AddDbContext<GestionDeEnviosContext>(option => option.UseSqlServer(strCon));
 
 var app = builder.Build();
 
