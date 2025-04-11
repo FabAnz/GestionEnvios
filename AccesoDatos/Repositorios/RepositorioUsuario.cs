@@ -1,7 +1,9 @@
-﻿using ExcepcionesPropias.Excepciones;
+﻿using AccesoDatos.ContextoEF;
+using ExcepcionesPropias.Excepciones;
 using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using LogicaNegocio.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,80 +14,59 @@ namespace AccesoDatos.Repositorios
 {
     public class RepositorioUsuario : IRepositorioUsuario
     {
-        private static List<Usuario> s_usuarios = new List<Usuario>()
-        {
-            new Usuario()
-            {
-                Id=1,
-                Nombre="Fabian",
-                Apellido="Antunez",
-                Direccion="Calle 1234",
-                Telefono="123456789",
-                Email=new Email("fabian@email.com"),
-                Contrasenia=new Contrasenia("Fabian123"),
-                Rol=new Rol(){Id=1,Nombre="Administrador"}
-            }
-        };
+        public GestionDeEnviosContext Contexto { get; set; }
 
-        private static int s_ultId = 2;
+        public RepositorioUsuario(GestionDeEnviosContext ctx)
+        {
+            Contexto = ctx;
+        }
 
         public void Add(Usuario obj)
         {
             if (obj == null)
                 throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
+
             if (BuscarUsuarioPorEmail(obj.Email.Valor) != null)
                 throw new DatosInvalidosException("Ya existe un usuario con ese email");
 
-            obj.Id = s_ultId++;
-
             obj.Validar();
-            s_usuarios.Add(obj);
+            Contexto.Usuarios.Add(obj);
+            Contexto.Entry(obj.Rol).State = EntityState.Unchanged;
+            Contexto.SaveChanges();
         }
 
         public Usuario BuscarUsuarioPorEmail(string email)
         {
-            Usuario aux = null;
+            Usuario aRetornar = Contexto.Usuarios
+                .Include(usuario => usuario.Rol)
+                .Where(usuario => usuario.Email.Valor == email)
+                .SingleOrDefault();
 
-            foreach (Usuario usuario in s_usuarios)
-            {
-                if (usuario.Email.Valor == email)
-                    return usuario;
-            }
-            return aux;
+            return aRetornar;
         }
 
         public List<Usuario> FindAll()
         {
-            return s_usuarios;
+            return Contexto.Usuarios.Include(usuario=>usuario.Rol).ToList();
         }
 
         public Usuario FindById(int id)
         {
-            int inicio = 0;
-            int fin = s_usuarios.Count() - 1;
-            int medio;
-            while (inicio <= fin)
-            {
-                medio = (inicio + fin) / 2;
-                if (s_usuarios[medio].Id == id)
-                    return s_usuarios[medio];
-
-                if (s_usuarios[medio].Id < id)
-                    inicio = medio + 1;
-
-                if (s_usuarios[medio].Id > id)
-                    fin = medio - 1;
-            }
-            throw new DatosInvalidosException("El usuario buscado no existe");
+            Usuario aRetornar = Contexto.Usuarios
+                .Include(usuario => usuario.Rol)
+                .Where(usuario => usuario.Id == id)
+                .SingleOrDefault();
+            if (aRetornar == null)
+                throw new DatosInvalidosException("El usuario buscado no existe");
+            return aRetornar;
         }
 
         public void Remove(int id)
         {
             Usuario aBorrar = FindById(id);
-            if (aBorrar == null)
-                throw new DatosInvalidosException("El usuario no existe");
 
-            s_usuarios.Remove(aBorrar);
+            Contexto.Usuarios.Remove(aBorrar);
+            Contexto.SaveChanges();
         }
 
         public void Update(Usuario obj)
@@ -94,35 +75,24 @@ namespace AccesoDatos.Repositorios
                 throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
 
             Usuario aModificar = FindById(obj.Id);
+            Contexto.Entry(aModificar).State = EntityState.Detached;
 
             if (!obj.Email.Equals(aModificar.Email))
                 if (BuscarUsuarioPorEmail(obj.Email.Valor) != null)
                     throw new DatosInvalidosException("Ya existe un usuario con ese email");
 
             obj.Validar();
-            aModificar.Nombre = obj.Nombre;
-            aModificar.Apellido = obj.Apellido;
-            aModificar.Direccion = obj.Direccion;
-            aModificar.Telefono = obj.Telefono;
-            aModificar.Email = obj.Email;
-            aModificar.Contrasenia = obj.Contrasenia;
-            aModificar.Rol = obj.Rol;
+            Contexto.Usuarios.Update(obj);
+            Contexto.Entry(obj.Rol).State = EntityState.Unchanged;
+            Contexto.SaveChanges();
         }
 
         public Usuario VerificarCredenciales(string email, string contrasenia)
         {
-            Usuario aRetornar = new Usuario();
-
-            foreach (Usuario usuario in s_usuarios)
-            {
-                if (usuario.Email.Valor == email && usuario.Contrasenia.Valor == contrasenia)
-                {
-                    aRetornar.Id = usuario.Id;
-                    aRetornar.Rol = usuario.Rol;
-                    return aRetornar;
-                }
-            }
-            throw new DatosInvalidosException("Email y/o contraseña incorrectos");
+            Usuario aRetornar = BuscarUsuarioPorEmail(email);
+            if (aRetornar.Contrasenia.Valor != contrasenia)
+                throw new DatosInvalidosException("Email y/o contraseña incorrectos");
+            return aRetornar;
         }
     }
 }

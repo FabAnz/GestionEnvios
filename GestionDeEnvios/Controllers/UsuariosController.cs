@@ -74,11 +74,11 @@ namespace Presentacion.Controllers
             }
             catch (DatosInvalidosException ex)
             {
-                ViewBag.Error = ex.Message;
+                ViewBag.Mensaje = ex.Message;
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Ocurrio un problema, contacte al administrador";
+                ViewBag.Mensaje = "Ocurrio un problema, contacte al administrador";
             }
             return View(dto);
         }
