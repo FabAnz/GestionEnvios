@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
 using Presentacion.Filters;
+using Presentacion.Models;
 
 namespace Presentacion.Controllers
 {
@@ -107,22 +108,22 @@ namespace Presentacion.Controllers
         [RolAdministradorFilter]
         public ActionResult Create()
         {
-            UsuarioDTO dto = new UsuarioDTO();
-            dto.Roles = CUListarRoles.Listar();
-            return View(dto);
+            UsuarioRolesViewModel vm = new UsuarioRolesViewModel();
+            vm.Roles = CUListarRoles.Listar();
+            return View(vm);
         }
 
         // POST: UsuariosController/Create
         [RolAdministradorFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UsuarioDTO dto)
+        public ActionResult Create(UsuarioRolesViewModel vm)
         {
             try
             {
-                dto.Roles = CUListarRoles.Listar();
-                dto.Rol.Nombre = CUBuscarRol.Buscar(dto.Rol.Id).Nombre;
-                CUAltaUsuario.EjecutarAlta(dto, UsuarioActivo());
+                vm.Roles = CUListarRoles.Listar();
+                vm.Usuario.Rol.Nombre = CUBuscarRol.Buscar(vm.Usuario.Rol.Id).Nombre;
+                CUAltaUsuario.EjecutarAlta(vm.Usuario, UsuarioActivo());
                 return RedirectToAction(nameof(Index));
             }
             catch (DatosInvalidosException ex)
@@ -133,7 +134,7 @@ namespace Presentacion.Controllers
             {
                 ViewBag.Error = "Ocurrio un problema, contacte al administrador";
             }
-            return View(dto);
+            return View(vm);
 
         }
 
@@ -141,22 +142,23 @@ namespace Presentacion.Controllers
         [RolAdministradorFilter]
         public ActionResult Edit(int id)
         {
-            UsuarioDTO dto = CUBuscarUsuario.Buscar(id);
-            dto.Roles = CUListarRoles.Listar();
-            return View(dto);
+            UsuarioRolesViewModel vm = new UsuarioRolesViewModel();
+            vm.Usuario = CUBuscarUsuario.Buscar(id);
+            vm.Roles = CUListarRoles.Listar();
+            return View(vm);
         }
 
         // POST: UsuariosController/Edit/5
         [RolAdministradorFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(UsuarioDTO dto)
+        public ActionResult Edit(UsuarioRolesViewModel vm)
         {
             try
             {
-                dto.Roles = CUListarRoles.Listar();
-                dto.Rol.Nombre = CUBuscarRol.Buscar(dto.Rol.Id).Nombre;
-                CUModificarUsuario.Modificar(dto, UsuarioActivo());
+                vm.Roles = CUListarRoles.Listar();
+                vm.Usuario.Rol.Nombre = CUBuscarRol.Buscar(vm.Usuario.Rol.Id).Nombre;
+                CUModificarUsuario.Modificar(vm.Usuario, UsuarioActivo());
                 return RedirectToAction(nameof(Index));
             }
             catch (DatosInvalidosException ex)
@@ -167,7 +169,7 @@ namespace Presentacion.Controllers
             {
                 ViewBag.Error = "Ocurrio un problema, contacte al administrador";
             }
-            return View(dto);
+            return View(vm);
         }
 
         // GET: UsuariosController/Delete/5
