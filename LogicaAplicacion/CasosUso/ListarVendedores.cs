@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class ListarUsuarios : IListarUsuarios
+    public class ListarVendedores : IListarVendedores
     {
         public IRepositorioUsuario RepoUsuario { get; set; }
 
-        public ListarUsuarios(IRepositorioUsuario repoUsuario)
+        public ListarVendedores(IRepositorioUsuario repoUsuario)
         {
             RepoUsuario = repoUsuario;
         }

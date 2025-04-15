@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IAltaEnvioComun
+    public interface IListarVendedores
     {
-        public void Emitir(EnvioComunDTO envio);
-
+        public List<UsuarioDTO> Listar();
     }
 }

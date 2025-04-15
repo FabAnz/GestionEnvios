@@ -1,0 +1,64 @@
+﻿@model Presentacion.Models.EnviosComunesViewModel
+
+@{
+    ViewData["Title"] = "CreateComun";
+}
+
+<h1>Create</h1>
+
+<h4>EnvioDTO</h4>
+
+<span>@ViewBag.Error</span>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <label class="control-label">Tipo</label>
+        <select id="slcEnvioTipo" class="form-control">
+            <option value="comun" selected>Común</option>
+            <option value="urgente">Urgente</option>
+        </select>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Envio.EmailCliente" class="control-label">Email cliente</label>
+                <input asp-for="Envio.EmailCliente" class="form-control" />
+                <span asp-validation-for="Envio.EmailCliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Envio.Peso" class="control-label">Peso</label>
+                <input asp-for="Envio.Peso" class="form-control" type="number" />
+                <span asp-validation-for="Envio.Peso" class="text-danger"></span>
+            </div>
+
+
+            <div id="camposComunes" class="form-group">
+                <label asp-for="Envio.Agencia.Id" class="control-label">Agencia destino</label>
+                <select asp-for="Envio.Agencia.Id" class="form-control"
+                        asp-items="@(new SelectList(Model.Agencias, "Id", "Nombre"))">
+                    <option value="">-- Seleccionar Agencia --</option>
+                </select>
+                <span asp-validation-for="Envio.Agencia.Id" class="text-danger"></span>
+            </div>
+
+            <div id="camposUrgentes">
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/enviosCreate.js"></script>
+}

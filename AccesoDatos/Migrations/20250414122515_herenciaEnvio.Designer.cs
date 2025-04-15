@@ -4,6 +4,7 @@ using AccesoDatos.ContextoEF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoDatos.Migrations
 {
     [DbContext(typeof(GestionDeEnviosContext))]
-    partial class GestionDeEnviosContextModelSnapshot : ModelSnapshot
+    [Migration("20250414122515_herenciaEnvio")]
+    partial class herenciaEnvio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,11 +194,11 @@ namespace AccesoDatos.Migrations
                             b1.Property<int>("AgenciaId")
                                 .HasColumnType("int");
 
-                            b1.Property<decimal>("Latitud")
-                                .HasColumnType("decimal(9,5)");
+                            b1.Property<int>("Latitud")
+                                .HasColumnType("int");
 
-                            b1.Property<decimal>("Longitud")
-                                .HasColumnType("decimal(9,5)");
+                            b1.Property<int>("Longitud")
+                                .HasColumnType("int");
 
                             b1.HasKey("AgenciaId");
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace LogicaNegocio.ValueObjects
 {
     [Owned]
-    public class Contrasenia:IEquatable<Contrasenia>
+    public class Contrasenia : IEquatable<Contrasenia>
     {
         public string Valor { get; private set; }
 

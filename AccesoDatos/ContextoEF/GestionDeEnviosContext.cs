@@ -13,6 +13,10 @@ namespace AccesoDatos.ContextoEF
         public DbSet<RegistroAuditable> RegistroSAuditables { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Agencia> Agencias { get; set; }
+        public DbSet<Envio> Envios { get; set; }
+        public DbSet<Comun> Comunes { get; set; }
+        public DbSet<Urgente> Urgentes { get; set; }
 
         public GestionDeEnviosContext(DbContextOptions opciones) : base(opciones)
         {
