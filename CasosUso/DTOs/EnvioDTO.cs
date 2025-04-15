@@ -15,6 +15,7 @@ namespace CasosUso.DTOs
         public int Peso { get; set; }
         public string Estado { get; set; }
         public DateTime FechaEnvio { get; set; }
+        public DateTime FechaEntrega{ get; set; }
         public string? Direccion { get; set; }
         public bool EntregaEficiente { get; set; }
         public AgenciaDTO? Agencia { get; set; }

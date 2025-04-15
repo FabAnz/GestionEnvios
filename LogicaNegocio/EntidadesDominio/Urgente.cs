@@ -20,7 +20,7 @@ namespace LogicaNegocio.EntidadesDominio
         }
         public void Entrega24Hs()
         {
-            if ((FechaEnvio - DateTime.Now) < TimeSpan.FromHours(24))
+            if ((FechaEntrega - FechaEnvio) < TimeSpan.FromHours(24))
             {
                 EntregaEficiente = true;
             }
