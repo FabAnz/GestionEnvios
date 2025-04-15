@@ -1,4 +1,6 @@
-﻿using LogicaNegocio.EntidadesDominio;
+﻿using AccesoDatos.ContextoEF;
+using ExcepcionesPropias.Excepciones;
+using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,12 @@ namespace AccesoDatos.Repositorios
 {
     public class RepositorioAgencia : IRepositorioAgencia
     {
+        public GestionDeEnviosContext Contexto { get; set; }
+
+        public RepositorioAgencia(GestionDeEnviosContext ctx)
+        {
+            Contexto = ctx;
+        }
         public void Add(Agencia obj)
         {
             throw new NotImplementedException();
@@ -17,12 +25,15 @@ namespace AccesoDatos.Repositorios
 
         public List<Agencia> FindAll()
         {
-            throw new NotImplementedException();
+            return Contexto.Agencias.ToList();
         }
 
         public Agencia FindById(int id)
         {
-            throw new NotImplementedException();
+            Agencia aRetornar = Contexto.Agencias.Find(id);
+            if (aRetornar == null)
+                throw new DatosInvalidosException("La agencia buscada no existe");
+            return aRetornar;
         }
 
         public void Remove(int id)

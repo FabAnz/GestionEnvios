@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IAltaEnvioComun
+    public interface IAccionAuditable
     {
-        public void Emitir(EnvioComunDTO envio);
-
+        public void GenerarRegistro(string accion, UsuarioDTO usuarioActivo, UsuarioDTO usuarioAfectado);
     }
 }

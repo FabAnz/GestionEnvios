@@ -1,5 +1,6 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion.Mappers;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace LogicaAplicacion.CasosUso
         }
         public UsuarioDTO Buscar(int id)
         {
-            throw new NotImplementedException();
+            return MapperUsuario.ToDTO(RepoUsuario.FindById(id));
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion.Mappers;
+using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -9,18 +11,20 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class AltaEnvioComun : IAltaEnvioComun
+    public class AltaEnvio : IAltaEnvio
     {
         public IRepositorioEnvio RepoEnvio { get; set; }
 
-        public AltaEnvioComun(IRepositorioEnvio repo)
+        public AltaEnvio(IRepositorioEnvio repoEnvio)
         {
-            RepoEnvio = repo;
+            RepoEnvio = repoEnvio;
         }
-
-        public void Emitir(EnvioComunDTO envio)
+        public void Ejecutar(EnvioDTO dto)
         {
-            throw new NotImplementedException();
+            Envio envio = MapperEnvio.ToEnvio(dto);
+
+            envio.Validar();
+            RepoEnvio.Add(envio);
         }
     }
 }

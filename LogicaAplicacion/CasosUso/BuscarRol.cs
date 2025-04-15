@@ -1,5 +1,6 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion.Mappers;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class AltaEnvioUrgente : IAltaEnvioUrgente
+    public class BuscarRol : IBuscarRol
     {
-        public IRepositorioEnvio RepoEnvio { get; set; }
+        public IRepositorioRol RepoRol { get; set; }
 
-        public AltaEnvioUrgente(IRepositorioEnvio repo)
+        public BuscarRol(IRepositorioRol repoRol)
         {
-            RepoEnvio = repo;
+            RepoRol = repoRol;
         }
 
-        public void Emitir(EnvioUrgenteDTO envio)
+        public RolDTO Buscar(int id)
         {
-            throw new NotImplementedException();
+            return MapperRol.ToDTO(RepoRol.FindById(id));
         }
     }
 }

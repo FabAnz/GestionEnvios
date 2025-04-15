@@ -1,4 +1,5 @@
-﻿using LogicaNegocio.InterfacesDominio;
+﻿using ExcepcionesPropias.Excepciones;
+using LogicaNegocio.InterfacesDominio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,36 @@ namespace LogicaNegocio.EntidadesDominio
 {
     public abstract class Envio : IValidable
     {
-        public virtual void FinalizarEnvio()
+        public int Id { get; set; }
+        public int NTracking { get; set; }
+        public Usuario Vendedor { get; set; }
+        public string EmailCliente { get; set; }
+        public int Peso { get; set; }
+        public EstadoEnvio Estado { get; set; }
+        public DateTime FechaEnvio { get; set; }
+
+
+        public Envio()
         {
-            //ToDo
+            Estado = EstadoEnvio.EN_PROCESO;
+            FechaEnvio = DateTime.Now;
         }
 
-        public void Validar()
+        public virtual void FinalizarEnvio()
         {
-            //ToDo
+            Estado = EstadoEnvio.FINALIZADO;
+        }
+
+        public virtual void Validar()
+        {
+            if (Vendedor == null)
+                throw new DatosInvalidosException("El vendedor no puede estar vacio");
+            if (EmailCliente == null)
+                throw new DatosInvalidosException("El cliente no puede estar vacio");
+            if (Peso == null || Peso <= 0)
+                throw new DatosInvalidosException("El peso debe ser mayor a 0");
+            if (FechaEnvio == null)
+                throw new DatosInvalidosException("La fecha no puede estar vacia");
         }
     }
 }

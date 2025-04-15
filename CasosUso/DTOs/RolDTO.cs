@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CasosUso.DTOs
 {
-    public class EnvioUrgenteDTO
+    public class RolDTO
     {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
     }
 }

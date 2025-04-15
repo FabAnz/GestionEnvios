@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IAltaUsuario : IRegistroAuditable
+    public interface IAltaUsuario
     {
-        public void EjecutarAlta(UsuarioDTO usuario);
+        public void EjecutarAlta(UsuarioDTO dto, UsuarioDTO usuarioActivoDto);
     }
 }

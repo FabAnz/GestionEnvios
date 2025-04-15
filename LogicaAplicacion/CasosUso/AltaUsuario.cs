@@ -1,5 +1,8 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using ExcepcionesPropias.Excepciones;
+using LogicaAplicacion.Mappers;
+using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -9,25 +12,27 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class AltaUsuario : IAltaUsuario
+    public class AltaUsuario : AccionAuditable, IAltaUsuario
     {
         public IRepositorioUsuario RepoUsuario { get; set; }
-        public IRepositorioRegistroAuditable RepoRegistroAuditable { get; set; }
 
-        public AltaUsuario(IRepositorioUsuario repoUsuario, IRepositorioRegistroAuditable repoRegistro)
+        public AltaUsuario(
+            IRepositorioUsuario repoUsuario,
+            IRepositorioRegistroAuditable repoRegistro
+            ) : base(repoUsuario, repoRegistro)
         {
             RepoUsuario = repoUsuario;
-            RepoRegistroAuditable = repoRegistro;
         }
 
-        public void EjecutarAlta(UsuarioDTO usuario)
+        public void EjecutarAlta(UsuarioDTO dto, UsuarioDTO usuarioActivoDto)
         {
-            throw new NotImplementedException();
-        }
+            if (dto == null)
+                throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
+            Usuario usuario = MapperUsuario.ToUsuario(dto);
+            usuario.Validar();
+            RepoUsuario.Add(usuario);
 
-        public void GenerarRegistro()
-        {
-            throw new NotImplementedException();
+            GenerarRegistro("Alta de usuario", usuarioActivoDto, dto);
         }
     }
 }

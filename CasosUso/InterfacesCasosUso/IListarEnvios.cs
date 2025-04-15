@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IFinalizarEnvioUrgente
+    public interface IListarEnvios
     {
-        public void Finalizar(EnvioUrgenteDTO envio);
+        public List<EnvioDTO> Listar();
     }
 }
