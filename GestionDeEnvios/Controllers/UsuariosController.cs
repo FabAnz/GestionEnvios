@@ -71,6 +71,8 @@ namespace Presentacion.Controllers
                 HttpContext.Session.SetString("rol", usuario.Rol);
                 if (usuario.Rol == "Administrador")
                     return RedirectToAction(nameof(Index));
+                if (usuario.Rol == "Funcionario")
+                    return RedirectToAction(nameof(Index), "Envios");
                 return View();
             }
             catch (DatosInvalidosException ex)

@@ -96,5 +96,13 @@ namespace AccesoDatos.Repositorios
                 throw new DatosInvalidosException("Email y/o contraseña incorrectos");
             return aRetornar;
         }
+
+        public List<Usuario> ListarVendedores()
+        {
+            return Contexto.Usuarios
+                .Include(usuario => usuario.Rol)
+                .Where(usuario => usuario.Rol.Id != 3)
+                .ToList();
+        }
     }
 }

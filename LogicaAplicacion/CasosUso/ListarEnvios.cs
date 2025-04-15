@@ -1,5 +1,6 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion.Mappers;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class FinalizarEnvioComun : IFinalizarEnvioComun
+    public class ListarEnvios : IListarEnvios
     {
         public IRepositorioEnvio RepoEnvio { get; set; }
 
-        public FinalizarEnvioComun(IRepositorioEnvio repo)
+        public ListarEnvios(IRepositorioEnvio repoEnvio)
         {
-            RepoEnvio = repo;
+            RepoEnvio = repoEnvio;
         }
 
-        public void Finalizar(EnvioComunDTO envio)
+        public List<EnvioDTO> Listar()
         {
-            throw new NotImplementedException();
+            return MapperEnvio.ToListDTO(RepoEnvio.FindAll());
         }
     }
 }
