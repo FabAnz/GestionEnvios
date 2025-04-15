@@ -2,9 +2,10 @@
 
 namespace Presentacion.Models
 {
-    public class EnviosComunesViewModel
+    public class EnviosViewModel
     {
         public EnvioDTO Envio { get; set; }
         public List<AgenciaDTO> Agencias { get; set; }
+        public string TipoEnvio { get; set; }
     }
 }

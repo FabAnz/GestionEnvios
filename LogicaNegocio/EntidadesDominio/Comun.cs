@@ -23,7 +23,7 @@ namespace LogicaNegocio.EntidadesDominio
         {
             base.Validar();
             if (Destino == null)
-                throw new DatosInvalidosException("El destino no puede estar vacio");
+                throw new DatosInvalidosException("La agencia de destino no puede estar vacio");
         }
 
     }

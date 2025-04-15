@@ -1,11 +1,6 @@
 ﻿document.querySelector("#slcEnvioTipo").addEventListener("change", CambiarFormularioEnvio);
 
-FormularioEnvio();
-
-function FormularioEnvio() {
-    document.querySelector("#camposComunes").style.display = "block";
-    document.querySelector("#camposUrgentes").style.display = "none";
-}
+CambiarFormularioEnvio();
 
 function CambiarFormularioEnvio() {
     const tipoEnvio = document.querySelector("#slcEnvioTipo").value;

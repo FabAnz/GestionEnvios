@@ -52,7 +52,7 @@ namespace Presentacion.Controllers
         [RolEmpleadoFilter]
         public ActionResult Create()
         {
-            EnviosComunesViewModel vm = new EnviosComunesViewModel();
+            EnviosViewModel vm = new EnviosViewModel();
             vm.Agencias = CUListarAgencias.Listar();
 
             return View(vm);
@@ -62,13 +62,14 @@ namespace Presentacion.Controllers
         [RolEmpleadoFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EnviosComunesViewModel vm)
+        public ActionResult Create(EnviosViewModel vm)
         {
             try
             {
                 vm.Agencias = CUListarAgencias.Listar();
                 vm.Envio.Vendedor = CUBuscarUsuario.Buscar(int.Parse(HttpContext.Session.GetString("idUsuario")));
-                vm.Envio.Agencia = CUBuscarAgencia.Buscar(vm.Envio.Agencia.Id);
+                if (vm.Envio.Agencia.Id != 0)
+                    vm.Envio.Agencia = CUBuscarAgencia.Buscar(vm.Envio.Agencia.Id);
 
                 CUAltaEnvio.Ejecutar(vm.Envio);
 

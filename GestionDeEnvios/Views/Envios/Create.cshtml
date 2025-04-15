@@ -1,4 +1,4 @@
-﻿@model Presentacion.Models.EnviosComunesViewModel
+﻿@model Presentacion.Models.EnviosViewModel
 
 @{
     ViewData["Title"] = "CreateComun";
@@ -13,12 +13,12 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <label class="control-label">Tipo</label>
-        <select id="slcEnvioTipo" class="form-control">
-            <option value="comun" selected>Común</option>
-            <option value="urgente">Urgente</option>
-        </select>
         <form asp-action="Create">
+            <label class="control-label">Tipo</label>
+            <select name="TipoEnvio" id="slcEnvioTipo" class="form-control">
+                <option value="comun" selected="@(Model.TipoEnvio == null || Model.TipoEnvio == "comun")">Común</option>
+                <option value="urgente" selected="@(Model.TipoEnvio == "urgente")">Urgente</option>
+            </select>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Envio.EmailCliente" class="control-label">Email cliente</label>
@@ -42,6 +42,11 @@
             </div>
 
             <div id="camposUrgentes">
+                <div class="form-group">
+                    <label asp-for="Envio.Direccion" class="control-label">Dirección</label>
+                    <input asp-for="Envio.Direccion" class="form-control" />
+                    <span asp-validation-for="Envio.Direccion" class="text-danger"></span>
+                </div>
             </div>
 
 
