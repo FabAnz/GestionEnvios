@@ -1,5 +1,8 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using ExcepcionesPropias.Excepciones;
+using LogicaAplicacion.Mappers;
+using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -9,25 +12,31 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class ModificarUsuario : IModificarUsuario
+    public class ModificarUsuario : AccionAuditable, IModificarUsuario
     {
         public IRepositorioUsuario RepoUsuario { get; set; }
-        public IRepositorioRegistroAuditable RepoRegistroAuditable { get; set; }
 
-        public ModificarUsuario(IRepositorioUsuario repoUsuario, IRepositorioRegistroAuditable repoRegistro)
+        public ModificarUsuario(
+            IRepositorioUsuario repoUsuario,
+            IRepositorioRegistroAuditable repoRegistro
+            ) : base(repoUsuario, repoRegistro)
         {
             RepoUsuario = repoUsuario;
-            RepoRegistroAuditable = repoRegistro;
         }
 
-        public void GenerarRegistro()
+        public void Modificar(UsuarioDTO dto, UsuarioDTO usuarioActivoDto)
         {
-            throw new NotImplementedException();
-        }
+            if (dto == null)
+                throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
+            Usuario usuario = MapperUsuario.ToUsuario(dto);
 
-        public void Modifiacr(UsuarioDTO usuario)
-        {
-            throw new NotImplementedException();
+            if (usuario.Contrasenia == null)
+                usuario.Contrasenia = RepoUsuario.FindById(usuario.Id).Contrasenia;
+
+            usuario.Validar();
+            RepoUsuario.Update(usuario);
+
+            GenerarRegistro("Modificación de usuario", usuarioActivoDto, dto);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface ILogin
     {
-        public void VerificarCredenciales(UsuarioLoginDTO usuario);
+        public UsuarioLoginDTO VerificarCredenciales(UsuarioLoginDTO usuario);
     }
 }

@@ -1,4 +1,6 @@
-﻿using LogicaNegocio.EntidadesDominio;
+﻿using AccesoDatos.ContextoEF;
+using ExcepcionesPropias.Excepciones;
+using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,13 @@ namespace AccesoDatos.Repositorios
 {
     public class RepositorioRol : IRepositorioRol
     {
+        public GestionDeEnviosContext Contexto { get; set; }
+
+        public RepositorioRol(GestionDeEnviosContext ctx)
+        {
+            Contexto = ctx;
+        }
+
         public void Add(Rol obj)
         {
             throw new NotImplementedException();
@@ -17,12 +26,15 @@ namespace AccesoDatos.Repositorios
 
         public List<Rol> FindAll()
         {
-            throw new NotImplementedException();
+            return Contexto.Roles.ToList();
         }
 
         public Rol FindById(int id)
         {
-            throw new NotImplementedException();
+            Rol aRetornar = Contexto.Roles.Find(id);
+            if (aRetornar == null)
+                throw new DatosInvalidosException("El rol buscado no existe");
+            return aRetornar;
         }
 
         public void Remove(int id)

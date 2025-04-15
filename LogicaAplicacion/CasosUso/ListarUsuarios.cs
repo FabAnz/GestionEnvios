@@ -1,5 +1,7 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion.Mappers;
+using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -13,13 +15,14 @@ namespace LogicaAplicacion.CasosUso
     {
         public IRepositorioUsuario RepoUsuario { get; set; }
 
-        public ListarUsuarios(IRepositorioUsuario repo)
+        public ListarUsuarios(IRepositorioUsuario repoUsuario)
         {
-            RepoUsuario = repo;
+            RepoUsuario = repoUsuario;
         }
         public List<UsuarioDTO> Listar()
         {
-            throw new NotImplementedException();
+            List<Usuario> usuarios = RepoUsuario.FindAll();
+            return MapperUsuario.ToListDTO(usuarios);
         }
     }
 }

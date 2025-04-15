@@ -1,5 +1,6 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion.Mappers;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class FinalizarEnvioUrgente : IFinalizarEnvioUrgente
+    public class ListarRoles : IListarRoles
     {
-        public IRepositorioEnvio RepoEnvio { get; set; }
+        public IRepositorioRol RepoRol { get; set; }
 
-        public FinalizarEnvioUrgente(IRepositorioEnvio repo)
+        public ListarRoles(IRepositorioRol repo)
         {
-            RepoEnvio = repo;
+            RepoRol = repo;
         }
 
-        public void Finalizar(EnvioUrgenteDTO envio)
+        public List<RolDTO> Listar()
         {
-            throw new NotImplementedException();
+            return MapperRol.ToListDTO(RepoRol.FindAll());
         }
     }
 }
