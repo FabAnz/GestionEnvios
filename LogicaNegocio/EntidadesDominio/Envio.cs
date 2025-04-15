@@ -17,6 +17,7 @@ namespace LogicaNegocio.EntidadesDominio
         public int Peso { get; set; }
         public EstadoEnvio Estado { get; set; }
         public DateTime FechaEnvio { get; set; }
+        public DateTime FechaEntrega { get; set; }
 
 
         public Envio()
@@ -28,6 +29,7 @@ namespace LogicaNegocio.EntidadesDominio
         public virtual void FinalizarEnvio()
         {
             Estado = EstadoEnvio.FINALIZADO;
+            FechaEntrega = DateTime.Now;
         }
 
         public virtual void Validar()
