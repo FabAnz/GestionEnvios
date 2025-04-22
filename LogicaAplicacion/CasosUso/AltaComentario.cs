@@ -1,5 +1,6 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion.Mappers;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,9 @@ namespace LogicaAplicacion.CasosUso
             RepoComentario = repo;
         }
 
-        public void Comentar(ComentarioDTO comentario)
+        public void Comentar(ComentarioDTO comentario, int idEnvio)
         {
-            throw new NotImplementedException();
+            RepoComentario.Agregar(MapperComentario.ToComentario(comentario), idEnvio);
         }
     }
 }

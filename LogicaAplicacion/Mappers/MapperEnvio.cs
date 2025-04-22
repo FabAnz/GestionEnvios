@@ -33,6 +33,7 @@ namespace LogicaAplicacion.Mappers
                 aRetornar.FechaEnvio = dto.FechaEnvio;
             if (dto.FechaEntrega != default(DateTime))
                 aRetornar.FechaEntrega = dto.FechaEntrega;
+            aRetornar.Comentarios = MapperComentario.ToListComentario(dto.Comentarios);
 
             return aRetornar;
         }

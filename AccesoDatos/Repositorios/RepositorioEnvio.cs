@@ -27,6 +27,7 @@ namespace AccesoDatos.Repositorios
             obj.Vendedor = Contexto.Usuarios.Find(obj.Vendedor.Id);
             if (obj is Comun)
                 ((Comun)obj).Destino = Contexto.Agencias.Find(((Comun)obj).Destino.Id);
+            obj.NTracking = ObtenerNTracking();
             obj.Validar();
             Contexto.Envios.Add(obj);
             Contexto.SaveChanges();
@@ -38,6 +39,7 @@ namespace AccesoDatos.Repositorios
                 .Include(envio => envio.Vendedor)
                 .Include(envio => envio.Vendedor.Rol)
                 .Include(envio => ((Comun)envio).Destino)
+                .Include(envio => envio.Comentarios)
                 .ToList();
         }
 
@@ -47,9 +49,9 @@ namespace AccesoDatos.Repositorios
                 .Include(envio => envio.Vendedor)
                 .Include(envio => envio.Vendedor.Rol)
                 .Include(envio => ((Comun)envio).Destino)
+                .Include(envio => envio.Comentarios)
                 .Where(envio => envio.Id == id)
                 .SingleOrDefault();
-            ;
         }
 
         public void Remove(int id)
@@ -75,8 +77,19 @@ namespace AccesoDatos.Repositorios
                 .Include(envio => envio.Vendedor)
                 .Include(envio => envio.Vendedor.Rol)
                 .Include(envio => ((Comun)envio).Destino)
+                .Include(envio => envio.Comentarios)
                 .Where(envio => envio.Estado.Equals(EstadoEnvio.EN_PROCESO))
                 .ToList();
+        }
+
+        public int ObtenerNTracking()
+        {
+            int num = Contexto.Envios
+                .OrderByDescending(e => e.NTracking)
+                .Select(e => e.NTracking)
+                .FirstOrDefault();
+
+            return num + 1;
         }
     }
 }

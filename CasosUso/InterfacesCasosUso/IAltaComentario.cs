@@ -9,6 +9,6 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IAltaComentario
     {
-        public void Comentar(ComentarioDTO comentario);
+        public void Comentar(ComentarioDTO comentario, int idEnvio);
     }
 }
