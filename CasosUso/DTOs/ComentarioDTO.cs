@@ -8,5 +8,9 @@ namespace CasosUso.DTOs
 {
     public class ComentarioDTO
     {
+        public int Id { get; set; }
+        public string Texto { get; set; }
+        public DateTime Fecha { get; set; }
+        public UsuarioDTO Usuario { get; set; }
     }
 }

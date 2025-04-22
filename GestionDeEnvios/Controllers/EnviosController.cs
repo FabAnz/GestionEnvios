@@ -14,6 +14,7 @@ namespace Presentacion.Controllers
         public IListarAgencias CUListarAgencias { get; set; }
         public IListarVendedores CUListarVendedores { get; set; }
         public IAltaEnvio CUAltaEnvio { get; set; }
+        public IAltaComentario CUAltaComentario { get; set; }
         public IBuscarEnvio CUBuscarEnvio { get; set; }
         public IFinalizarEnvio CUFinalizarEnvio { get; set; }
         public IBuscarUsuario CUBuscarUsuario { get; set; }
@@ -24,6 +25,7 @@ namespace Presentacion.Controllers
             IListarAgencias cuListarAgencias,
             IListarVendedores cuListarVendedores,
             IAltaEnvio cuAltaEnvio,
+            IAltaComentario cuAltaComentario,
             IBuscarUsuario cuBuscarUsuario,
             IBuscarAgencia cuBuscarAgencia,
             IBuscarEnvio cuBuscarEnvio,
@@ -38,12 +40,14 @@ namespace Presentacion.Controllers
             CUBuscarAgencia = cuBuscarAgencia;
             CUBuscarEnvio = cuBuscarEnvio;
             CUFinalizarEnvio = cuFinalizarEnvio;
+            CUAltaComentario = cuAltaComentario;
         }
 
         // GET: EnviosController
         [RolEmpleadoFilter]
-        public ActionResult Index()
+        public ActionResult Index(string mensaje)
         {
+            ViewBag.Mensaje = mensaje;
             List<EnvioDTO> dtos = CUListarEnviosEnProceso.Listar();
             return View(dtos);
         }
@@ -111,11 +115,43 @@ namespace Presentacion.Controllers
                 CUFinalizarEnvio.Finalizar(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.Error = "Ocurrio un problema, contacte al administrador";
                 return View();
             }
+        }
+
+        // GET: EnviosController/Comentar/5
+        [RolEmpleadoFilter]
+        public ActionResult Comentar(int id)
+        {
+            ComentariosViewModel vm = new ComentariosViewModel();
+            vm.IdEnvio = id;
+            return View(vm);
+        }
+
+        // POST: EnviosController/Comentar/5
+        [RolEmpleadoFilter]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Comentar(ComentariosViewModel vm)
+        {
+            try
+            {
+                vm.Comentario.Usuario = CUBuscarUsuario.Buscar(int.Parse(HttpContext.Session.GetString("idUsuario")));
+                CUAltaComentario.Comentar(vm.Comentario, vm.IdEnvio);
+                return RedirectToAction(nameof(Index), new { mensaje = "Comentario agregado" });
+            }
+            catch (DatosInvalidosException ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Ocurrio un problema, contacte al administrador";
+            }
+            return View(vm);
         }
 
         // GET: EnviosController/Edit/5

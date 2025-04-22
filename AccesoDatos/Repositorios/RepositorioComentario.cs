@@ -1,5 +1,8 @@
-﻿using LogicaNegocio.EntidadesDominio;
+﻿using AccesoDatos.ContextoEF;
+using ExcepcionesPropias.Excepciones;
+using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +13,13 @@ namespace AccesoDatos.Repositorios
 {
     public class RepositorioComentario : IRepositorioComentario
     {
+        public GestionDeEnviosContext Contexto { get; set; }
+
+        public RepositorioComentario(GestionDeEnviosContext ctx)
+        {
+            Contexto = ctx;
+        }
+
         public void Add(Comentario obj)
         {
             throw new NotImplementedException();
@@ -33,6 +43,23 @@ namespace AccesoDatos.Repositorios
         public void Update(Comentario obj)
         {
             throw new NotImplementedException();
+        }
+
+        public void Agregar(Comentario comentario, int idEnvio)
+        {
+            if (comentario == null)
+                throw new DatosInvalidosException("No se paso ningun comentario");
+            if (idEnvio == 0)
+                throw new DatosInvalidosException("El id de envio es null");
+
+            Envio envio = Contexto.Envios
+                .Include(e => e.Comentarios)
+                .Where(e => e.Id == idEnvio)
+                .SingleOrDefault();
+
+            comentario.Validar();
+            envio.Comentarios.Add(comentario);
+            Contexto.SaveChanges();
         }
     }
 }

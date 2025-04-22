@@ -17,6 +17,7 @@ namespace AccesoDatos.ContextoEF
         public DbSet<Envio> Envios { get; set; }
         public DbSet<Comun> Comunes { get; set; }
         public DbSet<Urgente> Urgentes { get; set; }
+        public DbSet<Comentario> Comentarios { get; set; }
 
         public GestionDeEnviosContext(DbContextOptions opciones) : base(opciones)
         {

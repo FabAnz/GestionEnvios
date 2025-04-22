@@ -34,6 +34,7 @@ builder.Services.AddScoped<IListarEnviosEnProceso, ListarEnviosEnProceso>();
 builder.Services.AddScoped<IBuscarEnvio, BuscarEnvio>();
 builder.Services.AddScoped<IAltaEnvio, AltaEnvio>();
 builder.Services.AddScoped<IFinalizarEnvio, FinalizarEnvio>();
+builder.Services.AddScoped<IAltaComentario, AltaComentario>();
 
 string strCon = builder.Configuration.GetConnectionString("MiConexion");
 builder.Services.AddDbContext<GestionDeEnviosContext>(option => option.UseSqlServer(strCon));
