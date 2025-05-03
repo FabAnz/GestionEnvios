@@ -4,6 +4,7 @@ using AccesoDatos.ContextoEF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoDatos.Migrations
 {
     [DbContext(typeof(GestionDeEnviosContext))]
-    partial class GestionDeEnviosContextModelSnapshot : ModelSnapshot
+    [Migration("20250415231802_ModificacionEnvio")]
+    partial class ModificacionEnvio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,44 +39,11 @@ namespace AccesoDatos.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Nombre")
-                        .IsUnique();
-
-                    b.ToTable("Agencias");
-                });
-
-            modelBuilder.Entity("LogicaNegocio.EntidadesDominio.Comentario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("EnvioId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Texto")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("EnvioId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("Comentarios");
+                    b.ToTable("Agencias");
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesDominio.Envio", b =>
@@ -107,9 +77,6 @@ namespace AccesoDatos.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("NTracking")
-                        .IsUnique();
 
                     b.HasIndex("VendedorId");
 
@@ -248,21 +215,6 @@ namespace AccesoDatos.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LogicaNegocio.EntidadesDominio.Comentario", b =>
-                {
-                    b.HasOne("LogicaNegocio.EntidadesDominio.Envio", null)
-                        .WithMany("Comentarios")
-                        .HasForeignKey("EnvioId");
-
-                    b.HasOne("LogicaNegocio.EntidadesDominio.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("LogicaNegocio.EntidadesDominio.Envio", b =>
                 {
                     b.HasOne("LogicaNegocio.EntidadesDominio.Usuario", "Vendedor")
@@ -306,12 +258,9 @@ namespace AccesoDatos.Migrations
 
                             b1.Property<string>("Valor")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(100)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("UsuarioId");
-
-                            b1.HasIndex("Valor")
-                                .IsUnique();
 
                             b1.ToTable("Usuarios");
 
@@ -352,11 +301,6 @@ namespace AccesoDatos.Migrations
                         .HasForeignKey("LogicaNegocio.EntidadesDominio.Urgente", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("LogicaNegocio.EntidadesDominio.Envio", b =>
-                {
-                    b.Navigation("Comentarios");
                 });
 #pragma warning restore 612, 618
         }

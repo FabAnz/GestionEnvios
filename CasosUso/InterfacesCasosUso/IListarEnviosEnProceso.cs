@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IAltaComentario
+    public interface IListarEnviosEnProceso
     {
-        public void Comentar(ComentarioDTO comentario, int idEnvio);
+        public List<EnvioDTO> Listar();
     }
 }

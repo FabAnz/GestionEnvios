@@ -1,5 +1,4 @@
-﻿using CasosUso.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IAltaComentario
+    public interface IFinalizarEnvio
     {
-        public void Comentar(ComentarioDTO comentario, int idEnvio);
+        public void Finalizar(int id);
     }
 }

@@ -10,35 +10,45 @@ namespace Presentacion.Controllers
 {
     public class EnviosController : Controller
     {
-        public IListarEnvios CUListarEnvios { get; set; }
+        public IListarEnviosEnProceso CUListarEnviosEnProceso { get; set; }
         public IListarAgencias CUListarAgencias { get; set; }
         public IListarVendedores CUListarVendedores { get; set; }
         public IAltaEnvio CUAltaEnvio { get; set; }
+        public IAltaComentario CUAltaComentario { get; set; }
+        public IBuscarEnvio CUBuscarEnvio { get; set; }
+        public IFinalizarEnvio CUFinalizarEnvio { get; set; }
         public IBuscarUsuario CUBuscarUsuario { get; set; }
         public IBuscarAgencia CUBuscarAgencia { get; set; }
 
         public EnviosController(
-            IListarEnvios cuListarEnvios,
+            IListarEnviosEnProceso cuListarEnviosEnProceso,
             IListarAgencias cuListarAgencias,
             IListarVendedores cuListarVendedores,
             IAltaEnvio cuAltaEnvio,
+            IAltaComentario cuAltaComentario,
             IBuscarUsuario cuBuscarUsuario,
-            IBuscarAgencia cuBuscarAgencia
+            IBuscarAgencia cuBuscarAgencia,
+            IBuscarEnvio cuBuscarEnvio,
+            IFinalizarEnvio cuFinalizarEnvio
             )
         {
-            CUListarEnvios = cuListarEnvios;
+            CUListarEnviosEnProceso = cuListarEnviosEnProceso;
             CUListarAgencias = cuListarAgencias;
             CUListarVendedores = cuListarVendedores;
             CUAltaEnvio = cuAltaEnvio;
             CUBuscarUsuario = cuBuscarUsuario;
             CUBuscarAgencia = cuBuscarAgencia;
+            CUBuscarEnvio = cuBuscarEnvio;
+            CUFinalizarEnvio = cuFinalizarEnvio;
+            CUAltaComentario = cuAltaComentario;
         }
 
         // GET: EnviosController
         [RolEmpleadoFilter]
-        public ActionResult Index()
+        public ActionResult Index(string mensaje)
         {
-            List<EnvioDTO> dtos = CUListarEnvios.Listar();
+            ViewBag.Mensaje = mensaje;
+            List<EnvioDTO> dtos = CUListarEnviosEnProceso.Listar();
             return View(dtos);
         }
 
@@ -74,6 +84,64 @@ namespace Presentacion.Controllers
                 CUAltaEnvio.Ejecutar(vm.Envio);
 
                 return RedirectToAction(nameof(Index));
+            }
+            catch (DatosInvalidosException ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Ocurrio un problema, contacte al administrador";
+            }
+            return View(vm);
+        }
+
+        // GET: EnviosController/Delete/5
+        [RolEmpleadoFilter]
+        public ActionResult Finalizar(int id)
+        {
+            EnvioDTO dto = CUBuscarEnvio.Buscar(id);
+            return View(dto);
+        }
+
+        // POST: EnviosController/Delete/5
+        [RolEmpleadoFilter]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Finalizar(int id, IFormCollection collection)
+        {
+            try
+            {
+                CUFinalizarEnvio.Finalizar(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Ocurrio un problema, contacte al administrador";
+                return View();
+            }
+        }
+
+        // GET: EnviosController/Comentar/5
+        [RolEmpleadoFilter]
+        public ActionResult Comentar(int id)
+        {
+            ComentariosViewModel vm = new ComentariosViewModel();
+            vm.IdEnvio = id;
+            return View(vm);
+        }
+
+        // POST: EnviosController/Comentar/5
+        [RolEmpleadoFilter]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Comentar(ComentariosViewModel vm)
+        {
+            try
+            {
+                vm.Comentario.Usuario = CUBuscarUsuario.Buscar(int.Parse(HttpContext.Session.GetString("idUsuario")));
+                CUAltaComentario.Comentar(vm.Comentario, vm.IdEnvio);
+                return RedirectToAction(nameof(Index), new { mensaje = "Comentario agregado" });
             }
             catch (DatosInvalidosException ex)
             {

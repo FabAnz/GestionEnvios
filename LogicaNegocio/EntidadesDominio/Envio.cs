@@ -1,13 +1,16 @@
 ﻿using ExcepcionesPropias.Excepciones;
 using LogicaNegocio.InterfacesDominio;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LogicaNegocio.EntidadesDominio
 {
+    [Index(nameof(NTracking), IsUnique = true)]
     public abstract class Envio : IValidable
     {
         public int Id { get; set; }
@@ -17,6 +20,8 @@ namespace LogicaNegocio.EntidadesDominio
         public int Peso { get; set; }
         public EstadoEnvio Estado { get; set; }
         public DateTime FechaEnvio { get; set; }
+        public DateTime FechaEntrega { get; set; }
+        public List<Comentario> Comentarios { get; set; }
 
 
         public Envio()
@@ -28,6 +33,7 @@ namespace LogicaNegocio.EntidadesDominio
         public virtual void FinalizarEnvio()
         {
             Estado = EstadoEnvio.FINALIZADO;
+            FechaEntrega = DateTime.Now;
         }
 
         public virtual void Validar()

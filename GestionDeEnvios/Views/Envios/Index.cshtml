@@ -6,6 +6,8 @@
 
 <h1>Index</h1>
 
+<span>@ViewBag.Mensaje</span>
+
 <p>
     <a asp-action="Create">Crear envio</a>
 </p>
@@ -17,13 +19,13 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                N° Tracking
+                @Html.DisplayNameFor(model => model.NTracking)
             </th>
             <th>
                 Envio
             </th>
             <th>
-                Cliente
+                @Html.DisplayNameFor(model => model.EmailCliente)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Peso)
@@ -32,7 +34,7 @@
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
-                Fecha de envio
+                @Html.DisplayNameFor(model => model.FechaEnvio)
             </th>
             <th>
                 Destino
@@ -69,9 +71,8 @@
                     @(item.Direccion == null ? item.Agencia.Nombre : item.Direccion)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Finalizar", "Finalizar", new { id = item.Id })
+                    @Html.ActionLink("Comentar", "Comentar", new { id = item.Id })
                 </td>
             </tr>
         }

@@ -30,7 +30,11 @@ builder.Services.AddScoped<IBuscarRol, BuscarRol>();
 builder.Services.AddScoped<IListarAgencias, ListarAgencias>();
 builder.Services.AddScoped<IBuscarAgencia, BuscarAgencia>();
 builder.Services.AddScoped<IListarEnvios, ListarEnvios>();
+builder.Services.AddScoped<IListarEnviosEnProceso, ListarEnviosEnProceso>();
+builder.Services.AddScoped<IBuscarEnvio, BuscarEnvio>();
 builder.Services.AddScoped<IAltaEnvio, AltaEnvio>();
+builder.Services.AddScoped<IFinalizarEnvio, FinalizarEnvio>();
+builder.Services.AddScoped<IAltaComentario, AltaComentario>();
 
 string strCon = builder.Configuration.GetConnectionString("MiConexion");
 builder.Services.AddDbContext<GestionDeEnviosContext>(option => option.UseSqlServer(strCon));

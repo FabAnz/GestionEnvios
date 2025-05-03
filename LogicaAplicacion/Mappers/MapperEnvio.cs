@@ -31,6 +31,9 @@ namespace LogicaAplicacion.Mappers
             aRetornar.Peso = dto.Peso;
             if (dto.FechaEnvio != default(DateTime))
                 aRetornar.FechaEnvio = dto.FechaEnvio;
+            if (dto.FechaEntrega != default(DateTime))
+                aRetornar.FechaEntrega = dto.FechaEntrega;
+            aRetornar.Comentarios = MapperComentario.ToListComentario(dto.Comentarios);
 
             return aRetornar;
         }
@@ -46,6 +49,7 @@ namespace LogicaAplicacion.Mappers
             aRetornar.Peso = envio.Peso;
             aRetornar.Estado = Enum.GetName(envio.Estado);
             aRetornar.FechaEnvio = envio.FechaEnvio;
+            aRetornar.FechaEntrega = envio.FechaEntrega;
 
             if (envio is Comun)
             {

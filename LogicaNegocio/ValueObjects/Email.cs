@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -11,8 +12,10 @@ using System.Threading.Tasks;
 namespace LogicaNegocio.ValueObjects
 {
     [Owned]
+    [Index(nameof(Valor), IsUnique = true)]
     public class Email : IEquatable<Email>
     {
+        [Column(TypeName = "nvarchar(100)")]
         public string Valor { get; private set; }
 
         public Email(string valor)
