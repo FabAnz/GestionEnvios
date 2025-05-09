@@ -57,6 +57,7 @@ namespace AccesoDatos.Repositorios
                 .Where(e => e.Id == idEnvio)
                 .SingleOrDefault();
 
+            comentario.Usuario = Contexto.Usuarios.Find(comentario.Usuario.Id);
             comentario.Validar();
             envio.Comentarios.Add(comentario);
             Contexto.SaveChanges();

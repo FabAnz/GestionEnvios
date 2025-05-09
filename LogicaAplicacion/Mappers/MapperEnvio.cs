@@ -27,13 +27,14 @@ namespace LogicaAplicacion.Mappers
             aRetornar.Id = dto.Id;
             aRetornar.NTracking = dto.NTracking;
             aRetornar.Vendedor = new Usuario() { Id = dto.Vendedor.Id };
-            aRetornar.EmailCliente = dto.EmailCliente;
+            aRetornar.Cliente = new Usuario() { Id = dto.Cliente.Id };
             aRetornar.Peso = dto.Peso;
             if (dto.FechaEnvio != default(DateTime))
                 aRetornar.FechaEnvio = dto.FechaEnvio;
             if (dto.FechaEntrega != default(DateTime))
                 aRetornar.FechaEntrega = dto.FechaEntrega;
-            aRetornar.Comentarios = MapperComentario.ToListComentario(dto.Comentarios);
+            if (dto.Comentarios != null)
+                aRetornar.Comentarios = MapperComentario.ToListComentario(dto.Comentarios);
 
             return aRetornar;
         }
@@ -45,7 +46,7 @@ namespace LogicaAplicacion.Mappers
             aRetornar.Id = envio.Id;
             aRetornar.NTracking = envio.NTracking;
             aRetornar.Vendedor = MapperUsuario.ToDTO(envio.Vendedor);
-            aRetornar.EmailCliente = envio.EmailCliente;
+            aRetornar.Cliente = MapperUsuario.ToDTO(envio.Cliente);
             aRetornar.Peso = envio.Peso;
             aRetornar.Estado = Enum.GetName(envio.Estado);
             aRetornar.FechaEnvio = envio.FechaEnvio;

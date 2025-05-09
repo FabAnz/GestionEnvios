@@ -4,6 +4,7 @@ using AccesoDatos.ContextoEF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoDatos.Migrations
 {
     [DbContext(typeof(GestionDeEnviosContext))]
-    partial class GestionDeEnviosContextModelSnapshot : ModelSnapshot
+    [Migration("20250507120413_ClienteEnEnvio")]
+    partial class ClienteEnEnvio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,15 +138,14 @@ namespace AccesoDatos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EmailUsuarioRealizoAcccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UsuarioRealizoAcccionId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioRealizoAcccionId");
 
                     b.ToTable("RegistroSAuditables");
                 });
@@ -233,10 +235,10 @@ namespace AccesoDatos.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<decimal>("Latitud")
-                                .HasColumnType("decimal(10,6)");
+                                .HasColumnType("decimal(9,5)");
 
                             b1.Property<decimal>("Longitud")
-                                .HasColumnType("decimal(10,6)");
+                                .HasColumnType("decimal(9,5)");
 
                             b1.HasKey("AgenciaId");
 
@@ -282,17 +284,6 @@ namespace AccesoDatos.Migrations
                     b.Navigation("Cliente");
 
                     b.Navigation("Vendedor");
-                });
-
-            modelBuilder.Entity("LogicaNegocio.EntidadesDominio.RegistroAuditable", b =>
-                {
-                    b.HasOne("LogicaNegocio.EntidadesDominio.Usuario", "UsuarioRealizoAcccion")
-                        .WithMany()
-                        .HasForeignKey("UsuarioRealizoAcccionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UsuarioRealizoAcccion");
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesDominio.Usuario", b =>

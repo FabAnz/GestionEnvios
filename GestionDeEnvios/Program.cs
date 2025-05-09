@@ -1,6 +1,7 @@
 using AccesoDatos.ContextoEF;
 using AccesoDatos.Repositorios;
 using CasosUso.InterfacesCasosUso;
+using LogicaAplicacion;
 using LogicaAplicacion.CasosUso;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ builder.Services.AddScoped<IRepositorioAgencia, RepositorioAgencia>();
 builder.Services.AddScoped<ILogin, Login>();
 builder.Services.AddScoped<IListarUsuarios, ListarUsuarios>();
 builder.Services.AddScoped<IListarVendedores, ListarVendedores>();
+builder.Services.AddScoped<IListarClientes, ListarClientes>();
 builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
 builder.Services.AddScoped<IBuscarUsuario, BuscarUsuario>();
 builder.Services.AddScoped<IModificarUsuario, ModificarUsuario>();

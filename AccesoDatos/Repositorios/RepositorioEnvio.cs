@@ -25,6 +25,7 @@ namespace AccesoDatos.Repositorios
             if (obj == null) throw new DatosInvalidosException("El envio esta vacio");
 
             obj.Vendedor = Contexto.Usuarios.Find(obj.Vendedor.Id);
+            obj.Cliente = Contexto.Usuarios.Find(obj.Cliente.Id);
             if (obj is Comun)
                 ((Comun)obj).Destino = Contexto.Agencias.Find(((Comun)obj).Destino.Id);
             obj.NTracking = ObtenerNTracking();
@@ -38,6 +39,8 @@ namespace AccesoDatos.Repositorios
             return Contexto.Envios
                 .Include(envio => envio.Vendedor)
                 .Include(envio => envio.Vendedor.Rol)
+                .Include(envio => envio.Cliente)
+                .Include(envio => envio.Cliente.Rol)
                 .Include(envio => ((Comun)envio).Destino)
                 .Include(envio => envio.Comentarios)
                 .ToList();
@@ -48,6 +51,8 @@ namespace AccesoDatos.Repositorios
             return Contexto.Envios
                 .Include(envio => envio.Vendedor)
                 .Include(envio => envio.Vendedor.Rol)
+                .Include(envio => envio.Cliente)
+                .Include(envio => envio.Cliente.Rol)
                 .Include(envio => ((Comun)envio).Destino)
                 .Include(envio => envio.Comentarios)
                 .Where(envio => envio.Id == id)
@@ -76,6 +81,8 @@ namespace AccesoDatos.Repositorios
             return Contexto.Envios
                 .Include(envio => envio.Vendedor)
                 .Include(envio => envio.Vendedor.Rol)
+                .Include(envio => envio.Cliente)
+                .Include(envio => envio.Cliente.Rol)
                 .Include(envio => ((Comun)envio).Destino)
                 .Include(envio => envio.Comentarios)
                 .Where(envio => envio.Estado.Equals(EstadoEnvio.EN_PROCESO))
