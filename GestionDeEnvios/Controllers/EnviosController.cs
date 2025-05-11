@@ -13,6 +13,7 @@ namespace Presentacion.Controllers
         public IListarEnviosEnProceso CUListarEnviosEnProceso { get; set; }
         public IListarAgencias CUListarAgencias { get; set; }
         public IListarVendedores CUListarVendedores { get; set; }
+        public IListarClientes CUListarClientes { get; set; }
         public IAltaEnvio CUAltaEnvio { get; set; }
         public IAltaComentario CUAltaComentario { get; set; }
         public IBuscarEnvio CUBuscarEnvio { get; set; }
@@ -24,6 +25,7 @@ namespace Presentacion.Controllers
             IListarEnviosEnProceso cuListarEnviosEnProceso,
             IListarAgencias cuListarAgencias,
             IListarVendedores cuListarVendedores,
+            IListarClientes cuListarClientes,
             IAltaEnvio cuAltaEnvio,
             IAltaComentario cuAltaComentario,
             IBuscarUsuario cuBuscarUsuario,
@@ -35,6 +37,7 @@ namespace Presentacion.Controllers
             CUListarEnviosEnProceso = cuListarEnviosEnProceso;
             CUListarAgencias = cuListarAgencias;
             CUListarVendedores = cuListarVendedores;
+            CUListarClientes = cuListarClientes;
             CUAltaEnvio = cuAltaEnvio;
             CUBuscarUsuario = cuBuscarUsuario;
             CUBuscarAgencia = cuBuscarAgencia;
@@ -63,6 +66,7 @@ namespace Presentacion.Controllers
         public ActionResult Create()
         {
             EnviosViewModel vm = new EnviosViewModel();
+            vm.Clientes = CUListarClientes.Listar();
             vm.Agencias = CUListarAgencias.Listar();
 
             return View(vm);
@@ -76,8 +80,10 @@ namespace Presentacion.Controllers
         {
             try
             {
+                vm.Clientes = CUListarClientes.Listar();
                 vm.Agencias = CUListarAgencias.Listar();
                 vm.Envio.Vendedor = CUBuscarUsuario.Buscar(int.Parse(HttpContext.Session.GetString("idUsuario")));
+                vm.Envio.Cliente = CUBuscarUsuario.Buscar(vm.Envio.Cliente.Id);
                 if (vm.Envio.Agencia.Id != 0)
                     vm.Envio.Agencia = CUBuscarAgencia.Buscar(vm.Envio.Agencia.Id);
 

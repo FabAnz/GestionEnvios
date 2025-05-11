@@ -29,7 +29,7 @@ namespace LogicaAplicacion.CasosUso
         {
             RegistroAuditable registro = new RegistroAuditable();
             registro.Accion = accion;
-            registro.EmailUsuarioRealizoAcccion = usuarioActivo.Email;
+            registro.UsuarioRealizoAcccion = MapperUsuario.ToUsuario(usuarioActivo);
             registro.EmailUsuarioAfectado = usuarioAfectado.Email;
 
             registro.Validar();

@@ -12,9 +12,9 @@ namespace LogicaNegocio.ValueObjects
     [Owned]
     public class Coordenadas : IEquatable<Coordenadas>
     {
-        [Column(TypeName = "decimal(9,5)")]
+        [Column(TypeName = "decimal(10,6)")]
         public decimal Latitud { get; private set; }
-        [Column(TypeName = "decimal(9,5)")]
+        [Column(TypeName = "decimal(10,6)")]
         public decimal Longitud { get; private set; }
 
         public Coordenadas(decimal latitud, decimal longitud)

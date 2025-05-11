@@ -24,5 +24,19 @@ namespace AccesoDatos.ContextoEF
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Envio>()
+                .HasOne(e => e.Vendedor)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Envio>()
+                .HasOne(e => e.Cliente)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+        }
     }
 }

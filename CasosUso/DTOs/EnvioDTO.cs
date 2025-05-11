@@ -13,8 +13,7 @@ namespace CasosUso.DTOs
         [DisplayName("N° Tracking")]
         public int NTracking { get; set; }
         public UsuarioDTO Vendedor { get; set; }
-        [DisplayName("Cliente")]
-        public string EmailCliente { get; set; }
+        public UsuarioDTO Cliente { get; set; }
         public int Peso { get; set; }
         public string Estado { get; set; }
         [DisplayName("Fecha de envio")]

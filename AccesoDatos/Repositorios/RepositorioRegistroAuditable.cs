@@ -25,6 +25,7 @@ namespace AccesoDatos.Repositorios
             if (obj == null)
                 throw new DatosInvalidosException("Registro vacio, intente nuevamente");
 
+            obj.UsuarioRealizoAcccion = Contexto.Usuarios.Find(obj.UsuarioRealizoAcccion.Id);
             obj.Validar();
             Contexto.RegistroSAuditables.Add(obj);
             Contexto.SaveChanges();
