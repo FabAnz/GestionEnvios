@@ -83,9 +83,9 @@ namespace Presentacion.Controllers
                 vm.Clientes = CUListarClientes.Listar();
                 vm.Agencias = CUListarAgencias.Listar();
                 vm.Envio.Vendedor = CUBuscarUsuario.Buscar(int.Parse(HttpContext.Session.GetString("idUsuario")));
-                vm.Envio.Cliente = CUBuscarUsuario.Buscar(vm.Envio.Cliente.Id);
-                if (vm.Envio.Agencia.Id != 0)
-                    vm.Envio.Agencia = CUBuscarAgencia.Buscar(vm.Envio.Agencia.Id);
+                vm.Envio.Cliente = CUBuscarUsuario.Buscar(vm.ClienteId);
+                if (vm.AgenciaId != 0)
+                    vm.Envio.Agencia = CUBuscarAgencia.Buscar(vm.AgenciaId);
 
                 CUAltaEnvio.Ejecutar(vm.Envio);
 
@@ -93,7 +93,10 @@ namespace Presentacion.Controllers
             }
             catch (DatosInvalidosException ex)
             {
-                ViewBag.Error = ex.Message;
+                if (ex.Message.Contains("peso", StringComparison.OrdinalIgnoreCase))
+                    ModelState.AddModelError("Envio.Peso", ex.Message);
+                else
+                    ViewBag.Error = ex.Message;
             }
             catch (Exception ex)
             {
@@ -151,7 +154,10 @@ namespace Presentacion.Controllers
             }
             catch (DatosInvalidosException ex)
             {
-                ViewBag.Error = ex.Message;
+                if (ex.Message.Contains("comentario", StringComparison.OrdinalIgnoreCase))
+                    ModelState.AddModelError("Comentario.Texto", ex.Message);
+                else
+                    ViewBag.Error = ex.Message;
             }
             catch (Exception ex)
             {

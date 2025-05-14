@@ -31,7 +31,7 @@ namespace LogicaAplicacion.CasosUso
                 throw new DatosInvalidosException("El usuario no existe");
             RepoUsuario.Remove(id);
 
-            GenerarRegistro("Baja de usuario", usuarioActivo, dto);
+            GenerarRegistro("Baja de usuario", usuarioActivo, dto.Email);
         }
     }
 }

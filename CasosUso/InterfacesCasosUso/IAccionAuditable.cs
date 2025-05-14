@@ -9,6 +9,6 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IAccionAuditable
     {
-        public void GenerarRegistro(string accion, UsuarioDTO usuarioActivo, UsuarioDTO usuarioAfectado);
+        public void GenerarRegistro(string accion, UsuarioDTO usuarioActivo, string emailUsuarioAfectado);
     }
 }

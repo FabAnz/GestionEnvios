@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.Mappers
 {
-    internal class MapperUsuario
+    internal class MapperUsuarioConContrasenia
     {
-        internal static Usuario ToUsuario(UsuarioDTO dto)
+        internal static Usuario ToUsuario(UsuarioConContraseniaDTO dto)
         {
             Usuario aRetornar = new Usuario()
             {
@@ -21,15 +21,16 @@ namespace LogicaAplicacion.Mappers
                 Direccion = dto.Direccion,
                 Telefono = dto.Telefono,
                 Email = new Email(dto.Email),
+                Contrasenia = new Contrasenia(dto.Contrasenia),
                 Rol = new Rol() { Id = dto.Rol.Id }
             };
 
             return aRetornar;
         }
 
-        internal static UsuarioDTO ToDTO(Usuario usuario)
+        internal static UsuarioConContraseniaDTO ToDTO(Usuario usuario)
         {
-            UsuarioDTO aRetornar = new UsuarioDTO()
+            UsuarioConContraseniaDTO aRetornar = new UsuarioConContraseniaDTO()
             {
                 Id = usuario.Id,
                 Nombre = usuario.Nombre,
@@ -37,15 +38,16 @@ namespace LogicaAplicacion.Mappers
                 Direccion = usuario.Direccion,
                 Telefono = usuario.Telefono,
                 Email = usuario.Email.Valor,
+                Contrasenia=usuario.Contrasenia.Valor,
                 Rol = MapperRol.ToDTO(usuario.Rol)
             };
 
             return aRetornar;
         }
 
-        internal static List<UsuarioDTO> ToListDTO(List<Usuario> lista)
+        internal static List<UsuarioConContraseniaDTO> ToListDTO(List<Usuario> lista)
         {
-            List<UsuarioDTO> aRetornar = new List<UsuarioDTO>();
+            List<UsuarioConContraseniaDTO> aRetornar = new List<UsuarioConContraseniaDTO>();
 
             foreach (Usuario usuario in lista)
             {

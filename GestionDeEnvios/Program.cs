@@ -25,6 +25,7 @@ builder.Services.AddScoped<IListarVendedores, ListarVendedores>();
 builder.Services.AddScoped<IListarClientes, ListarClientes>();
 builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
 builder.Services.AddScoped<IBuscarUsuario, BuscarUsuario>();
+builder.Services.AddScoped<IBuscarUsuarioConContrasenia, BuscarUsuarioConContrasenia>();
 builder.Services.AddScoped<IModificarUsuario, ModificarUsuario>();
 builder.Services.AddScoped<IBajaUsuario, BajaUsuario>();
 builder.Services.AddScoped<IListarRoles, ListarRoles>();
