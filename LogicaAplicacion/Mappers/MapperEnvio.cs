@@ -14,7 +14,7 @@ namespace LogicaAplicacion.Mappers
         {
             Envio aRetornar = null;
 
-            if (dto.Agencia.Id == 0)
+            if (dto.Agencia == null)
             {
                 aRetornar = new Urgente();
                 ((Urgente)aRetornar).Direccion = dto.Direccion;

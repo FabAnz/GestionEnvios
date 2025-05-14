@@ -24,15 +24,15 @@ namespace LogicaAplicacion.CasosUso
             RepoUsuario = repoUsuario;
         }
 
-        public void EjecutarAlta(UsuarioDTO dto, UsuarioDTO usuarioActivoDto)
+        public void EjecutarAlta(UsuarioConContraseniaDTO dto, UsuarioDTO usuarioActivoDto)
         {
             if (dto == null)
                 throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
-            Usuario usuario = MapperUsuario.ToUsuario(dto);
+            Usuario usuario = MapperUsuarioConContrasenia.ToUsuario(dto);
             usuario.Validar();
             RepoUsuario.Add(usuario);
 
-            GenerarRegistro("Alta de usuario", usuarioActivoDto, dto);
+            GenerarRegistro("Alta de usuario", usuarioActivoDto, dto.Email);
         }
     }
 }

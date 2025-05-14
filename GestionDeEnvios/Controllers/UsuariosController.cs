@@ -20,6 +20,7 @@ namespace Presentacion.Controllers
         public IListarRoles CUListarRoles { get; set; }
         public IBuscarRol CUBuscarRol { get; set; }
         public IBuscarUsuario CUBuscarUsuario { get; set; }
+        public IBuscarUsuarioConContrasenia CUBuscarUsuarioConContrasenia { get; set; }
         public IModificarUsuario CUModificarUsuario { get; set; }
         public IBajaUsuario CUBajaUsuario { get; set; }
 
@@ -30,6 +31,7 @@ namespace Presentacion.Controllers
             IListarRoles cuListarRoles,
             IBuscarRol cuBuscarRol,
             IBuscarUsuario cuBuscarUsuario,
+            IBuscarUsuarioConContrasenia cuBuscarUsuarioConContrasenia,
             IModificarUsuario cuModificarUsuario,
             IBajaUsuario cuBajaUsuario
             )
@@ -40,6 +42,7 @@ namespace Presentacion.Controllers
             CUListarRoles = cuListarRoles;
             CUBuscarRol = cuBuscarRol;
             CUBuscarUsuario = cuBuscarUsuario;
+            CUBuscarUsuarioConContrasenia = cuBuscarUsuarioConContrasenia;
             CUModificarUsuario = cuModificarUsuario;
             CUBajaUsuario = cuBajaUsuario;
         }
@@ -101,10 +104,10 @@ namespace Presentacion.Controllers
         }
 
         // GET: UsuariosController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
 
         // GET: UsuariosController/Create
         [RolAdministradorFilter]
@@ -124,13 +127,18 @@ namespace Presentacion.Controllers
             try
             {
                 vm.Roles = CUListarRoles.Listar();
-                vm.Usuario.Rol.Nombre = CUBuscarRol.Buscar(vm.Usuario.Rol.Id).Nombre;
+                vm.Usuario.Rol = CUBuscarRol.Buscar(vm.RolId);
                 CUAltaUsuario.EjecutarAlta(vm.Usuario, UsuarioActivo());
                 return RedirectToAction(nameof(Index));
             }
             catch (DatosInvalidosException ex)
             {
-                ViewBag.Error = ex.Message;
+                if (ex.Message.Contains("contraseña", StringComparison.OrdinalIgnoreCase))
+                    ModelState.AddModelError("Usuario.Contrasenia", ex.Message);
+                else if (ex.Message.Contains("email", StringComparison.OrdinalIgnoreCase))
+                    ModelState.AddModelError("Usuario.Email", ex.Message);
+                else
+                    ViewBag.Error = ex.Message;
             }
             catch (Exception ex)
             {
@@ -145,7 +153,7 @@ namespace Presentacion.Controllers
         public ActionResult Edit(int id)
         {
             UsuarioRolesViewModel vm = new UsuarioRolesViewModel();
-            vm.Usuario = CUBuscarUsuario.Buscar(id);
+            vm.Usuario = CUBuscarUsuarioConContrasenia.Buscar(id);
             vm.Roles = CUListarRoles.Listar();
             return View(vm);
         }
@@ -165,7 +173,12 @@ namespace Presentacion.Controllers
             }
             catch (DatosInvalidosException ex)
             {
-                ViewBag.Error = ex.Message;
+                if (ex.Message.Contains("contraseña", StringComparison.OrdinalIgnoreCase))
+                    ModelState.AddModelError("Usuario.Contrasenia", ex.Message);
+                else if (ex.Message.Contains("email", StringComparison.OrdinalIgnoreCase))
+                    ModelState.AddModelError("Usuario.Email", ex.Message);
+                else
+                    ViewBag.Error = ex.Message;
             }
             catch (Exception ex)
             {
@@ -199,11 +212,16 @@ namespace Presentacion.Controllers
                     return RedirectToAction(nameof(Login), new { mensaje = "Elimino su usuario con éxito" });
                 return RedirectToAction(nameof(Index));
             }
+            catch (OperacionConflictivaException ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
             catch (Exception ex)
             {
                 ViewBag.Error = "Ocurrio un problema, contacte al administrador";
-                return View();
             }
+            UsuarioDTO dto = CUBuscarUsuario.Buscar(id);
+            return View(dto);
         }
     }
 }

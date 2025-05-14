@@ -9,6 +9,6 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IModificarUsuario
     {
-        public void Modificar(UsuarioDTO dto, UsuarioDTO usuarioActivoDto);
+        public void Modificar(UsuarioConContraseniaDTO dto, UsuarioDTO usuarioActivoDto);
     }
 }

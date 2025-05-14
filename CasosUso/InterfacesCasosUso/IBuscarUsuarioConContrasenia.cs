@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IAltaUsuario
+    public interface IBuscarUsuarioConContrasenia
     {
-        public void EjecutarAlta(UsuarioConContraseniaDTO dto, UsuarioDTO usuarioActivoDto);
+        public UsuarioConContraseniaDTO Buscar(int id);
     }
 }
