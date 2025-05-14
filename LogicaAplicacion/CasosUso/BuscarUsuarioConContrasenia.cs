@@ -1,7 +1,6 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
 using LogicaAplicacion.Mappers;
-using LogicaNegocio.EntidadesDominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -11,18 +10,17 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class ListarVendedores : IListarVendedores
+    public class BuscarUsuarioConContrasenia : IBuscarUsuarioConContrasenia
     {
         public IRepositorioUsuario RepoUsuario { get; set; }
 
-        public ListarVendedores(IRepositorioUsuario repoUsuario)
+        public BuscarUsuarioConContrasenia(IRepositorioUsuario repo)
         {
-            RepoUsuario = repoUsuario;
+            RepoUsuario = repo;
         }
-        public List<UsuarioDTO> Listar()
+        public UsuarioConContraseniaDTO Buscar(int id)
         {
-            List<Usuario> usuarios = RepoUsuario.FindAll().Where(u => u.Rol.Id == 1 || u.Rol.Id == 2).ToList();
-            return MapperUsuario.ToListDTO(usuarios);
+            return MapperUsuarioConContrasenia.ToDTO(RepoUsuario.FindById(id));
         }
     }
 }

@@ -20,10 +20,14 @@
                 <option value="urgente" selected="@(Model.TipoEnvio == "urgente")">Urgente</option>
             </select>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="Envio.EmailCliente" class="control-label">Email cliente</label>
-                <input asp-for="Envio.EmailCliente" class="form-control" />
-                <span asp-validation-for="Envio.EmailCliente" class="text-danger"></span>
+                <label asp-for="ClienteId" class="control-label">Cliente</label>
+                <select asp-for="ClienteId" class="form-control"
+                        asp-items="@(new SelectList(Model.Clientes, "Id", "Email"))">
+                    <option value="">-- Seleccionar Cliente --</option>
+                </select>
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Envio.Peso" class="control-label">Peso</label>
@@ -33,12 +37,12 @@
 
 
             <div id="camposComunes" class="form-group">
-                <label asp-for="Envio.Agencia.Id" class="control-label">Agencia destino</label>
-                <select asp-for="Envio.Agencia.Id" class="form-control"
+                <label asp-for="AgenciaId" class="control-label">Agencia destino</label>
+                <select asp-for="AgenciaId" class="form-control"
                         asp-items="@(new SelectList(Model.Agencias, "Id", "Nombre"))">
                     <option value="">-- Seleccionar Agencia --</option>
                 </select>
-                <span asp-validation-for="Envio.Agencia.Id" class="text-danger"></span>
+                <span asp-validation-for="AgenciaId" class="text-danger"></span>
             </div>
 
             <div id="camposUrgentes">

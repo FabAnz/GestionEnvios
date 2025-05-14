@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentacion", "GestionDeEnvios\Presentacion.csproj", "{BD2DE1C7-3DE4-446D-A550-F7250C04B0A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentacion", "GestionDeEnvios\Presentacion.csproj", "{BD2DE1C7-3DE4-446D-A550-F7250C04B0A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicaNegocio", "LogicaNegocio\LogicaNegocio.csproj", "{4D3F8A4D-B169-496C-B62B-9B4006E5BE66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaNegocio", "LogicaNegocio\LogicaNegocio.csproj", "{4D3F8A4D-B169-496C-B62B-9B4006E5BE66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcepcionesPropias", "ExcepcionesPropias\ExcepcionesPropias.csproj", "{7E873CD3-761E-48F3-9902-7BBB194D0468}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcepcionesPropias", "ExcepcionesPropias\ExcepcionesPropias.csproj", "{7E873CD3-761E-48F3-9902-7BBB194D0468}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoDatos", "AccesoDatos\AccesoDatos.csproj", "{A63FA803-591B-4B34-9AF4-F138FA37A1FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccesoDatos", "AccesoDatos\AccesoDatos.csproj", "{A63FA803-591B-4B34-9AF4-F138FA37A1FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicaAplicacion", "LogicaAplicacion\LogicaAplicacion.csproj", "{7138D8EE-284D-442A-B415-BD3A637C905D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaAplicacion", "LogicaAplicacion\LogicaAplicacion.csproj", "{7138D8EE-284D-442A-B415-BD3A637C905D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasosUso", "CasosUso\CasosUso.csproj", "{2E8762C6-679B-400C-AF4B-BA0F0AF46607}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasosUso", "CasosUso\CasosUso.csproj", "{2E8762C6-679B-400C-AF4B-BA0F0AF46607}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{073AF3F2-A2F3-4BAC-8F40-09B7AF455FC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{2E8762C6-679B-400C-AF4B-BA0F0AF46607}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E8762C6-679B-400C-AF4B-BA0F0AF46607}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E8762C6-679B-400C-AF4B-BA0F0AF46607}.Release|Any CPU.Build.0 = Release|Any CPU
+		{073AF3F2-A2F3-4BAC-8F40-09B7AF455FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{073AF3F2-A2F3-4BAC-8F40-09B7AF455FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{073AF3F2-A2F3-4BAC-8F40-09B7AF455FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{073AF3F2-A2F3-4BAC-8F40-09B7AF455FC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

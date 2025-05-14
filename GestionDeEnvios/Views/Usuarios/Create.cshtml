@@ -16,12 +16,12 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Usuario.Rol.Id" class="control-label">Rol</label>
-                <select asp-for="Usuario.Rol.Id" class="form-control"
+                <label asp-for="RolId" class="control-label">Rol</label>
+                <select asp-for="RolId" class="form-control"
                         asp-items="@(new SelectList(Model.Roles, "Id", "Nombre"))">
                     <option value="">-- Seleccionar Rol --</option>
                 </select>
-                <span asp-validation-for="Usuario.Rol.Id" class="text-danger"></span>
+                <span asp-validation-for="RolId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Usuario.Nombre" class="control-label"></label>

@@ -24,19 +24,16 @@ namespace LogicaAplicacion.CasosUso
             RepoUsuario = repoUsuario;
         }
 
-        public void Modificar(UsuarioDTO dto, UsuarioDTO usuarioActivoDto)
+        public void Modificar(UsuarioConContraseniaDTO dto, UsuarioDTO usuarioActivoDto)
         {
             if (dto == null)
                 throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
-            Usuario usuario = MapperUsuario.ToUsuario(dto);
-
-            if (usuario.Contrasenia == null)
-                usuario.Contrasenia = RepoUsuario.FindById(usuario.Id).Contrasenia;
+            Usuario usuario = MapperUsuarioConContrasenia.ToUsuario(dto);
 
             usuario.Validar();
             RepoUsuario.Update(usuario);
 
-            GenerarRegistro("Modificación de usuario", usuarioActivoDto, dto);
+            GenerarRegistro("Modificación de usuario", usuarioActivoDto, dto.Email);
         }
     }
 }

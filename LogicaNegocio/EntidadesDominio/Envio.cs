@@ -16,7 +16,7 @@ namespace LogicaNegocio.EntidadesDominio
         public int Id { get; set; }
         public int NTracking { get; set; }
         public Usuario Vendedor { get; set; }
-        public string EmailCliente { get; set; }
+        public Usuario Cliente{ get; set; }
         public int Peso { get; set; }
         public EstadoEnvio Estado { get; set; }
         public DateTime FechaEnvio { get; set; }
@@ -40,7 +40,7 @@ namespace LogicaNegocio.EntidadesDominio
         {
             if (Vendedor == null)
                 throw new DatosInvalidosException("El vendedor no puede estar vacio");
-            if (EmailCliente == null)
+            if (Cliente == null)
                 throw new DatosInvalidosException("El cliente no puede estar vacio");
             if (Peso == null || Peso <= 0)
                 throw new DatosInvalidosException("El peso debe ser mayor a 0");

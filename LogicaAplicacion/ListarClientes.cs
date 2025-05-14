@@ -9,19 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.CasosUso
+namespace LogicaAplicacion
 {
-    public class ListarVendedores : IListarVendedores
+    public class ListarClientes : IListarClientes
     {
         public IRepositorioUsuario RepoUsuario { get; set; }
 
-        public ListarVendedores(IRepositorioUsuario repoUsuario)
+        public ListarClientes(IRepositorioUsuario repoUsuario)
         {
             RepoUsuario = repoUsuario;
         }
         public List<UsuarioDTO> Listar()
         {
-            List<Usuario> usuarios = RepoUsuario.FindAll().Where(u => u.Rol.Id == 1 || u.Rol.Id == 2).ToList();
+            List<Usuario> usuarios = RepoUsuario.FindAll().Where(u => u.Rol.Id == 3).ToList();
             return MapperUsuario.ToListDTO(usuarios);
         }
     }

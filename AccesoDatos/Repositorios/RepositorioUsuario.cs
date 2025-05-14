@@ -67,6 +67,11 @@ namespace AccesoDatos.Repositorios
         {
             Usuario aBorrar = FindById(id);
 
+            bool hayEnvios =
+                Contexto.Envios.Any(e => e.Vendedor.Id == id || e.Cliente.Id == id);
+
+            if (aBorrar == null) throw new DatosInvalidosException("El usuario no existe");
+            if (hayEnvios) throw new OperacionConflictivaException("El usuario tiene envios asociados, no se puede eliminar");
             Contexto.Usuarios.Remove(aBorrar);
             Contexto.SaveChanges();
         }
@@ -92,7 +97,7 @@ namespace AccesoDatos.Repositorios
         public Usuario VerificarCredenciales(string email, string contrasenia)
         {
             Usuario aRetornar = BuscarUsuarioPorEmail(email);
-            if (aRetornar.Contrasenia.Valor != contrasenia)
+            if (aRetornar == null || aRetornar.Contrasenia.Valor != contrasenia)
                 throw new DatosInvalidosException("Email y/o contraseña incorrectos");
             return aRetornar;
         }
