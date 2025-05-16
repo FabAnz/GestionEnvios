@@ -4,36 +4,37 @@
     ViewData["Title"] = "Comentar";
 }
 
-<h1>Comentar</h1>
+<div class="container py-4">
+    <h2>Comentar Envío</h2>
+    <hr />
 
-<h4>ComentarioDTO</h4>
+    @if (!string.IsNullOrEmpty(ViewBag.Error as string))
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
 
-<span>@ViewBag.Error</span>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Comentar" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Comentar">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="IdEnvio" class="control-label"></label>
-                <input asp-for="IdEnvio" class="form-control" readonly />
-                <span asp-validation-for="IdEnvio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Comentario.Texto" class="control-label"></label>
-                <input asp-for="Comentario.Texto" class="form-control" />
-                <span asp-validation-for="Comentario.Texto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="mb-3">
+                    <label asp-for="IdEnvio" class="form-label"></label>
+                    <input asp-for="IdEnvio" class="form-control" readonly />
+                    <span asp-validation-for="IdEnvio" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Comentario.Texto" class="form-label"></label>
+                    <textarea asp-for="Comentario.Texto" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Comentario.Texto" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Crear Comentario</button>
+                <a asp-action="Index" class="btn btn-link ms-3">Volver a la lista</a>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
