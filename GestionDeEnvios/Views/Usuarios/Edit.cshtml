@@ -1,71 +1,78 @@
 ﻿@model Presentacion.Models.UsuarioRolesViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Usuario";
 }
 
-<h1>Edit</h1>
+<div class="container py-4">
+    <div class="mb-4">
+        <h2>Editar Usuario</h2>
+        @if (!string.IsNullOrEmpty(ViewBag.Error as string))
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+    </div>
 
-<h4>UsuarioDTO</h4>
-
-<span>@ViewBag.Error</span>
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
+    <div class="card shadow-sm p-4 mb-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Usuario.Id" class="control-label"></label>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Usuario.Id" class="form-label">ID</label>
                 <input asp-for="Usuario.Id" class="form-control" readonly />
                 <span asp-validation-for="Usuario.Id" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Usuario.Rol.Id" class="control-label">Rol</label>
-                <select asp-for="Usuario.Rol.Id" class="form-control"
+
+            <div class="mb-3">
+                <label asp-for="Usuario.Rol.Id" class="form-label">Rol</label>
+                <select asp-for="Usuario.Rol.Id" class="form-select"
                         asp-items="@(new SelectList(Model.Roles, "Id", "Nombre"))">
                 </select>
                 <span asp-validation-for="Usuario.Rol.Id" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Usuario.Nombre" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Usuario.Nombre" class="form-label">Nombre</label>
                 <input asp-for="Usuario.Nombre" class="form-control" />
                 <span asp-validation-for="Usuario.Nombre" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Usuario.Apellido" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Usuario.Apellido" class="form-label">Apellido</label>
                 <input asp-for="Usuario.Apellido" class="form-control" />
                 <span asp-validation-for="Usuario.Apellido" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Usuario.Direccion" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Usuario.Direccion" class="form-label">Dirección</label>
                 <input asp-for="Usuario.Direccion" class="form-control" />
                 <span asp-validation-for="Usuario.Direccion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Usuario.Telefono" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Usuario.Telefono" class="form-label">Teléfono</label>
                 <input asp-for="Usuario.Telefono" class="form-control" type="number" />
                 <span asp-validation-for="Usuario.Telefono" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Usuario.Email" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Usuario.Email" class="form-label">Email</label>
                 <input asp-for="Usuario.Email" class="form-control" type="email" />
                 <span asp-validation-for="Usuario.Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Usuario.Contrasenia" class="control-label"></label>
+
+            <div class="mb-4">
+                <label asp-for="Usuario.Contrasenia" class="form-label">Contraseña</label>
                 <input asp-for="Usuario.Contrasenia" class="form-control" type="password" value="@Model.Usuario.Contrasenia" />
                 <span asp-validation-for="Usuario.Contrasenia" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <div class="d-flex gap-2">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

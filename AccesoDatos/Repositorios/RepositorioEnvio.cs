@@ -40,7 +40,7 @@ namespace AccesoDatos.Repositorios
                 .Include(envio => envio.Vendedor)
                 .Include(envio => envio.Vendedor.Rol)
                 .Include(envio => envio.Cliente)
-                .Include(envio => envio.Cliente.Rol)
+                    .ThenInclude(c => c.Rol)
                 .Include(envio => ((Comun)envio).Destino)
                 .Include(envio => envio.Comentarios)
                 .ToList();
@@ -52,7 +52,7 @@ namespace AccesoDatos.Repositorios
                 .Include(envio => envio.Vendedor)
                 .Include(envio => envio.Vendedor.Rol)
                 .Include(envio => envio.Cliente)
-                .Include(envio => envio.Cliente.Rol)
+                    .ThenInclude(c => c.Rol)
                 .Include(envio => ((Comun)envio).Destino)
                 .Include(envio => envio.Comentarios)
                 .Where(envio => envio.Id == id)

@@ -29,16 +29,21 @@ namespace LogicaAplicacion.Mappers
 
         internal static UsuarioDTO ToDTO(Usuario usuario)
         {
-            UsuarioDTO aRetornar = new UsuarioDTO()
+            UsuarioDTO aRetornar = null;
+
+            if (usuario != null)
             {
-                Id = usuario.Id,
-                Nombre = usuario.Nombre,
-                Apellido = usuario.Apellido,
-                Direccion = usuario.Direccion,
-                Telefono = usuario.Telefono,
-                Email = usuario.Email.Valor,
-                Rol = MapperRol.ToDTO(usuario.Rol)
-            };
+                aRetornar = new UsuarioDTO()
+                {
+                    Id = usuario.Id,
+                    Nombre = usuario.Nombre,
+                    Apellido = usuario.Apellido,
+                    Direccion = usuario.Direccion,
+                    Telefono = usuario.Telefono,
+                    Email = usuario.Email.Valor,
+                    Rol = MapperRol.ToDTO(usuario.Rol)
+                };
+            }
 
             return aRetornar;
         }
