@@ -8,11 +8,11 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EnviosController : ControllerBase
+    public class EnviosApiController : ControllerBase
     {
         public IBuscarEnvio CUBuscarEnvio { get; set; }
 
-        public EnviosController(IBuscarEnvio cuBuscarEnvio)
+        public EnviosApiController(IBuscarEnvio cuBuscarEnvio)
         {
             CUBuscarEnvio = cuBuscarEnvio;
         }

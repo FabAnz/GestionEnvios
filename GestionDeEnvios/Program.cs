@@ -1,7 +1,6 @@
 using AccesoDatos.ContextoEF;
 using AccesoDatos.Repositorios;
 using CasosUso.InterfacesCasosUso;
-using LogicaAplicacion;
 using LogicaAplicacion.CasosUso;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
