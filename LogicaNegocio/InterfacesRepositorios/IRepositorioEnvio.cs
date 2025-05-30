@@ -10,6 +10,7 @@ namespace LogicaNegocio.InterfacesRepositorios
     public interface IRepositorioEnvio : IRepositorio<Envio>
     {
         public List<Envio> ListarEnProceso();
+        public Envio BuscarPorNTraking(int NTraking);
         public int ObtenerNTracking();
     }
 }

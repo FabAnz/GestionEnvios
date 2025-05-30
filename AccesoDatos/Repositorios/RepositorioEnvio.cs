@@ -98,5 +98,18 @@ namespace AccesoDatos.Repositorios
 
             return num + 1;
         }
+
+        public Envio BuscarPorNTraking(int NTraking)
+        {
+            return Contexto.Envios
+                .Include(envio => envio.Vendedor)
+                .Include(envio => envio.Vendedor.Rol)
+                .Include(envio => envio.Cliente)
+                    .ThenInclude(c => c.Rol)
+                .Include(envio => ((Comun)envio).Destino)
+                .Include(envio => envio.Comentarios)
+                .Where(e => e.NTracking == NTraking)
+                .SingleOrDefault();
+        }
     }
 }

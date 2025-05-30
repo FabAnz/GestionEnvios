@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IBuscarEnvio, BuscarEnvio>();
+builder.Services.AddScoped<IBuscarEnvioPorNTracking, BuscarEnvioPorNTracking>();
 builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
 
 string strCon = builder.Configuration.GetConnectionString("MiConexion");

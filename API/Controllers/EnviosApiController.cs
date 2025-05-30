@@ -10,21 +10,21 @@ namespace API.Controllers
     [ApiController]
     public class EnviosApiController : ControllerBase
     {
-        public IBuscarEnvio CUBuscarEnvio { get; set; }
+        public IBuscarEnvioPorNTracking CUBuscarEnvioPorNTracking { get; set; }
 
-        public EnviosApiController(IBuscarEnvio cuBuscarEnvio)
+        public EnviosApiController(IBuscarEnvioPorNTracking cuBuscarEnvioPorNTracking)
         {
-            CUBuscarEnvio = cuBuscarEnvio;
+            CUBuscarEnvioPorNTracking = cuBuscarEnvioPorNTracking;
         }
 
         // GET api/<EnviosController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("{nTracking}")]
+        public IActionResult Get(int nTracking)
         {
             try
             {
-                EnvioDTO envio = CUBuscarEnvio.Buscar(id);
-                if (envio == null) return NotFound("El envio con id " + id + " no existe");
+                EnvioDTO envio = CUBuscarEnvioPorNTracking.Buscar(nTracking);
+                if (envio == null) return NotFound("El envio con N° Tracking " + nTracking + " no existe");
 
                 return Ok(envio);
             }
