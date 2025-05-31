@@ -1,6 +1,7 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +9,11 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EnviosApiController : ControllerBase
+    public class EnviosController : ControllerBase
     {
         public IBuscarEnvioPorNTracking CUBuscarEnvioPorNTracking { get; set; }
 
-        public EnviosApiController(IBuscarEnvioPorNTracking cuBuscarEnvioPorNTracking)
+        public EnviosController(IBuscarEnvioPorNTracking cuBuscarEnvioPorNTracking)
         {
             CUBuscarEnvioPorNTracking = cuBuscarEnvioPorNTracking;
         }
@@ -23,7 +24,7 @@ namespace API.Controllers
         {
             try
             {
-                EnvioDTO envio = CUBuscarEnvioPorNTracking.Buscar(nTracking);
+                EnvioAClienteDTOs envio = CUBuscarEnvioPorNTracking.Buscar(nTracking);
                 if (envio == null) return NotFound("El envio con N° Tracking " + nTracking + " no existe");
 
                 return Ok(envio);
