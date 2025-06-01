@@ -9,7 +9,7 @@ namespace CasosUso.DTOs
 {
     public class UsuarioLoginDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "Ingrese un email")]
         public string? Email { get; set; }
