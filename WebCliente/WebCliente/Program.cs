@@ -25,6 +25,6 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Envios}/{action=BuescarEnvio}/{id?}");
+    pattern: "{controller=Envios}/{action=BuscarEnvio}/{id?}");
 
 app.Run();

@@ -14,36 +14,35 @@ namespace WebCliente.Controllers
         }
 
         [HttpGet]
-        public IActionResult BuescarEnvio()
+        public IActionResult BuscarEnvio()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult BuescarEnvio(int nTracking)
+        public IActionResult BuscarEnvio(int nTracking)
         {
             HttpClient cliente = new HttpClient();
 
             try
             {
-                Task<HttpResponseMessage> response = cliente.GetAsync(URLApi + nTracking);
-                response.Wait();
+                bool exito = false;
 
-                if (response.Result.IsSuccessStatusCode)
+                string body = AuxClienteHttp.ObtenerBody("get", URLApi + nTracking, null, null, out exito);
+
+                if (exito)
                 {
-                    Task<string> body = response.Result.Content.ReadAsStringAsync();
-                    body.Wait();
-
-                    EnvioDTO dto = JsonConvert.DeserializeObject<EnvioDTO>(body.Result);
+                    EnvioDTO dto = JsonConvert.DeserializeObject<EnvioDTO>(body);
                     return View(dto);
                 }
                 else
                 {
-                    ViewBag.Error = "El envio buscado no existe";
+                    ViewBag.Error = body;
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                ViewBag.Error = "Ocurrio un problema inesperado, contacte con el administrador";
+                ViewBag.Error = "El servidor no responde, contacte con el administrador";
             }
 
 

@@ -11,6 +11,8 @@ namespace WebCliente.DTOs
     public class EnvioDTO
     {
         [DisplayName("N° Tracking")]
+        [Required(ErrorMessage = "Ingreese el N° de tracking")]
+        [Range(1, int.MaxValue, ErrorMessage = "El N° debe ser mayor a 0")]
         public int NTracking { get; set; }
         public string? Vendedor { get; set; }
         public string? Cliente { get; set; }
