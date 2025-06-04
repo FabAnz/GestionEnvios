@@ -9,7 +9,10 @@ namespace LogicaNegocio.InterfacesRepositorios
 {
     public interface IRepositorioUsuario : IRepositorio<Usuario>
     {
+        public Usuario BuscarUsuarioPorEmail(string email);
         public Usuario VerificarCredenciales(string email, string contrasenia);
         public List<Usuario> ListarVendedores();
+
+        public void ModificarContrasenia(string email, string actual, string nueva);
     }
 }

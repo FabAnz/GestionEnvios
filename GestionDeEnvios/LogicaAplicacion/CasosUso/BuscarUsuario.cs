@@ -18,9 +18,14 @@ namespace LogicaAplicacion.CasosUso
         {
             RepoUsuario = repo;
         }
-        public UsuarioDTO Buscar(int id)
+        public UsuarioDTO BuscarPorId(int id)
         {
             return MapperUsuario.ToDTO(RepoUsuario.FindById(id));
+        }
+
+        public UsuarioDTO BuscarPorEmail(string email)
+        {
+            return MapperUsuario.ToDTO(RepoUsuario.BuscarUsuarioPorEmail(email));
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Presentacion.Controllers
         private UsuarioDTO UsuarioActivo()
         {
             int idUsuario = int.Parse(HttpContext.Session.GetString("idUsuario"));
-            return CUBuscarUsuario.Buscar(idUsuario);
+            return CUBuscarUsuario.BuscarPorId(idUsuario);
         }
 
         //GET: UsuariosController/Login
@@ -78,7 +78,7 @@ namespace Presentacion.Controllers
                     return RedirectToAction(nameof(Index), "Envios");
                 return View();
             }
-            catch (DatosInvalidosException ex)
+            catch (NoAutorizadoException ex)
             {
                 ViewBag.Mensaje = ex.Message;
             }
@@ -191,7 +191,7 @@ namespace Presentacion.Controllers
         [RolAdministradorFilter]
         public ActionResult Delete(int id)
         {
-            UsuarioDTO dto = CUBuscarUsuario.Buscar(id);
+            UsuarioDTO dto = CUBuscarUsuario.BuscarPorId(id);
             if (dto == null)
                 throw new DatosInvalidosException("El usuario no existe");
 
@@ -220,7 +220,7 @@ namespace Presentacion.Controllers
             {
                 ViewBag.Error = "Ocurrio un problema, contacte al administrador";
             }
-            UsuarioDTO dto = CUBuscarUsuario.Buscar(id);
+            UsuarioDTO dto = CUBuscarUsuario.BuscarPorId(id);
             return View(dto);
         }
     }

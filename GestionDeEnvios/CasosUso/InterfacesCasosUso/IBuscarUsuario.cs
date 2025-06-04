@@ -9,6 +9,7 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IBuscarUsuario
     {
-        public UsuarioDTO Buscar(int id);
+        public UsuarioDTO BuscarPorId(int id);
+        public UsuarioDTO BuscarPorEmail(string email);
     }
 }

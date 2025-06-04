@@ -1,6 +1,7 @@
 ﻿using CasosUso.DTOs;
 using CasosUso.InterfacesCasosUso;
 using ExcepcionesPropias.Excepciones;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -10,10 +11,18 @@ namespace API.Controllers
     public class UsuariosController : ControllerBase
     {
         public ILogin CULogin { get; set; }
+        public IModificarUsuario CUModificarUsuario { get; set; }
+        public IBuscarUsuario CUBuscarUsuario { get; set; }
 
-        public UsuariosController(ILogin cuLogin)
+        public UsuariosController(
+            ILogin cuLogin,
+            IModificarUsuario cuModificarUsuario,
+            IBuscarUsuario cuBuscarUsuario
+            )
         {
             CULogin = cuLogin;
+            CUModificarUsuario = cuModificarUsuario;
+            CUBuscarUsuario = cuBuscarUsuario;
         }
 
         [HttpPost]
@@ -26,7 +35,7 @@ namespace API.Controllers
                 string token = JWTManager.GenerarToken(dto);
                 return Ok(new { Email = dto.Email, Rol = dto.Rol, Token = token });
             }
-            catch (DatosInvalidosException ex)
+            catch (NoAutorizadoException ex)
             {
                 return Unauthorized(ex.Message);
             }
@@ -36,5 +45,32 @@ namespace API.Controllers
             }
 
         }
+
+        [HttpPut]
+        [Authorize(Roles = "Cliente")]
+        public IActionResult ModificarContrasenia([FromBody] ModificarContraseniaDTO dto)
+        {
+            try
+            {
+                CUModificarUsuario.ModificarContrasenia(dto);
+
+                UsuarioDTO aRetornar = CUBuscarUsuario.BuscarPorEmail(dto.Email);
+                return Ok(aRetornar);
+            }
+            catch (NoAutorizadoException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (DatosInvalidosException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocurrio un problema, contacte al administrador");
+            }
+        }
+
+
     }
 }

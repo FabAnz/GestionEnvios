@@ -82,8 +82,8 @@ namespace Presentacion.Controllers
             {
                 vm.Clientes = CUListarClientes.Listar();
                 vm.Agencias = CUListarAgencias.Listar();
-                vm.Envio.Vendedor = CUBuscarUsuario.Buscar(int.Parse(HttpContext.Session.GetString("idUsuario")));
-                vm.Envio.Cliente = CUBuscarUsuario.Buscar(vm.ClienteId);
+                vm.Envio.Vendedor = CUBuscarUsuario.BuscarPorId(int.Parse(HttpContext.Session.GetString("idUsuario")));
+                vm.Envio.Cliente = CUBuscarUsuario.BuscarPorId(vm.ClienteId);
                 if (vm.AgenciaId != 0)
                     vm.Envio.Agencia = CUBuscarAgencia.Buscar(vm.AgenciaId);
 
@@ -148,7 +148,7 @@ namespace Presentacion.Controllers
         {
             try
             {
-                vm.Comentario.Usuario = CUBuscarUsuario.Buscar(int.Parse(HttpContext.Session.GetString("idUsuario")));
+                vm.Comentario.Usuario = CUBuscarUsuario.BuscarPorId(int.Parse(HttpContext.Session.GetString("idUsuario")));
                 CUAltaComentario.Comentar(vm.Comentario, vm.IdEnvio);
                 return RedirectToAction(nameof(Index), new { mensaje = "Comentario agregado" });
             }

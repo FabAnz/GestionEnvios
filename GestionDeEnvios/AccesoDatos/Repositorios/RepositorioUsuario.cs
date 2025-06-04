@@ -98,7 +98,7 @@ namespace AccesoDatos.Repositorios
         {
             Usuario aRetornar = BuscarUsuarioPorEmail(email);
             if (aRetornar == null || aRetornar.Contrasenia.Valor != contrasenia)
-                throw new DatosInvalidosException("Email y/o contraseña incorrectos");
+                throw new NoAutorizadoException("Email y/o contraseña incorrectos");
             return aRetornar;
         }
 
@@ -108,6 +108,23 @@ namespace AccesoDatos.Repositorios
                 .Include(usuario => usuario.Rol)
                 .Where(usuario => usuario.Rol.Id != 3)
                 .ToList();
+        }
+
+        public void ModificarContrasenia(string email, string actual, string nueva)
+        {
+            try
+            {
+                Usuario usuario = VerificarCredenciales(email, actual);
+                usuario.Contrasenia = new Contrasenia(nueva);
+
+                usuario.Validar();
+                Contexto.Usuarios.Update(usuario);
+                Contexto.SaveChanges();
+            }
+            catch (NoAutorizadoException ex)
+            {
+                throw new NoAutorizadoException("Contraseña actual incorrecta");
+            }
         }
     }
 }

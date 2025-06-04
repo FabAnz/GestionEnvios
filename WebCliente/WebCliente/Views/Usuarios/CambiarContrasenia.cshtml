@@ -1,0 +1,51 @@
+﻿@model WebCliente.Models.CambiarContraseniaViewModel
+
+@{
+    ViewData["Title"] = "CambiarContrasenia";
+}
+
+<h1>CambiarContrasenia</h1>
+
+<h4>CambiarContraseniaViewModel</h4>
+
+@if (ViewBag.Exito != null)
+{
+    <span>@ViewBag.Exito</span>
+}
+
+@if (ViewBag.Error != null)
+{
+    <span>@ViewBag.Error</span>
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CambiarContrasenia">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Actual" class="control-label"></label>
+                <input asp-for="Actual" class="form-control" type="password" />
+                <span asp-validation-for="Actual" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nueva" class="control-label"></label>
+                <input asp-for="Nueva" class="form-control" type="password" />
+                <span asp-validation-for="Nueva" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

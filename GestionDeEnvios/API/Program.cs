@@ -42,10 +42,13 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddScoped<IBuscarEnvioPorNTracking, BuscarEnvioPorNTracking>();
 builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
-builder.Services.AddScoped<ILogin, Login>();
 builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+builder.Services.AddScoped<IRepositorioRegistroAuditable, RepositorioRegistroAuditable>();
+builder.Services.AddScoped<IBuscarEnvioPorNTracking, BuscarEnvioPorNTracking>();
+builder.Services.AddScoped<ILogin, Login>();
+builder.Services.AddScoped<IModificarUsuario, ModificarUsuario>();
+builder.Services.AddScoped<IBuscarUsuario, BuscarUsuario>();
 
 string strCon = builder.Configuration.GetConnectionString("MiConexion");
 builder.Services.AddDbContext<GestionDeEnviosContext>(option => option.UseSqlServer(strCon));
