@@ -46,7 +46,7 @@ namespace WebCliente.Controllers
                     HttpContext.Session.SetString("email", respuesta.Email);
                     HttpContext.Session.SetString("rol", respuesta.Rol);
                     HttpContext.Session.SetString("token", respuesta.Token);
-                    return RedirectToAction("BuscarEnvio", "Envios");
+                    return RedirectToAction("Index", "Envios");
                 }
                 else
                 {

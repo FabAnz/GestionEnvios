@@ -83,5 +83,32 @@ namespace WebCliente.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        [RolClienteFilter]
+        public IActionResult Detalle(int nTracking)
+        {
+
+            try
+            {
+                bool exito = false;
+                string body = AuxClienteHttp.ObtenerBody("get", URLApi + nTracking, null, null, out exito);
+
+                if (exito)
+                {
+                    EnvioDTO dto = JsonConvert.DeserializeObject<EnvioDTO>(body);
+                    return View(dto);
+                }
+                else
+                {
+                    ViewBag.Error = body;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "El servidor no responde, contacte con el administrador";
+            }
+            return View();
+        }
     }
 }

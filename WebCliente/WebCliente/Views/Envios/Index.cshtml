@@ -21,9 +21,6 @@
                 @Html.DisplayNameFor(model => model.Vendedor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cliente)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Peso)
             </th>
             <th>
@@ -52,25 +49,23 @@
                     @Html.DisplayFor(modelItem => item.Vendedor)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Cliente)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Peso)
+                    @Html.DisplayFor(modelItem => item.Peso) Kg
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FechaEnvio)
+                    @item.FechaEnvio?.ToString("dd/MM/yyyy")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FechaEntrega)
+                    @if (!item.FechaEntrega.Equals(default(DateTime)))
+                        @Html.DisplayFor(modelItem => item.FechaEntrega)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Direccion)
                 </td>
                 <td>
-                    @Html.ActionLink("Comentarios", "Index")
+                    @Html.ActionLink("Detalles", "Detalle", new { nTracking = item.NTracking })
                 </td>
             </tr>
         }

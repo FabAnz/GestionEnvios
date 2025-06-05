@@ -50,7 +50,7 @@
                 <label asp-for="FechaEnvio" class="control-label"></label>
                 <input asp-for="FechaEnvio" class="form-control" readonly />
             </div>
-            @if (Model.Estado == "FINALIZADO")
+            @if (Model.Estado == "Finalizado")
             {
                 <div class="form-group">
                     <label asp-for="FechaEntrega" class="control-label"></label>
@@ -81,6 +81,10 @@
                         }
                     </tbody>
                 </table>
+            }
+            else
+            {
+                <span>No hay comentarios</span>
             }
         }
     </div>
