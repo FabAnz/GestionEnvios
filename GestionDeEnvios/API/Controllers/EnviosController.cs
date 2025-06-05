@@ -4,6 +4,7 @@ using ExcepcionesPropias.Excepciones;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -40,10 +41,14 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost()]
+        [HttpGet()]
         [Authorize(Roles = "Cliente")]
-        public IActionResult Get([FromBody] string email)
+        public IActionResult Get()
         {
+            string email = User.FindFirst(ClaimTypes.Email)?.Value;
+
+            if (email == null) return Unauthorized("No hay usuario logueado");
+
             try
             {
                 List<EnvioAClienteDTOs> envios = CUBuscarEnviosPorCliente.Buscar(email);

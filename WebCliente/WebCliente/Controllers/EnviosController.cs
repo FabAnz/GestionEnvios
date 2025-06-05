@@ -65,7 +65,7 @@ namespace WebCliente.Controllers
             try
             {
                 bool exito = false;
-                string body = AuxClienteHttp.ObtenerBody("post", URLApi, EmailActivo(), TokenActivo(), out exito);
+                string body = AuxClienteHttp.ObtenerBody("get", URLApi, null, TokenActivo(), out exito);
 
                 if (exito)
                 {

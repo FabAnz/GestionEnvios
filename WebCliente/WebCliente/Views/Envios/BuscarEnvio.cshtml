@@ -30,41 +30,58 @@
         </form>
         @if (Model != null)
         {
-            <div class="form-group">
-                <label asp-for="Vendedor" class="control-label"></label>
-                <input asp-for="Vendedor" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <label asp-for="Cliente" class="control-label"></label>
-                <input asp-for="Cliente" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <label asp-for="Peso" class="control-label"></label>
-                <input asp-for="Peso" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaEnvio" class="control-label"></label>
-                <input asp-for="FechaEnvio" class="form-control" readonly />
-            </div>
-            @if (Model.Estado == "Finalizado")
-            {
-                <div class="form-group">
-                    <label asp-for="FechaEntrega" class="control-label"></label>
-                    <input asp-for="FechaEntrega" class="form-control" readonly />
-                </div>
-            }
-            <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" readonly />
-            </div>
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Vendedor)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Vendedor)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Cliente)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Cliente)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Peso)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Peso) Kg
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Estado)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Estado)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FechaEnvio)
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.FechaEnvio?.ToString("dd/MM/yyyy")
+                </dd>
+                @if (Model.Estado == "Finalizado")
+                {
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.FechaEntrega)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.FechaEntrega)
+                    </dd>
+                }
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Direccion)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Direccion)
+                </dd>
+            </dl>
+
             @if (Model.Comentarios.Count > 0)
             {
                 <h4>Comentarios</h4>
-                <table class="table table-bordered mt-2">
+                <table class="table table-bordered mt-4">
                     <thead>
                         <tr>
                             <th>Texto</th>
