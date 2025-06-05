@@ -24,7 +24,7 @@ namespace WebCliente.DTOs
         public DateTime? FechaEntrega { get; set; }
         public List<ComentarioDTO>? Comentarios { get; set; }
 
-        [DisplayName("Dirección")]
+        [DisplayName("Entrega en")]
         public string? Direccion { get; set; }
     }
 }

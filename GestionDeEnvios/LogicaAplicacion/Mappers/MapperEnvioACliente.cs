@@ -21,7 +21,7 @@ namespace LogicaAplicacion.Mappers
                 aRetornar.Vendedor = envio.Vendedor.Nombre + " " + envio.Vendedor.Apellido;
                 aRetornar.Cliente = envio.Cliente.Nombre + " " + envio.Cliente.Apellido;
                 aRetornar.Peso = envio.Peso;
-                aRetornar.Estado = envio.Estado.ToString();
+                aRetornar.Estado = envio.Estado == EstadoEnvio.EN_PROCESO ? "En proceso" : "Finalizado";
                 aRetornar.FechaEnvio = envio.FechaEnvio;
                 aRetornar.FechaEntrega = envio.FechaEntrega;
                 aRetornar.Comentarios = MapperComentarioACliente.ToListDTO(envio.Comentarios);
@@ -35,7 +35,7 @@ namespace LogicaAplicacion.Mappers
         {
 
             return lista.Select(e => ToDTO(e)).ToList();
-      
+
         }
     }
 }

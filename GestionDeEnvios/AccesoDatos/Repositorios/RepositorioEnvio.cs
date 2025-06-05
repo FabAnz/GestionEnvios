@@ -124,6 +124,7 @@ namespace AccesoDatos.Repositorios
                 .Include(envio => ((Comun)envio).Destino)
                 .Include(envio => envio.Comentarios)
                 .Where(envio => envio.Cliente.Email.Valor == email)
+                .OrderBy(envio => envio.FechaEnvio)
                 .ToList();
         }
     }

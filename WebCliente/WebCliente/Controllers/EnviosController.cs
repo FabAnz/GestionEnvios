@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebCliente.DTOs;
+using WebCliente.Filters;
 
 namespace WebCliente.Controllers
 {
@@ -13,6 +14,16 @@ namespace WebCliente.Controllers
             URLApi = config.GetValue<string>("URLApi") + "Envios/";
         }
 
+        private string EmailActivo()
+        {
+            return HttpContext.Session.GetString("email");
+        }
+
+        private string TokenActivo()
+        {
+            return HttpContext.Session.GetString("token");
+        }
+
         [HttpGet]
         public IActionResult BuscarEnvio()
         {
@@ -22,8 +33,6 @@ namespace WebCliente.Controllers
         [HttpPost]
         public IActionResult BuscarEnvio(int nTracking)
         {
-            HttpClient cliente = new HttpClient();
-
             try
             {
                 bool exito = false;
@@ -46,6 +55,32 @@ namespace WebCliente.Controllers
             }
 
 
+            return View();
+        }
+
+        [HttpGet]
+        [RolClienteFilter]
+        public IActionResult Index()
+        {
+            try
+            {
+                bool exito = false;
+                string body = AuxClienteHttp.ObtenerBody("post", URLApi, EmailActivo(), TokenActivo(), out exito);
+
+                if (exito)
+                {
+                    List<EnvioDTO> dto = JsonConvert.DeserializeObject<List<EnvioDTO>>(body);
+                    return View(dto);
+                }
+                else
+                {
+                    ViewBag.Error = body;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "El servidor no responde, contacte con el administrador";
+            }
             return View();
         }
     }

@@ -15,12 +15,12 @@ namespace WebCliente.Controllers
             URLApi = config.GetValue<string>("URLApi") + "Usuarios/";
         }
 
-        public string EmailActivo()
+        private string EmailActivo()
         {
             return HttpContext.Session.GetString("email");
         }
 
-        public string TokenActivo()
+        private string TokenActivo()
         {
             return HttpContext.Session.GetString("token");
         }
