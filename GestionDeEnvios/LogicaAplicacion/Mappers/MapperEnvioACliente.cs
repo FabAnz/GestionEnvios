@@ -33,14 +33,9 @@ namespace LogicaAplicacion.Mappers
 
         internal static List<EnvioAClienteDTOs> ToListDTO(List<Envio> lista)
         {
-            List<EnvioAClienteDTOs> aRetornar = new List<EnvioAClienteDTOs>();
 
-            foreach (Envio envio in lista)
-            {
-                aRetornar.Add(ToDTO(envio));
-            }
-
-            return aRetornar;
+            return lista.Select(e => ToDTO(e)).ToList();
+      
         }
     }
 }

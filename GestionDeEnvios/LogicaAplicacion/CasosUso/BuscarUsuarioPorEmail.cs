@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class BuscarUsuario : IBuscarUsuario
+    public class BuscarUsuarioPorEmail:IBuscarUsuarioPorEmail
     {
         public IRepositorioUsuario RepoUsuario { get; set; }
 
-        public BuscarUsuario(IRepositorioUsuario repo)
+        public BuscarUsuarioPorEmail(IRepositorioUsuario repo)
         {
             RepoUsuario = repo;
         }
-        public UsuarioDTO BuscarPorId(int id)
+        public UsuarioDTO BuscarPorEmail(string email)
         {
-            return MapperUsuario.ToDTO(RepoUsuario.FindById(id));
-        }        
+            return MapperUsuario.ToDTO(RepoUsuario.BuscarUsuarioPorEmail(email));
+        }
     }
 }

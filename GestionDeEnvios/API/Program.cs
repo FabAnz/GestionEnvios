@@ -46,9 +46,10 @@ builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
 builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
 builder.Services.AddScoped<IRepositorioRegistroAuditable, RepositorioRegistroAuditable>();
 builder.Services.AddScoped<IBuscarEnvioPorNTracking, BuscarEnvioPorNTracking>();
+builder.Services.AddScoped<IBuscarEnviosPorCliente, BuscarEnviosPorCliente>();
 builder.Services.AddScoped<ILogin, Login>();
 builder.Services.AddScoped<IModificarUsuario, ModificarUsuario>();
-builder.Services.AddScoped<IBuscarUsuario, BuscarUsuario>();
+builder.Services.AddScoped<IBuscarUsuarioPorEmail, BuscarUsuarioPorEmail>();
 
 string strCon = builder.Configuration.GetConnectionString("MiConexion");
 builder.Services.AddDbContext<GestionDeEnviosContext>(option => option.UseSqlServer(strCon));

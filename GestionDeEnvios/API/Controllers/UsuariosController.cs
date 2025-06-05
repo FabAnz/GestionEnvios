@@ -12,17 +12,17 @@ namespace API.Controllers
     {
         public ILogin CULogin { get; set; }
         public IModificarUsuario CUModificarUsuario { get; set; }
-        public IBuscarUsuario CUBuscarUsuario { get; set; }
+        public IBuscarUsuarioPorEmail CUBuscarUsuarioPorEmail { get; set; }
 
         public UsuariosController(
             ILogin cuLogin,
             IModificarUsuario cuModificarUsuario,
-            IBuscarUsuario cuBuscarUsuario
+            IBuscarUsuarioPorEmail cuBuscarUsuario
             )
         {
             CULogin = cuLogin;
             CUModificarUsuario = cuModificarUsuario;
-            CUBuscarUsuario = cuBuscarUsuario;
+            CUBuscarUsuarioPorEmail = cuBuscarUsuario;
         }
 
         [HttpPost]
@@ -54,7 +54,7 @@ namespace API.Controllers
             {
                 CUModificarUsuario.ModificarContrasenia(dto);
 
-                UsuarioDTO aRetornar = CUBuscarUsuario.BuscarPorEmail(dto.Email);
+                UsuarioDTO aRetornar = CUBuscarUsuarioPorEmail.BuscarPorEmail(dto.Email);
                 return Ok(aRetornar);
             }
             catch (NoAutorizadoException ex)

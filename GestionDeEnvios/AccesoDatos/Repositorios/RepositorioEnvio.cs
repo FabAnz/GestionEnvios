@@ -111,5 +111,20 @@ namespace AccesoDatos.Repositorios
                 .Where(e => e.NTracking == NTraking)
                 .SingleOrDefault();
         }
+
+        public List<Envio> ListarPorCliente(string email)
+        {
+            if (email == null) throw new DatosInvalidosException("El email esta vacio");
+
+            return Contexto.Envios
+                .Include(envio => envio.Vendedor)
+                .Include(envio => envio.Vendedor.Rol)
+                .Include(envio => envio.Cliente)
+                    .ThenInclude(c => c.Rol)
+                .Include(envio => ((Comun)envio).Destino)
+                .Include(envio => envio.Comentarios)
+                .Where(envio => envio.Cliente.Email.Valor == email)
+                .ToList();
+        }
     }
 }

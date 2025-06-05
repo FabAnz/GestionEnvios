@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IBuscarUsuario
+    public interface IBuscarUsuarioPorEmail
     {
-        public UsuarioDTO BuscarPorId(int id);
+        public UsuarioDTO BuscarPorEmail(string email);
     }
 }
