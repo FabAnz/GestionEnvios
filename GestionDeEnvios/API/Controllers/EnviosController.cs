@@ -16,13 +16,21 @@ namespace API.Controllers
     {
         public IBuscarEnvioPorNTracking CUBuscarEnvioPorNTracking { get; set; }
         public IBuscarEnviosPorCliente CUBuscarEnviosPorCliente { get; set; }
+        public IFiltrarEnvios CUFiltrarEnvios { get; set; }
 
         public EnviosController(
             IBuscarEnvioPorNTracking cuBuscarEnvioPorNTracking,
-            IBuscarEnviosPorCliente cUBuscarEnviosPorCliente)
+            IBuscarEnviosPorCliente cUBuscarEnviosPorCliente,
+            IFiltrarEnvios cuFiltrarEnvios)
         {
             CUBuscarEnvioPorNTracking = cuBuscarEnvioPorNTracking;
             CUBuscarEnviosPorCliente = cUBuscarEnviosPorCliente;
+            CUFiltrarEnvios = cuFiltrarEnvios;
+        }
+
+        private string EmailActivo()
+        {
+            return User.FindFirst(ClaimTypes.Email)?.Value;
         }
 
         [HttpGet("{nTracking}")]
@@ -45,13 +53,12 @@ namespace API.Controllers
         [Authorize(Roles = "Cliente")]
         public IActionResult Get()
         {
-            string email = User.FindFirst(ClaimTypes.Email)?.Value;
 
-            if (email == null) return Unauthorized("No hay usuario logueado");
+            if (EmailActivo() == null) return Unauthorized("No hay usuario logueado");
 
             try
             {
-                List<EnvioAClienteDTOs> envios = CUBuscarEnviosPorCliente.Buscar(email);
+                List<EnvioAClienteDTOs> envios = CUBuscarEnviosPorCliente.Buscar(EmailActivo());
                 if (envios == null) return NotFound("No hay envios");
 
                 return Ok(envios);
@@ -64,7 +71,27 @@ namespace API.Controllers
             {
                 return StatusCode(500, "Ocurrio un problema, contacte al administrador");
             }
+        }
 
+        [HttpGet("Filtrar")]
+        [Authorize(Roles = "Cliente")]
+        public IActionResult Get([FromQuery] DateTime? fInicio, [FromQuery] DateTime? fFin)
+        {
+            if (EmailActivo() == null) return Unauthorized("No hay usuario logueado");
+            try
+            {
+                List<EnvioAClienteDTOs> envios = CUFiltrarEnvios.Filtrar(EmailActivo(), fInicio, fFin);
+                if (envios == null) return NotFound("No hay envios");
+                return Ok(envios);
+            }
+            catch (DatosInvalidosException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocurrio un problema, contacte al administrador");
+            }
         }
     }
 }

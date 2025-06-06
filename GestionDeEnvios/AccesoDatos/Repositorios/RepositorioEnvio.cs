@@ -127,5 +127,15 @@ namespace AccesoDatos.Repositorios
                 .OrderBy(envio => envio.FechaEnvio)
                 .ToList();
         }
+
+        public List<Envio> Filtrar(string email, DateTime? fInicio, DateTime? fFin)
+        {
+            List<Envio> aRetornar = ListarPorCliente(email);
+
+            if (fInicio != null) aRetornar = aRetornar.Where(e => e.FechaEnvio >= fInicio).ToList();
+            if (fFin != null) aRetornar = aRetornar.Where(e => e.FechaEnvio <= fFin).ToList();
+
+            return aRetornar.OrderBy(e => e.NTracking).ToList();
+        }
     }
 }

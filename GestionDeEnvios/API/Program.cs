@@ -47,6 +47,7 @@ builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
 builder.Services.AddScoped<IRepositorioRegistroAuditable, RepositorioRegistroAuditable>();
 builder.Services.AddScoped<IBuscarEnvioPorNTracking, BuscarEnvioPorNTracking>();
 builder.Services.AddScoped<IBuscarEnviosPorCliente, BuscarEnviosPorCliente>();
+builder.Services.AddScoped<IFiltrarEnvios, FiltrarEnvios>();
 builder.Services.AddScoped<ILogin, Login>();
 builder.Services.AddScoped<IModificarContrasenia, ModificarContrasenia>();
 builder.Services.AddScoped<IBuscarUsuarioPorEmail, BuscarUsuarioPorEmail>();
