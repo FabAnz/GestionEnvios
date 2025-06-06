@@ -35,12 +35,5 @@ namespace LogicaAplicacion.CasosUso
 
             GenerarRegistro("Modificación de usuario", usuarioActivoDto, dto.Email);
         }
-
-        public void ModificarContrasenia(ModificarContraseniaDTO dto)
-        {
-            if (dto == null)
-                throw new DatosInvalidosException("Usuario vacio, intente nuevamente");
-            RepoUsuario.ModificarContrasenia(dto.Email, dto.Actual, dto.Nueva);
-        }
     }
 }

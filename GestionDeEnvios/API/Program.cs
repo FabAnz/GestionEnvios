@@ -48,7 +48,7 @@ builder.Services.AddScoped<IRepositorioRegistroAuditable, RepositorioRegistroAud
 builder.Services.AddScoped<IBuscarEnvioPorNTracking, BuscarEnvioPorNTracking>();
 builder.Services.AddScoped<IBuscarEnviosPorCliente, BuscarEnviosPorCliente>();
 builder.Services.AddScoped<ILogin, Login>();
-builder.Services.AddScoped<IModificarUsuario, ModificarUsuario>();
+builder.Services.AddScoped<IModificarContrasenia, ModificarContrasenia>();
 builder.Services.AddScoped<IBuscarUsuarioPorEmail, BuscarUsuarioPorEmail>();
 
 string strCon = builder.Configuration.GetConnectionString("MiConexion");

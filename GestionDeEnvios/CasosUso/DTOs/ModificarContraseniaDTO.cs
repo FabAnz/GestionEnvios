@@ -8,7 +8,6 @@ namespace CasosUso.DTOs
 {
     public class ModificarContraseniaDTO
     {
-        public string Email { get; set; }
         public string Actual { get; set; }
         public string Nueva { get; set; }
     }

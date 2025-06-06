@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosUso.InterfacesCasosUso
 {
-    public interface IModificarUsuario
+    public interface IModificarContrasenia
     {
-        public void Modificar(UsuarioConContraseniaDTO dto, UsuarioDTO usuarioActivoDto);
+        public void Modificar(string email, ModificarContraseniaDTO dto);
     }
 }

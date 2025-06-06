@@ -83,10 +83,9 @@ namespace WebCliente.Controllers
         {
             try
             {
-                object obj = new { Email = EmailActivo(), Actual = vm.Actual, Nueva = vm.Nueva };
                 bool exito = false;
 
-                string body = AuxClienteHttp.ObtenerBody("put", URLApi, obj, TokenActivo(), out exito);
+                string body = AuxClienteHttp.ObtenerBody("put", URLApi, vm, TokenActivo(), out exito);
 
                 if (exito)
                 {

@@ -3,6 +3,7 @@ using CasosUso.InterfacesCasosUso;
 using ExcepcionesPropias.Excepciones;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -11,17 +12,17 @@ namespace API.Controllers
     public class UsuariosController : ControllerBase
     {
         public ILogin CULogin { get; set; }
-        public IModificarUsuario CUModificarUsuario { get; set; }
+        public IModificarContrasenia CUModificarContrasenia { get; set; }
         public IBuscarUsuarioPorEmail CUBuscarUsuarioPorEmail { get; set; }
 
         public UsuariosController(
             ILogin cuLogin,
-            IModificarUsuario cuModificarUsuario,
+            IModificarContrasenia cuModificarContrasenia,
             IBuscarUsuarioPorEmail cuBuscarUsuario
             )
         {
             CULogin = cuLogin;
-            CUModificarUsuario = cuModificarUsuario;
+            CUModificarContrasenia = cuModificarContrasenia;
             CUBuscarUsuarioPorEmail = cuBuscarUsuario;
         }
 
@@ -50,11 +51,14 @@ namespace API.Controllers
         [Authorize(Roles = "Cliente")]
         public IActionResult ModificarContrasenia([FromBody] ModificarContraseniaDTO dto)
         {
+            string email = User.FindFirst(ClaimTypes.Email)?.Value;
+            if (email == null) return Unauthorized("No hay usuario logueado");
+
             try
             {
-                CUModificarUsuario.ModificarContrasenia(dto);
+                CUModificarContrasenia.Modificar(email, dto);
 
-                UsuarioDTO aRetornar = CUBuscarUsuarioPorEmail.BuscarPorEmail(dto.Email);
+                UsuarioDTO aRetornar = CUBuscarUsuarioPorEmail.BuscarPorEmail(email);
                 return Ok(aRetornar);
             }
             catch (NoAutorizadoException ex)
