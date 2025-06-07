@@ -51,30 +51,6 @@ namespace API.Controllers
 
         [HttpGet()]
         [Authorize(Roles = "Cliente")]
-        public IActionResult Get()
-        {
-
-            if (EmailActivo() == null) return Unauthorized("No hay usuario logueado");
-
-            try
-            {
-                List<EnvioAClienteDTOs> envios = CUBuscarEnviosPorCliente.Buscar(EmailActivo());
-                if (envios == null) return NotFound("No hay envios");
-
-                return Ok(envios);
-            }
-            catch (DatosInvalidosException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch
-            {
-                return StatusCode(500, "Ocurrio un problema, contacte al administrador");
-            }
-        }
-
-        [HttpGet("Filtrar")]
-        [Authorize(Roles = "Cliente")]
         public IActionResult Get([FromQuery] DateTime? fInicio, [FromQuery] DateTime? fFin)
         {
             if (EmailActivo() == null) return Unauthorized("No hay usuario logueado");

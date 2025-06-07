@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebCliente.DTOs.EnvioDTO>
+﻿@model WebCliente.Models.EnviosViewModel
 
 @{
     ViewData["Title"] = "Envios";
@@ -11,68 +11,85 @@
     <span>@ViewBag.Error</span>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NTracking)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vendedor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaEnvio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaEntrega)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>
-                Comentarios
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NTracking)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vendedor)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td>
-                    @item.FechaEnvio?.ToString("dd/MM/yyyy")
-                </td>
-                <td>
-                    @if (!item.FechaEntrega.Equals(default(DateTime)))
-                        @Html.DisplayFor(modelItem => item.FechaEntrega)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Direccion)
-                </td>
-                <td>
-                    @item.Comentarios.Count()
-                </td>
-                <td>
-                    @Html.ActionLink("Detalles", "Detalle", new { nTracking = item.NTracking })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span>Rango de fechas</span>
+            <div class="form-group">
+                <label asp-for="FInicio" class="control-label"></label>
+                <input asp-for="FInicio" class="form-control" type="date" />
+                <span asp-validation-for="FInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FFin" class="control-label"></label>
+                <input asp-for="FFin" class="form-control" type="date" />
+                <span asp-validation-for="FFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Filtrar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
 
-@if (Model.Count() == 0)
+@if (Model.Envios != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().NTracking)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().Vendedor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().Estado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().FechaEnvio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().Direccion)
+                </th>
+                <th>
+                    Comentarios
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Envios)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NTracking)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vendedor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @item.FechaEnvio?.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Direccion)
+                    </td>
+                    <td>
+                        @item.Comentarios.Count()
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalles", "Detalle", new { nTracking = item.NTracking })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
 {
     <span>No hay envios</span>
 }

@@ -132,10 +132,10 @@ namespace AccesoDatos.Repositorios
         {
             List<Envio> aRetornar = ListarPorCliente(email);
 
-            if (fInicio != null) aRetornar = aRetornar.Where(e => e.FechaEnvio >= fInicio).ToList();
-            if (fFin != null) aRetornar = aRetornar.Where(e => e.FechaEnvio <= fFin).ToList();
+            if (fInicio != null) aRetornar = aRetornar.Where(e => e.FechaEnvio >= fInicio).OrderBy(e => e.NTracking).ToList();
+            if (fFin != null) aRetornar = aRetornar.Where(e => e.FechaEnvio <= fFin).OrderBy(e => e.NTracking).ToList();
 
-            return aRetornar.OrderBy(e => e.NTracking).ToList();
+            return aRetornar;
         }
     }
 }

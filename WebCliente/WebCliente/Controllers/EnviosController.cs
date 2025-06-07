@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using WebCliente.DTOs;
 using WebCliente.Filters;
+using WebCliente.Models;
 
 namespace WebCliente.Controllers
 {
@@ -37,7 +38,7 @@ namespace WebCliente.Controllers
             {
                 bool exito = false;
 
-                string body = AuxClienteHttp.ObtenerBody("get", URLApi + nTracking, null, null, out exito);
+                string body = AuxClienteHttp.ObtenerBody("get", $"URLApi{nTracking}", null, null, out exito);
 
                 if (exito)
                 {
@@ -69,8 +70,9 @@ namespace WebCliente.Controllers
 
                 if (exito)
                 {
-                    List<EnvioDTO> dto = JsonConvert.DeserializeObject<List<EnvioDTO>>(body);
-                    return View(dto);
+                    EnviosViewModel vm = new EnviosViewModel();
+                    vm.Envios = JsonConvert.DeserializeObject<List<EnvioDTO>>(body);
+                    return View(vm);
                 }
                 else
                 {
@@ -84,11 +86,44 @@ namespace WebCliente.Controllers
             return View();
         }
 
+        [HttpPost]
+        [RolClienteFilter]
+        public IActionResult Index(EnviosViewModel vm)
+        {
+            try
+            {
+                bool exito = false;
+
+                string filtros = "";
+                if (vm.FInicio != null)
+                    filtros += "fInicio=" + vm.FInicio?.ToString("yyyy/MM/dd");
+                if (vm.FFin != null)
+                    filtros += (string.IsNullOrEmpty(filtros) ? "" : "&") + "fFin=" + vm.FFin?.ToString("yyyy/MM/dd");
+
+                string url = URLApi + (!string.IsNullOrEmpty(filtros) ? "?" + filtros : "");
+
+                string body = AuxClienteHttp.ObtenerBody("get", url, null, TokenActivo(), out exito);
+
+                if (exito)
+                {
+                    vm.Envios = JsonConvert.DeserializeObject<List<EnvioDTO>>(body);
+                }
+                else
+                {
+                    ViewBag.Error = body;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "El servidor no responde, contacte con el administrador";
+            }
+            return View(vm);
+        }
+
         [HttpGet]
         [RolClienteFilter]
         public IActionResult Detalle(int nTracking)
         {
-
             try
             {
                 bool exito = false;
