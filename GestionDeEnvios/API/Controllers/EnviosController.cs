@@ -51,12 +51,12 @@ namespace API.Controllers
 
         [HttpGet()]
         [Authorize(Roles = "Cliente")]
-        public IActionResult Get([FromQuery] DateTime? fInicio, [FromQuery] DateTime? fFin)
+        public IActionResult Get([FromQuery] DateTime? fInicio, [FromQuery] DateTime? fFin, [FromQuery] string? estado)
         {
             if (EmailActivo() == null) return Unauthorized("No hay usuario logueado");
             try
             {
-                List<EnvioAClienteDTOs> envios = CUFiltrarEnvios.Filtrar(EmailActivo(), fInicio, fFin);
+                List<EnvioAClienteDTOs> envios = CUFiltrarEnvios.Filtrar(EmailActivo(), fInicio, fFin, estado);
                 if (envios == null) return NotFound("No hay envios");
                 return Ok(envios);
             }

@@ -128,12 +128,19 @@ namespace AccesoDatos.Repositorios
                 .ToList();
         }
 
-        public List<Envio> Filtrar(string email, DateTime? fInicio, DateTime? fFin)
+        public List<Envio> Filtrar(string email, DateTime? fInicio, DateTime? fFin, string? estado)
         {
             List<Envio> aRetornar = ListarPorCliente(email);
 
             if (fInicio != null) aRetornar = aRetornar.Where(e => e.FechaEnvio >= fInicio).OrderBy(e => e.NTracking).ToList();
             if (fFin != null) aRetornar = aRetornar.Where(e => e.FechaEnvio <= fFin).OrderBy(e => e.NTracking).ToList();
+            if (!string.IsNullOrEmpty(estado))
+            {
+                if (estado != "En proceso" && estado != "Finalizado")
+                    throw new DatosInvalidosException("El estado debe ser \"Finalizado\" o \"En proceso\"");
+                EstadoEnvio estadoEnvio = estado == "En proceso" ? EstadoEnvio.EN_PROCESO : EstadoEnvio.FINALIZADO;
+                aRetornar = aRetornar.Where(e => e.Estado == estadoEnvio).OrderBy(e => e.NTracking).ToList();
+            }
 
             return aRetornar;
         }

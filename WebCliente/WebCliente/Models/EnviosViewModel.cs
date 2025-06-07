@@ -12,5 +12,7 @@ namespace WebCliente.Models
 
         [DisplayName("Fin")]
         public DateTime? FFin { get; set; }
+
+        public string? Estado { get; set; }
     }
 }

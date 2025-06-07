@@ -94,15 +94,7 @@ namespace WebCliente.Controllers
             {
                 bool exito = false;
 
-                string filtros = "";
-                if (vm.FInicio != null)
-                    filtros += "fInicio=" + vm.FInicio?.ToString("yyyy/MM/dd");
-                if (vm.FFin != null)
-                    filtros += (string.IsNullOrEmpty(filtros) ? "" : "&") + "fFin=" + vm.FFin?.ToString("yyyy/MM/dd");
-
-                string url = URLApi + (!string.IsNullOrEmpty(filtros) ? "?" + filtros : "");
-
-                string body = AuxClienteHttp.ObtenerBody("get", url, null, TokenActivo(), out exito);
+                string body = AuxClienteHttp.ObtenerBody("get", UrlConFiltros(vm), null, TokenActivo(), out exito);
 
                 if (exito)
                 {
@@ -118,6 +110,21 @@ namespace WebCliente.Controllers
                 ViewBag.Error = "El servidor no responde, contacte con el administrador";
             }
             return View(vm);
+        }
+
+        private string UrlConFiltros(EnviosViewModel vm)
+        {
+            string filtros = "";
+            if (vm.FInicio != null)
+                filtros += "fInicio=" + vm.FInicio?.ToString("yyyy/MM/dd");
+            if (vm.FFin != null)
+                filtros += (string.IsNullOrEmpty(filtros) ? "" : "&") + "fFin=" + vm.FFin?.ToString("yyyy/MM/dd");
+            if (!string.IsNullOrEmpty(vm.Estado))
+                filtros += (string.IsNullOrEmpty(filtros) ? "" : "&") + "estado=" + vm.Estado;
+
+            string url = URLApi + (!string.IsNullOrEmpty(filtros) ? "?" + filtros : "");
+
+            return url;
         }
 
         [HttpGet]

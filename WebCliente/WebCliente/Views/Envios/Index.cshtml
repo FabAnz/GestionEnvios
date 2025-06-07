@@ -27,6 +27,15 @@
                 <span asp-validation-for="FFin" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Estado" class="control-label">Estado</label>
+                <select asp-for="Estado" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="En proceso">En proceso</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Filtrar" class="btn btn-primary" />
             </div>
         </form>

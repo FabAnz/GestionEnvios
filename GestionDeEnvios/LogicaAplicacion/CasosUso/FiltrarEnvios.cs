@@ -18,9 +18,9 @@ namespace LogicaAplicacion.CasosUso
         {
             RepoEnvios = repo;
         }
-        public List<EnvioAClienteDTOs> Filtrar(string email, DateTime? fInicio, DateTime? fFin)
+        public List<EnvioAClienteDTOs> Filtrar(string email, DateTime? fInicio, DateTime? fFin, string? estado)
         {
-            return MapperEnvioACliente.ToListDTO(RepoEnvios.Filtrar(email, fInicio, fFin));
+            return MapperEnvioACliente.ToListDTO(RepoEnvios.Filtrar(email, fInicio, fFin, estado));
         }
     }
 }

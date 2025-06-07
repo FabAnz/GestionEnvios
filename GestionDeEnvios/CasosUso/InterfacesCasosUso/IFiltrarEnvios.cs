@@ -9,6 +9,6 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IFiltrarEnvios
     {
-        public List<EnvioAClienteDTOs> Filtrar(string email, DateTime? fInicio, DateTime? fFin);
+        public List<EnvioAClienteDTOs> Filtrar(string email, DateTime? fInicio, DateTime? fFin, string? estado);
     }
 }
