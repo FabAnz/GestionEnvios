@@ -128,7 +128,7 @@ namespace AccesoDatos.Repositorios
                 .ToList();
         }
 
-        public List<Envio> Filtrar(string email, DateTime? fInicio, DateTime? fFin, string? estado)
+        public List<Envio> Filtrar(string email, DateTime? fInicio, DateTime? fFin, string? estado, string? comentario)
         {
             List<Envio> aRetornar = ListarPorCliente(email);
 
@@ -141,6 +141,10 @@ namespace AccesoDatos.Repositorios
                 EstadoEnvio estadoEnvio = estado == "En proceso" ? EstadoEnvio.EN_PROCESO : EstadoEnvio.FINALIZADO;
                 aRetornar = aRetornar.Where(e => e.Estado == estadoEnvio).OrderBy(e => e.NTracking).ToList();
             }
+            if (!string.IsNullOrEmpty(comentario))
+                aRetornar = aRetornar
+                    .Where(e => e.Comentarios.Any(c => c.Texto.ToLower().Contains(comentario.ToLower())))
+                    .OrderBy(e => e.FechaEnvio).ToList();
 
             return aRetornar;
         }

@@ -14,5 +14,6 @@ namespace WebCliente.Models
         public DateTime? FFin { get; set; }
 
         public string? Estado { get; set; }
+        public string? Comentario { get; set; }
     }
 }

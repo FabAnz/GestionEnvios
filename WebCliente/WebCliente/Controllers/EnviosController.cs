@@ -121,6 +121,8 @@ namespace WebCliente.Controllers
                 filtros += (string.IsNullOrEmpty(filtros) ? "" : "&") + "fFin=" + vm.FFin?.ToString("yyyy/MM/dd");
             if (!string.IsNullOrEmpty(vm.Estado))
                 filtros += (string.IsNullOrEmpty(filtros) ? "" : "&") + "estado=" + vm.Estado;
+            if (!string.IsNullOrEmpty(vm.Comentario))
+                filtros += (string.IsNullOrEmpty(filtros) ? "" : "&") + "comentario=" + vm.Comentario;
 
             string url = URLApi + (!string.IsNullOrEmpty(filtros) ? "?" + filtros : "");
 
