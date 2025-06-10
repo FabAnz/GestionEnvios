@@ -13,7 +13,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Index">
+        <form asp-action="BuscarEnvios">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <span>Rango de fechas</span>
             <div class="form-group">
@@ -100,7 +100,14 @@
                         @item.Comentarios.Count()
                     </td>
                     <td>
-                        @Html.ActionLink("Detalles", "Detalle", new { nTracking = item.NTracking })
+                        @Html.ActionLink("Detalle", "Detalle", new
+                            {
+                                nTracking = item.NTracking,
+                                fInicio = Model.FInicio?.ToString("yyyy-MM-dd"),
+                                fFin = Model.FFin?.ToString("yyyy-MM-dd"),
+                                estado = Model.Estado,
+                                comentario = Model.Comentario
+                            })
                     </td>
                 </tr>
             }

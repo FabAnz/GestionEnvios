@@ -61,16 +61,23 @@ namespace WebCliente.Controllers
 
         [HttpGet]
         [RolClienteFilter]
-        public IActionResult Index()
+        public IActionResult Index(DateTime? fInicio, DateTime? fFin, string? estado, string? comentario)
         {
+            EnviosViewModel vm = new EnviosViewModel()
+            {
+                FInicio = fInicio,
+                FFin = fFin,
+                Estado = estado,
+                Comentario = comentario
+            };
+
             try
             {
                 bool exito = false;
-                string body = AuxClienteHttp.ObtenerBody("get", URLApi, null, TokenActivo(), out exito);
+                string body = AuxClienteHttp.ObtenerBody("get", UrlConFiltros(vm), null, TokenActivo(), out exito);
 
                 if (exito)
                 {
-                    EnviosViewModel vm = new EnviosViewModel();
                     vm.Envios = JsonConvert.DeserializeObject<List<EnvioDTO>>(body);
                     return View(vm);
                 }
@@ -88,28 +95,15 @@ namespace WebCliente.Controllers
 
         [HttpPost]
         [RolClienteFilter]
-        public IActionResult Index(EnviosViewModel vm)
+        public IActionResult BuscarEnvios(EnviosViewModel vm)
         {
-            try
+            return RedirectToAction("Index", new
             {
-                bool exito = false;
-
-                string body = AuxClienteHttp.ObtenerBody("get", UrlConFiltros(vm), null, TokenActivo(), out exito);
-
-                if (exito)
-                {
-                    vm.Envios = JsonConvert.DeserializeObject<List<EnvioDTO>>(body);
-                }
-                else
-                {
-                    ViewBag.Error = body;
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = "El servidor no responde, contacte con el administrador";
-            }
-            return View(vm);
+                fInicio = vm.FInicio?.ToString("yyyy-MM-dd"),
+                fFin = vm.FFin?.ToString("yyyy-MM-dd"),
+                estado = vm.Estado,
+                comentario = vm.Comentario
+            });
         }
 
         private string UrlConFiltros(EnviosViewModel vm)
@@ -131,8 +125,13 @@ namespace WebCliente.Controllers
 
         [HttpGet]
         [RolClienteFilter]
-        public IActionResult Detalle(int nTracking)
+        public IActionResult Detalle(int nTracking, DateTime? fInicio, DateTime? fFin, string? estado, string? comentario)
         {
+            ViewBag.FInicio = fInicio;
+            ViewBag.FFin = fFin;
+            ViewBag.Estado = estado;
+            ViewBag.Comentario = comentario;
+
             try
             {
                 bool exito = false;

@@ -83,5 +83,9 @@
     }
 </div>
 <div>
-    <a asp-action="Index">Volver</a>
+    <a asp-action="Index"
+       asp-route-fInicio="@((ViewBag.FInicio as DateTime?)?.ToString("yyyy-MM-dd"))"
+       asp-route-fFin="@((ViewBag.FFin as DateTime?)?.ToString("yyyy-MM-dd"))"
+       asp-route-estado="@ViewBag.Estado"
+       asp-route-comentario="@ViewBag.Comentario">Volver</a>
 </div>
