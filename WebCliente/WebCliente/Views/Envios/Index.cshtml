@@ -1,0 +1,120 @@
+﻿@model WebCliente.Models.EnviosViewModel
+
+@{
+    ViewData["Title"] = "Envios";
+}
+
+<h1>Envios</h1>
+
+@if (ViewBag.Error != null)
+{
+    <span>@ViewBag.Error</span>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="BuscarEnvios">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span>Rango de fechas</span>
+            <div class="form-group">
+                <label asp-for="FInicio" class="control-label"></label>
+                <input asp-for="FInicio" class="form-control" type="date" />
+                <span asp-validation-for="FInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FFin" class="control-label"></label>
+                <input asp-for="FFin" class="form-control" type="date" />
+                <span asp-validation-for="FFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label">Estado</label>
+                <select asp-for="Estado" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="En proceso">En proceso</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input name="filtros" type="submit" value="Filtrar" class="btn btn-primary" />
+            </div>
+            <h2>Buscar por comentario</h2>
+            <div class="form-group">
+                <label asp-for="Comentario" class="control-label"></label>
+                <input asp-for="Comentario" class="form-control" />
+                <span asp-validation-for="Comentario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input name="comentarios" type="submit" value="Buscar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.Envios != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().NTracking)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().Vendedor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().Estado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().FechaEnvio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(_ => new WebCliente.DTOs.EnvioDTO().Direccion)
+                </th>
+                <th>
+                    Comentarios
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Envios)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NTracking)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vendedor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @item.FechaEnvio?.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Direccion)
+                    </td>
+                    <td>
+                        @item.Comentarios.Count()
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalle", "Detalle", new
+                            {
+                                nTracking = item.NTracking,
+                                fInicio = Model.FInicio?.ToString("yyyy-MM-dd"),
+                                fFin = Model.FFin?.ToString("yyyy-MM-dd"),
+                                estado = Model.Estado,
+                                comentario = Model.Comentario
+                            })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <span>No hay envios</span>
+}
