@@ -26,7 +26,7 @@
                             <h1 class="h2">Buscar envio</h1>
                         }
                         <div class="form-group flex-grow-1">
-                            <input asp-for="NTracking" class="form-control" />
+                            <input asp-for="NTracking" class="form-control" placeholder="Ingrese el N° de tracking" />
                             <span asp-validation-for="NTracking" class="text-danger"></span>
                         </div>
 
@@ -35,63 +35,67 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="col">
+
                 @if (Model != null)
                 {
                     <dl class="row">
-                        <dt class="col-sm-4 py-sm-1">
+                        <dt class="col-sm-3 py-sm-1">
                             @Html.DisplayNameFor(model => model.Vendedor)
                         </dt>
-                        <dd class="col-sm-8 py-sm-1">
+                        <dd class="col-sm-9 py-sm-1">
                             @Html.DisplayFor(model => model.Vendedor)
                         </dd>
-                        <dt class="col-sm-4 py-sm-1">
+                        <dt class="col-sm-3 py-sm-1">
                             @Html.DisplayNameFor(model => model.Cliente)
                         </dt>
-                        <dd class="col-sm-8 py-sm-1">
+                        <dd class="col-sm-9 py-sm-1">
                             @Html.DisplayFor(model => model.Cliente)
                         </dd>
-                        <dt class="col-sm-4 py-sm-1">
+                        <dt class="col-sm-3 py-sm-1">
                             @Html.DisplayNameFor(model => model.Peso)
                         </dt>
-                        <dd class="col-sm-8 py-sm-1">
+                        <dd class="col-sm-9 py-sm-1">
                             @Html.DisplayFor(model => model.Peso) Kg
                         </dd>
-                        <dt class="col-sm-4 py-sm-1">
+                        <dt class="col-sm-3 py-sm-1">
                             @Html.DisplayNameFor(model => model.Estado)
                         </dt>
-                        <dd class="col-sm-8 py-sm-1">
+                        <dd class="col-sm-9 py-sm-1">
                             @Html.DisplayFor(model => model.Estado)
                         </dd>
-                        <dt class="col-sm-4 py-sm-1">
+                        <dt class="col-sm-3 py-sm-1">
                             @Html.DisplayNameFor(model => model.FechaEnvio)
                         </dt>
-                        <dd class="col-sm-8 py-sm-1">
+                        <dd class="col-sm-9 py-sm-1">
                             @Model.FechaEnvio?.ToString("dd/MM/yyyy")
                         </dd>
                         @if (Model.Estado == "Finalizado")
                         {
-                            <dt class="col-sm-4 py-sm-1">
+                            <dt class="col-sm-3 py-sm-1">
                                 @Html.DisplayNameFor(model => model.FechaEntrega)
                             </dt>
-                            <dd class="col-sm-8 py-sm-1">
+                            <dd class="col-sm-9 py-sm-1">
                                 @Html.DisplayFor(model => model.FechaEntrega)
                             </dd>
                         }
-                        <dt class="col-sm-4 py-sm-1">
+                        <dt class="col-sm-3 py-sm-1">
                             @Html.DisplayNameFor(model => model.Direccion)
                         </dt>
-                        <dd class="col-sm-8 py-sm-1">
+                        <dd class="col-sm-9 py-sm-1">
                             @Html.DisplayFor(model => model.Direccion)
                         </dd>
                     </dl>
 
+                }
+            </div>
 
+            <div class="col mb-5">
 
+                @if (Model != null)
+                {
                     @if (Model.Comentarios.Count > 0)
                     {
-                        <h2 class="h2">Comentarios</h2>
+                        <h2 class="h2 mb-3">Comentarios</h2>
                         <table class="table table-bordered mt-2">
                             <thead>
                                 <tr>
@@ -104,7 +108,7 @@
                                 {
                                     <tr>
                                         <td>@comentario.Texto</td>
-                                        <td>@comentario.Fecha.ToString("dd/MM/yyyy")</td>
+                                        <td>@comentario.Fecha</td>
                                     </tr>
                                 }
                             </tbody>
@@ -117,6 +121,7 @@
                         </div>
                     }
                 }
+
             </div>
         </div>
     </div>

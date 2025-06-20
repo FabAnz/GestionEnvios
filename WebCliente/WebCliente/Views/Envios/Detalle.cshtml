@@ -4,93 +4,99 @@
     ViewData["Title"] = "Detalle";
 }
 
-<h1>Detalle</h1>
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger">@ViewBag.Error</div>
-}
-else
-{
+<div class="container-xxl">
 
-    <div>
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.NTracking)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.NTracking)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Vendedor)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Vendedor)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Peso)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Peso) Kg
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Estado)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Estado)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FechaEnvio)
-            </dt>
-            <dd class="col-sm-10">
-                @Model.FechaEnvio?.ToString("dd/MM/yyyy")
-            </dd>
-            @if (Model.Estado == "Finalizado")
-            {
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.FechaEntrega)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.FechaEntrega)
-                </dd>
-            }
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Direccion)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Direccion)
-            </dd>
-        </dl>
-        @if (Model.Comentarios.Count > 0)
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        @if (ViewBag.Error == null)
         {
-            <h4>Comentarios</h4>
-            <table class="table table-bordered mt-2">
-                <thead>
-                    <tr>
-                        <th>Texto</th>
-                        <th>Fecha</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var comentario in Model.Comentarios)
-                    {
-                        <tr>
-                            <td>@comentario.Texto</td>
-                            <td>@comentario.Fecha</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <h1 class="h2"><span>Envio N°</span> @Html.DisplayFor(model => model.NTracking)</h1>
         }
-        else
-        {
-            <span>No hay comentarios</span>
-        }
+        <div class="@(ViewBag.Error!=null?"w-100 text-end":"")">
+            <a class="btn btn-primary"
+               asp-action="Index"
+               asp-route-fInicio="@((ViewBag.FInicio as DateTime?)?.ToString("yyyy-MM-dd"))"
+               asp-route-fFin="@((ViewBag.FFin as DateTime?)?.ToString("yyyy-MM-dd"))"
+               asp-route-estado="@ViewBag.Estado"
+               asp-route-comentario="@ViewBag.Comentario">Volver</a>
+        </div>
     </div>
-}
-<div>
-    <a asp-action="Index"
-       asp-route-fInicio="@((ViewBag.FInicio as DateTime?)?.ToString("yyyy-MM-dd"))"
-       asp-route-fFin="@((ViewBag.FFin as DateTime?)?.ToString("yyyy-MM-dd"))"
-       asp-route-estado="@ViewBag.Estado"
-       asp-route-comentario="@ViewBag.Comentario">Volver</a>
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+    else
+    {
+
+        <div>
+            <dl class="row mb-5">
+                <dt class="col-sm-3 col-md-2 py-sm-1">
+                    @Html.DisplayNameFor(model => model.Vendedor)
+                </dt>
+                <dd class="col-sm-9 col-md-10">
+                    @Html.DisplayFor(model => model.Vendedor)
+                </dd>
+                <dt class="col-sm-3 col-md-2 py-sm-1">
+                    @Html.DisplayNameFor(model => model.Peso)
+                </dt>
+                <dd class="col-sm-9 col-md-10">
+                    @Html.DisplayFor(model => model.Peso) Kg
+                </dd>
+                <dt class="col-sm-3 col-md-2 py-sm-1">
+                    @Html.DisplayNameFor(model => model.Estado)
+                </dt>
+                <dd class="col-sm-9 col-md-10">
+                    @Html.DisplayFor(model => model.Estado)
+                </dd>
+                <dt class="col-sm-3 col-md-2 py-sm-1">
+                    @Html.DisplayNameFor(model => model.FechaEnvio)
+                </dt>
+                <dd class="col-sm-9 col-md-10">
+                    @Model.FechaEnvio?.ToString("dd/MM/yyyy")
+                </dd>
+                @if (Model.Estado == "Finalizado")
+                {
+                    <dt class="col-sm-3 col-md-2 py-sm-1">
+                        @Html.DisplayNameFor(model => model.FechaEntrega)
+                    </dt>
+                    <dd class="col-sm-9 col-md-10">
+                        @Html.DisplayFor(model => model.FechaEntrega)
+                    </dd>
+                }
+                <dt class="col-sm-3 col-md-2 py-sm-1">
+                    @Html.DisplayNameFor(model => model.Direccion)
+                </dt>
+                <dd class="col-sm-9 col-md-10">
+                    @Html.DisplayFor(model => model.Direccion)
+                </dd>
+            </dl>
+            @if (Model.Comentarios.Count > 0)
+            {
+                <h4 class="mb-3">Comentarios</h4>
+                <table class="table table-bordered mt-2">
+                    <thead>
+                        <tr>
+                            <th>Texto</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var comentario in Model.Comentarios)
+                        {
+                            <tr>
+                                <td>@comentario.Texto</td>
+                                <td>@comentario.Fecha</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="text-center mt-5">
+                    <p class="no-envios">No hay comentarios</p>
+                </div>
+            }
+        </div>
+    }
+
 </div>
