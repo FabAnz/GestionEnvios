@@ -45,7 +45,7 @@
     </form>
 
 
-    @if (Model.Envios != null && Model.Envios.Any())
+    @if (ViewBag.Error == null && Model.Envios != null && Model.Envios.Any())
     {
         <div class="table-responsive">
             <table class="table table-bordered table-hover align-middle">

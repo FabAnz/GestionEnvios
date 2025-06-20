@@ -64,7 +64,7 @@ h1, h2, label {
     color: var(--deep-black);
 }
 
-dt {
+dt, label {
     color: var(--gray-text);
 }
 
@@ -100,8 +100,26 @@ dd {
         color: white;
     }
 
+.btn-texto {
+    background-color: transparent;
+    color: var(--deep-black) !important;
+    font-weight: bold;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    padding: 8px 16px !important;
+    transition: all 0.3s ease;
+}
 
-/* Tabla de envíos */
+    .btn-texto:hover {
+        color: var(--accent-orange) !important;
+    }
+
+.navbar a {
+    font-weight: 500;
+}
+
+
+/* Tablas */
 .table {
     background-color: #ffffff;
     border-radius: var(--border-radius);
@@ -133,4 +151,15 @@ dd {
     text-align: center;
     color: var(--gray-text);
     margin-top: 2rem;
+}
+
+/*Cajas*/
+.caja {
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 4px 6px 20px 0px #e1e1e1;
+}
+
+.login .caja {
+    width: 400px;
 }
