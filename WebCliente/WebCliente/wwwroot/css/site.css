@@ -1,4 +1,4 @@
-html {
+/*html {
   font-size: 14px;
 }
 
@@ -19,4 +19,118 @@ html {
 
 body {
   margin-bottom: 60px;
+}*/
+
+/** {
+    border: 1px solid red;
+}*/
+
+html, body, main {
+    height: 100%;
+}
+
+:root {
+    --primary-yellow: #FFD400;
+    --accent-orange: #FF9800;
+    --deep-black: #252525;
+    --soft-white: #FDFDFD;
+    --gray-text: #BABABA;
+    --border-radius: 12px;
+}
+
+footer {
+    height: 48px;
+    background-color: transparent;
+}
+
+.contenido {
+    flex: 1;
+}
+
+.buscarEnvio {
+    min-height: 50%;
+}
+
+/* Tipografía general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--soft-white);
+    color: var(--deep-black);
+}
+
+/* Títulos */
+h1, h2, label {
+    font-weight: 700;
+    color: var(--deep-black);
+}
+
+dt {
+    color: var(--gray-text);
+}
+
+dd {
+    font-weight: 500;
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 8px 16px;
+    width: 100%;
+    /*margin-bottom: 1rem;*/
+    font-size: 1rem;
+}
+
+/* Botones */
+.btn-primary {
+    background-color: var(--primary-yellow);
+    color: var(--deep-black) !important;
+    font-weight: bold;
+    border: 2px solid var(--primary-yellow);
+    border-radius: var(--border-radius);
+    padding: 8px 16px !important;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: var(--accent-orange);
+        border-color: var(--accent-orange);
+        color: white;
+    }
+
+
+/* Tabla de envíos */
+.table {
+    background-color: #ffffff;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+    .table th {
+        background-color: var(--primary-yellow);
+        color: var(--deep-black);
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+/* Mensajes de error */
+.text-danger {
+    color: #ff4d4d;
+}
+
+/* No hay envíos */
+.no-envios {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--gray-text);
+    margin-top: 2rem;
 }
