@@ -38,7 +38,7 @@ namespace WebCliente.Controllers
             {
                 bool exito = false;
 
-                string body = AuxClienteHttp.ObtenerBody("get", $"URLApi{nTracking}", null, null, out exito);
+                string body = AuxClienteHttp.ObtenerBody("get", $"{URLApi}{nTracking}", null, null, out exito);
 
                 if (exito)
                 {

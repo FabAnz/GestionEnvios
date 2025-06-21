@@ -4,106 +4,126 @@
     ViewData["Title"] = "BuescarEnvio";
 }
 
-<h1>BuescarEnvio</h1>
-
-<h4>EnvioDTO</h4>
-
-@if (ViewBag.Error != null)
-{
-    <span>@ViewBag.Error</span>
-}
-
-<hr />
-<div class="row">
-    <div class="col-md-8">
-        <form asp-action="BuscarEnvio">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NTracking" class="control-label"></label>
-                <input asp-for="NTracking" class="form-control" />
-                <span asp-validation-for="NTracking" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Buscar" class="btn btn-primary" />
-            </div>
-        </form>
-        @if (Model != null)
+<div class="container-xxl h-100">
+    <div class="d-flex flex-column justify-content-center buscarEnvio">
+        @if (Model == null)
         {
-            <dl class="row">
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Vendedor)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Vendedor)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Cliente)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Cliente)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Peso)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Peso) Kg
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Estado)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Estado)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.FechaEnvio)
-                </dt>
-                <dd class="col-sm-8">
-                    @Model.FechaEnvio?.ToString("dd/MM/yyyy")
-                </dd>
-                @if (Model.Estado == "Finalizado")
-                {
-                    <dt class="col-sm-4">
-                        @Html.DisplayNameFor(model => model.FechaEntrega)
-                    </dt>
-                    <dd class="col-sm-8">
-                        @Html.DisplayFor(model => model.FechaEntrega)
-                    </dd>
-                }
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Direccion)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Direccion)
-                </dd>
-            </dl>
-
-            @if (Model.Comentarios.Count > 0)
-            {
-                <h4>Comentarios</h4>
-                <table class="table table-bordered mt-4">
-                    <thead>
-                        <tr>
-                            <th>Texto</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var comentario in Model.Comentarios)
-                        {
-                            <tr>
-                                <td>@comentario.Texto</td>
-                                <td>@comentario.Fecha.ToString("dd/MM/yyyy")</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <span>No hay comentarios</span>
-            }
+            <h1 class="text-center mb-5">Buscar envio</h1>
         }
+
+
+        <div class="row flex-column align-items-center">
+            <div class="col-md-8 @(Model == null?"col-xxl-6":"") mb-5">
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.Error</div>
+                }
+                <form asp-action="BuscarEnvio" class="mb-5">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="d-flex flex-column flex-md-row gap-3">
+                        @if (Model != null)
+                        {
+                            <h1 class="h2">Buscar envio</h1>
+                        }
+                        <div class="form-group flex-grow-1">
+                            <input asp-for="NTracking" class="form-control" placeholder="Ingrese el N° de tracking" />
+                            <span asp-validation-for="NTracking" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Buscar" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+
+                @if (Model != null)
+                {
+                    <dl class="row">
+                        <dt class="col-sm-3 py-sm-1">
+                            @Html.DisplayNameFor(model => model.Vendedor)
+                        </dt>
+                        <dd class="col-sm-9 py-sm-1">
+                            @Html.DisplayFor(model => model.Vendedor)
+                        </dd>
+                        <dt class="col-sm-3 py-sm-1">
+                            @Html.DisplayNameFor(model => model.Cliente)
+                        </dt>
+                        <dd class="col-sm-9 py-sm-1">
+                            @Html.DisplayFor(model => model.Cliente)
+                        </dd>
+                        <dt class="col-sm-3 py-sm-1">
+                            @Html.DisplayNameFor(model => model.Peso)
+                        </dt>
+                        <dd class="col-sm-9 py-sm-1">
+                            @Html.DisplayFor(model => model.Peso) Kg
+                        </dd>
+                        <dt class="col-sm-3 py-sm-1">
+                            @Html.DisplayNameFor(model => model.Estado)
+                        </dt>
+                        <dd class="col-sm-9 py-sm-1">
+                            @Html.DisplayFor(model => model.Estado)
+                        </dd>
+                        <dt class="col-sm-3 py-sm-1">
+                            @Html.DisplayNameFor(model => model.FechaEnvio)
+                        </dt>
+                        <dd class="col-sm-9 py-sm-1">
+                            @Model.FechaEnvio?.ToString("dd/MM/yyyy")
+                        </dd>
+                        @if (Model.Estado == "Finalizado")
+                        {
+                            <dt class="col-sm-3 py-sm-1">
+                                @Html.DisplayNameFor(model => model.FechaEntrega)
+                            </dt>
+                            <dd class="col-sm-9 py-sm-1">
+                                @Html.DisplayFor(model => model.FechaEntrega)
+                            </dd>
+                        }
+                        <dt class="col-sm-3 py-sm-1">
+                            @Html.DisplayNameFor(model => model.Direccion)
+                        </dt>
+                        <dd class="col-sm-9 py-sm-1">
+                            @Html.DisplayFor(model => model.Direccion)
+                        </dd>
+                    </dl>
+
+                }
+            </div>
+
+            <div class="col mb-5">
+
+                @if (Model != null)
+                {
+                    @if (Model.Comentarios.Count > 0)
+                    {
+                        <h2 class="h2 mb-5">Comentarios</h2>
+                        <table class="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th>Texto</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var comentario in Model.Comentarios)
+                                {
+                                    <tr>
+                                        <td>@comentario.Texto</td>
+                                        <td>@comentario.Fecha</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="text-center mt-5">
+                            <p class="no-envios">No hay comentarios</p>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
     </div>
 </div>
 

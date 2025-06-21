@@ -1,22 +1,191 @@
-html {
-  font-size: 14px;
+/**{
+    border:1px solid red;
+}*/
+
+html, body, main {
+    height: 100%;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+:root {
+    --primary-yellow: #FFD400;
+    --accent-orange: #FF9800;
+    --deep-black: #252525;
+    --soft-white: #FDFDFD;
+    --gray-text: #BABABA;
+    --verde-semantico-900: #1B7211;
+    --verde-semantico-200: #E0FDBE;
+    --azul-semantico-900: #004076;
+    --azul-semantico-200: #99FEF5;
+    --border-radius: 12px;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+footer {
+    height: 48px;
+    background-color: transparent;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.contenido {
+    flex: 1;
 }
 
+.buscarEnvio {
+    min-height: 75%;
+}
+
+/* Tipografía general */
 body {
-  margin-bottom: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--soft-white);
+    color: var(--deep-black);
+}
+
+/* Títulos */
+h1, h2, label {
+    font-weight: 700;
+    color: var(--deep-black);
+}
+
+    h1 span {
+        font-weight: normal;
+    }
+
+dt, label {
+    color: var(--gray-text);
+}
+
+dd {
+    font-weight: 500;
+    margin: 0;
+}
+
+.pill {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 8px;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+    .pill {
+        font-size: 12px;
+        padding: 2px 8px;
+    }
+}
+
+.pill-verde {
+    color: var(--azul-semantico-900);
+    background-color: var(--verde-semantico-200);
+}
+
+.pill-azul {
+    color: var(--azul-semantico-900);
+    background-color: var(--azul-semantico-200);
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 8px 16px;
+    width: 100%;
+    /*margin-bottom: 1rem;*/
+    font-size: 1rem;
+}
+
+/* Botones */
+.btn-texto {
+    background-color: transparent;
+    color: var(--deep-black) !important;
+    font-weight: 500;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    padding: 8px 16px !important;
+    transition: all 0.3s ease;
+}
+
+    .btn-texto:hover {
+        color: var(--accent-orange) !important;
+    }
+
+.btn-icono{
+    background-color: transparent;
+    color: var(--deep-black) !important;
+    padding: 4px 8px !important;
+    transition: all 0.3s ease;
+}
+
+    .btn-icono:hover {
+        color: var(--accent-orange) !important;
+    }
+
+.navbar a {
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-yellow);
+    color: var(--deep-black) !important;
+    font-weight: bold !important;
+    border: 2px solid var(--primary-yellow);
+    border-radius: var(--border-radius);
+    padding: 8px 16px !important;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: var(--accent-orange);
+        border-color: var(--accent-orange);
+        color: white;
+    }
+
+
+/* Tablas */
+.table {
+    background-color: #ffffff;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 4px 6px 20px 0px #e1e1e1;
+}
+
+    .table > :not(:last-child) > :last-child > * {
+        border-bottom-color: transparent;
+    }
+
+    .table th {
+        background: linear-gradient(0deg, #e9e9e9, transparent);
+        color: var(--deep-black);
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+/* Mensajes de error */
+.text-danger {
+    color: #ff4d4d;
+}
+
+/* No hay envíos */
+.no-envios {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--gray-text);
+    margin-top: 2rem;
+}
+
+/*Cajas*/
+.caja {
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 4px 6px 20px 0px #e1e1e1;
+}
+
+.login .caja {
+    width: 400px;
 }
