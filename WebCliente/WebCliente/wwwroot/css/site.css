@@ -1,28 +1,5 @@
-/*html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}*/
-
-/** {
-    border: 1px solid red;
+/**{
+    border:1px solid red;
 }*/
 
 html, body, main {
@@ -35,6 +12,10 @@ html, body, main {
     --deep-black: #252525;
     --soft-white: #FDFDFD;
     --gray-text: #BABABA;
+    --verde-semantico-900: #1B7211;
+    --verde-semantico-200: #E0FDBE;
+    --azul-semantico-900: #004076;
+    --azul-semantico-200: #99FEF5;
     --border-radius: 12px;
 }
 
@@ -48,7 +29,7 @@ footer {
 }
 
 .buscarEnvio {
-    min-height: 50%;
+    min-height: 75%;
 }
 
 /* Tipografía general */
@@ -74,6 +55,32 @@ dt, label {
 
 dd {
     font-weight: 500;
+    margin: 0;
+}
+
+.pill {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 8px;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+    .pill {
+        font-size: 12px;
+        padding: 2px 8px;
+    }
+}
+
+.pill-verde {
+    color: var(--azul-semantico-900);
+    background-color: var(--verde-semantico-200);
+}
+
+.pill-azul {
+    color: var(--azul-semantico-900);
+    background-color: var(--azul-semantico-200);
 }
 
 /* Inputs */
@@ -99,6 +106,17 @@ dd {
 }
 
     .btn-texto:hover {
+        color: var(--accent-orange) !important;
+    }
+
+.btn-icono{
+    background-color: transparent;
+    color: var(--deep-black) !important;
+    padding: 4px 8px !important;
+    transition: all 0.3s ease;
+}
+
+    .btn-icono:hover {
         color: var(--accent-orange) !important;
     }
 
@@ -128,13 +146,17 @@ dd {
     background-color: #ffffff;
     border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    box-shadow: 4px 6px 20px 0px #e1e1e1;
 }
+
+    .table > :not(:last-child) > :last-child > * {
+        border-bottom-color: transparent;
+    }
 
     .table th {
         background: linear-gradient(0deg, #e9e9e9, transparent);
         color: var(--deep-black);
-        font-weight: bold;
+        font-weight: 500;
         text-align: center;
     }
 

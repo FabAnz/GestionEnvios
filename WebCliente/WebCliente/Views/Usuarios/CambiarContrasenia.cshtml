@@ -4,42 +4,40 @@
     ViewData["Title"] = "CambiarContrasenia";
 }
 
-<h1>CambiarContrasenia</h1>
+<div class="login d-flex h-100 justify-content-center align-items-center">
+    <div class="d-flex flex-column gap-3 caja">
+        <h1 class="h2 mb-5">Cambiar contraseña</h1>
 
-<h4>CambiarContraseniaViewModel</h4>
 
-@if (ViewBag.Exito != null)
-{
-    <span>@ViewBag.Exito</span>
-}
+        @if (ViewBag.Exito != null)
+        {
+            <div class="alert alert-success">@ViewBag.Exito</div>
+        }
 
-@if (ViewBag.Error != null)
-{
-    <span>@ViewBag.Error</span>
-}
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
         <form asp-action="CambiarContrasenia">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Actual" class="control-label"></label>
-                <input asp-for="Actual" class="form-control" type="password" />
+            <div class="form-group mb-3">
+                <input asp-for="Actual" class="form-control" type="password" placeholder="Ingrese su contraseña actual" />
                 <span asp-validation-for="Actual" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Nueva" class="control-label"></label>
-                <input asp-for="Nueva" class="form-control" type="password" />
+            <div class="form-group mb-5">
+                <input asp-for="Nueva" class="form-control" type="password" placeholder="Ingrese la nueva contraseña" />
                 <span asp-validation-for="Nueva" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="w-100 btn btn-primary" />
             </div>
         </form>
+        <div>
+            <a asp-action="Index" asp-controller="Envios" class="btn btn-texto w-100">Cerrar</a>
+        </div>
     </div>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -32,25 +32,25 @@
                 <dt class="col-sm-3 col-md-2 py-sm-1">
                     @Html.DisplayNameFor(model => model.Vendedor)
                 </dt>
-                <dd class="col-sm-9 col-md-10">
+                <dd class="col-sm-9 col-md-10 py-sm-1">
                     @Html.DisplayFor(model => model.Vendedor)
                 </dd>
                 <dt class="col-sm-3 col-md-2 py-sm-1">
                     @Html.DisplayNameFor(model => model.Peso)
                 </dt>
-                <dd class="col-sm-9 col-md-10">
+                <dd class="col-sm-9 col-md-10 py-sm-1">
                     @Html.DisplayFor(model => model.Peso) Kg
                 </dd>
                 <dt class="col-sm-3 col-md-2 py-sm-1">
                     @Html.DisplayNameFor(model => model.Estado)
                 </dt>
-                <dd class="col-sm-9 col-md-10">
+                <dd class="col-sm-9 col-md-10 py-sm-1">
                     @Html.DisplayFor(model => model.Estado)
                 </dd>
                 <dt class="col-sm-3 col-md-2 py-sm-1">
                     @Html.DisplayNameFor(model => model.FechaEnvio)
                 </dt>
-                <dd class="col-sm-9 col-md-10">
+                <dd class="col-sm-9 col-md-10 py-sm-1">
                     @Model.FechaEnvio?.ToString("dd/MM/yyyy")
                 </dd>
                 @if (Model.Estado == "Finalizado")
@@ -58,21 +58,21 @@
                     <dt class="col-sm-3 col-md-2 py-sm-1">
                         @Html.DisplayNameFor(model => model.FechaEntrega)
                     </dt>
-                    <dd class="col-sm-9 col-md-10">
+                    <dd class="col-sm-9 col-md-10 py-sm-1">
                         @Html.DisplayFor(model => model.FechaEntrega)
                     </dd>
                 }
                 <dt class="col-sm-3 col-md-2 py-sm-1">
                     @Html.DisplayNameFor(model => model.Direccion)
                 </dt>
-                <dd class="col-sm-9 col-md-10">
+                <dd class="col-sm-9 col-md-10 py-sm-1">
                     @Html.DisplayFor(model => model.Direccion)
                 </dd>
             </dl>
             @if (Model.Comentarios.Count > 0)
             {
-                <h4 class="mb-3">Comentarios</h4>
-                <table class="table table-bordered mt-2">
+                <h4 class="mb-5">Comentarios</h4>
+                <table class="table mt-2">
                     <thead>
                         <tr>
                             <th>Texto</th>
