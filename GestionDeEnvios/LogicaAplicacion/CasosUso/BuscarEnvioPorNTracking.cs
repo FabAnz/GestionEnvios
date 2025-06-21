@@ -18,9 +18,9 @@ namespace LogicaAplicacion.CasosUso
         {
             RepoEnvio = repoEnvio;
         }
-        public EnvioAClienteDTOs Buscar(int nTracking)
+        public EnvioAClienteDTOs Buscar(string email, int nTracking)
         {
-            return MapperEnvioACliente.ToDTO(RepoEnvio.BuscarPorNTraking(nTracking));
+            return MapperEnvioACliente.ToDTO(RepoEnvio.BuscarPorNTraking(email, nTracking));
         }
     }
 }

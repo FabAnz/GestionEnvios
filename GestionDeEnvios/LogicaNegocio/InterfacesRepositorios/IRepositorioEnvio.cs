@@ -11,7 +11,7 @@ namespace LogicaNegocio.InterfacesRepositorios
     {
         public List<Envio> ListarEnProceso();
         public List<Envio> ListarPorCliente(string email);
-        public Envio BuscarPorNTraking(int NTraking);
+        public Envio BuscarPorNTraking(string email, int nTraking);
         public int ObtenerNTracking();
         public List<Envio> Filtrar(string email, DateTime? fInicio, DateTime? fFin, string? estado, string? comentario);
     }
