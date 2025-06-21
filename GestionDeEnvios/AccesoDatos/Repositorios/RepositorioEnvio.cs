@@ -99,7 +99,17 @@ namespace AccesoDatos.Repositorios
             return num + 1;
         }
 
-        public Envio BuscarPorNTraking(int NTraking)
+        public Envio BuscarPorNTraking(string email, int nTraking)
+        {
+            Envio aRetornar = BuscarPorNTraking(nTraking);
+
+            if (aRetornar == null || email == null || aRetornar.Cliente.Email.Valor == email)
+                return aRetornar;
+
+            throw new NoAutorizadoException($"El n° de tracking {nTraking} no pertenece al cliente");
+        }
+
+        private Envio BuscarPorNTraking(int nTraking)
         {
             return Contexto.Envios
                 .Include(envio => envio.Vendedor)
@@ -108,7 +118,7 @@ namespace AccesoDatos.Repositorios
                     .ThenInclude(c => c.Rol)
                 .Include(envio => ((Comun)envio).Destino)
                 .Include(envio => envio.Comentarios)
-                .Where(e => e.NTracking == NTraking)
+                .Where(e => e.NTracking == nTraking)
                 .SingleOrDefault();
         }
 

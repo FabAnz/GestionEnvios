@@ -9,6 +9,6 @@ namespace CasosUso.InterfacesCasosUso
 {
     public interface IBuscarEnvioPorNTracking
     {
-        public EnvioAClienteDTOs Buscar(int nTracking);
+        public EnvioAClienteDTOs Buscar(string email, int nTracking);
     }
 }
