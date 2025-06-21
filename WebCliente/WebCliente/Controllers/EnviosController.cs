@@ -135,7 +135,7 @@ namespace WebCliente.Controllers
             try
             {
                 bool exito = false;
-                string body = AuxClienteHttp.ObtenerBody("get", URLApi + nTracking, null, null, out exito);
+                string body = AuxClienteHttp.ObtenerBody("get", URLApi + "detalle/" + nTracking, null, TokenActivo(), out exito);
 
                 if (exito)
                 {

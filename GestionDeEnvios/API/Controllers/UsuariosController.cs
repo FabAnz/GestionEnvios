@@ -26,7 +26,14 @@ namespace API.Controllers
             CUBuscarUsuarioPorEmail = cuBuscarUsuario;
         }
 
+        /// <summary>
+        /// Login de usuario
+        /// </summary>
+        /// <param name="dto">DTO que contiene email y contraseña</param>
+        /// <returns>Objeto con email, rol y token, 401 Unauthorized</returns>
         [HttpPost]
+        [ProducesResponseType(typeof(LoginResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         public IActionResult Login([FromBody] UsuarioLoginDTO dto)
         {
             try
@@ -34,7 +41,7 @@ namespace API.Controllers
                 dto.Rol = CULogin.VerificarCredenciales(dto).Rol;
 
                 string token = JWTManager.GenerarToken(dto);
-                return Ok(new { Email = dto.Email, Rol = dto.Rol, Token = token });
+                return Ok(new LoginResponseDTO { Email = dto.Email, Rol = dto.Rol, Token = token });
             }
             catch (NoAutorizadoException ex)
             {
@@ -47,12 +54,20 @@ namespace API.Controllers
 
         }
 
+        /// <summary>
+        /// Modificar las contraseña del usuario
+        /// </summary>
+        /// <param name="dto">Contiene la contraseña actual y la nueva</param>
+        /// <returns>El DTO del usuario, 400 BadRequest,403 Forbidden</returns>
         [HttpPut]
         [Authorize(Roles = "Cliente")]
+        [ProducesResponseType(typeof(UsuarioDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         public IActionResult ModificarContrasenia([FromBody] ModificarContraseniaDTO dto)
         {
             string email = User.FindFirst(ClaimTypes.Email)?.Value;
-            if (email == null) return Unauthorized("No hay usuario logueado");
 
             try
             {
@@ -63,7 +78,7 @@ namespace API.Controllers
             }
             catch (NoAutorizadoException ex)
             {
-                return Unauthorized(ex.Message);
+                return StatusCode(403, ex.Message);
             }
             catch (DatosInvalidosException ex)
             {
